@@ -5,9 +5,9 @@ public class EnemyManager : MonoBehaviour
     public int enemyAIndex = 0;
     public int bIndex = 5;
     public bool bExists = true;
-
     public void MoveEnemyA(int newIndex)
     {
+
         enemyAIndex = newIndex;
         CheckEnemyInteraction();
     }
@@ -23,11 +23,11 @@ public class EnemyManager : MonoBehaviour
     private void RemoveB()
     {
         bExists = false;
-        Debug.Log("Àû A°¡ B¸¦ Á¦°ÅÇß½À´Ï´Ù.");
+        Debug.Log("ï¿½ï¿½ Aï¿½ï¿½ Bï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½.");
     }
 
     public void RealEnding()
     {
-        Debug.Log("¸®¾ó ¿£µù È£Ãâ!");
+        Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È£ï¿½ï¿½!");
     }
 }
