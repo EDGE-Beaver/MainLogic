@@ -16,7 +16,6 @@ public class TextAnimationScripts : MonoBehaviour
     private string text;
     public TMP_Text targetText;
     public float delay;
-    
 
     void Start()
     {
