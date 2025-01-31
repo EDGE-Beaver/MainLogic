@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -10,34 +11,52 @@ public abstract class FileManager : MonoBehaviour
 
     /*
      * 
-     * È­ÀÚ ÀÌ¸§|´ëÈ­ ³»¿ë|SE ÆÄÀÏ ÀÌ¸§|ÀÌ¹ÌÁö ÆÄÀÏ ÀÌ¸§|¾À µ¥ÀÌÅÍ|¼±ÅÃÁö1,¼±ÅÃÁö2,¼±ÅÃÁö3
-     * ¿¹½Ã:
-    NPC1|¾È³çÇÏ¼¼¿ä! ¿©±â´Â Å×½ºÆ® ¾ÀÀÔ´Ï´Ù.|se_greeting|npc1_image|Scene1|
-    NPC2|¹«¾ùÀ» µµ¿Íµå¸±±î¿ä?|se_help|npc2_image|Scene2|µµ¿ò ¿äÃ»ÇÏ±â,±×³É ¶°³­´Ù
+     * í™”ì ì´ë¦„|ëŒ€í™” ë‚´ìš©|SE íŒŒì¼ ì´ë¦„|ì´ë¯¸ì§€ íŒŒì¼ ì´ë¦„|ì”¬ ë°ì´í„°|ì„ íƒì§€1,ì„ íƒì§€2,ì„ íƒì§€3
+     * ì˜ˆì‹œ:
+    NPC1|ì•ˆë…•í•˜ì„¸ìš”! ì—¬ê¸°ëŠ” í…ŒìŠ¤íŠ¸ ì”¬ì…ë‹ˆë‹¤.|se_greeting|npc1_image|Scene1|
+    NPC2|ë¬´ì—‡ì„ ë„ì™€ë“œë¦´ê¹Œìš”?|se_help|npc2_image|Scene2|ë„ì›€ ìš”ì²­í•˜ê¸°,ê·¸ëƒ¥ ë– ë‚œë‹¤
+
+    ìˆ˜ì •ì‚¬í•­(ë°•ì¤€ê±´)
+    ì–´ì°¨í”¼ ì”¬ë§ˆë‹¤ í…ìŠ¤íŠ¸íŒŒì¼ ë¶ˆëŸ¬ì˜¤ëŠ”ê²Œ ë‹¤ë¥´ê¸° ë•Œë¬¸ì— ì”¬ ë°ì´í„°ëŠ” ì˜ë¯¸ ì—†ì„ ë“¯
+    í™”ì ì´ë¦„|ëŒ€í™” ë‚´ìš©|SE íŒŒì¼ ì´ë¦„|ì´ë¯¸ì§€ íŒŒì¼ ì´ë¦„|ì„ íƒì§€ ê´€ë ¨ íŒŒì¼(0ì¼ì‹œ ì—†ê³ , 1ì¼ì‹œ 1ë²ˆ ì„ íƒì§€ë¥¼ ì œê³µ)
      * 
      */
 
 
-    // ·ÎµåµÈ µ¥ÀÌÅÍ¸¦ ÀúÀåÇÏ´Â µñ¼Å³Ê¸®: ÆÄÀÏ ÀÌ¸§À» Å°·Î, °¢ ÁÙÀ» ÆÄ½ÌÇÑ µ¥ÀÌÅÍ ¸®½ºÆ®¸¦ °ªÀ¸·Î ÀúÀå
+    /// <summary>
+    /// ë¡œë“œëœ ë°ì´í„°ë¥¼ ì €ì¥í•˜ëŠ” ë”•ì…”ë„ˆë¦¬: íŒŒì¼ ì´ë¦„ì„ í‚¤ë¡œ, ê° ì¤„ì„ íŒŒì‹±í•œ ë°ì´í„° ë¦¬ìŠ¤íŠ¸ë¥¼ ê°’ìœ¼ë¡œ ì €ì¥
+    /// í‚¤ëŠ” íŒŒì¼ ì´ë¦„, ê°’ì€ string ë°°ì—´ í˜•íƒœì˜ ë°ì´í„°.
+    /// </summary>
     protected Dictionary<string, List<string[]>> loadedData = new Dictionary<string, List<string[]>>();
 
-    [Header("ÅØ½ºÆ® ÆÄÀÏ °æ·Î ¸ñ·Ï (Resources Æú´õ ±âÁØ)")]
+    [Header("í…ìŠ¤íŠ¸ íŒŒì¼ ì´ë¦„ ëª©ë¡ (Resources í´ë” ê¸°ì¤€)")]
     public List<string> textFilePaths;
 
-    [Header("µ¥ÀÌÅÍ ±¸ºĞÀÚ")]
+    [Header("ë°ì´í„° êµ¬ë¶„ì")]
     public char delimiter = '|';
 
     /// <summary>
-    /// ¸ğµç ÅØ½ºÆ® ÆÄÀÏ ·Îµå
+    /// ëª¨ë“  í…ìŠ¤íŠ¸ íŒŒì¼ ë¡œë“œ
     /// </summary>
     protected void LoadAllTextFiles()
     {
+        /*
+        --------------------------------------------
+        í…ìŠ¤íŠ¸ íŒŒì¼ ì½ì–´ì˜¤ëŠ” í•¨ìˆ˜
+
+        1. String ë°°ì—´ë¡œ ì €ì¥ë˜ì–´ ìˆëŠ” filepathì˜ ê°œìˆ˜ë§Œí¼ ë‹¤ìŒì„ ë°˜ë³µí•¨
+            1. íŒŒì¼ ê²½ë¡œì— ìˆëŠ” í…ìŠ¤íŠ¸ íŒŒì¼ì„ ê°€ì ¸ì˜´
+            2. ê°œí–‰ ë¬¸ìë¥¼ ê¸°ì¤€ìœ¼ë¡œ ë‚˜ëˆ„ê³ 
+            3. datalist(í–¥í›„ ë”•ì…”ë„ˆë¦¬ì— ë„£ê¸° ìœ„í•¨)ì„ ë§Œë“¬
+            4. ë§Œì•½ ë¼ì¸ì´ ë¹„ì–´ìˆì§€ ì•Šë‹¤ë©´ í† í°í™”í•˜ê³ 
+
+        */
         foreach (var filePath in textFilePaths)
         {
             TextAsset textAsset = Resources.Load<TextAsset>(filePath);
             if (textAsset == null)
             {
-                Debug.LogError($"ÅØ½ºÆ® ÆÄÀÏÀ» Ã£À» ¼ö ¾ø½À´Ï´Ù: {filePath}");
+                Debug.LogError($"í…ìŠ¤íŠ¸ íŒŒì¼ì„ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤: {filePath}");
                 continue;
             }
 
@@ -46,31 +65,40 @@ public abstract class FileManager : MonoBehaviour
 
             foreach (var line in lines)
             {
-                if (!string.IsNullOrWhiteSpace(line))
+                if (!string.IsNullOrEmpty(line))
                 {
                     var tokens = line.Split(delimiter);
                     dataList.Add(tokens);
+                
                 }
             }
 
             string fileName = Path.GetFileNameWithoutExtension(filePath);
-            loadedData[fileName] = dataList; // ·ÎµåµÈ µ¥ÀÌÅÍ¸¦ µñ¼Å³Ê¸®¿¡ ÀúÀå
+            loadedData.Add(fileName, dataList);//
 
-            Debug.Log($"ÅØ½ºÆ® ÆÄÀÏ ·Îµå ¿Ï·á: {fileName}");
+            Debug.Log($"í…ìŠ¤íŠ¸ íŒŒì¼ ë¡œë“œ ì™„ë£Œ: {fileName}");
+            foreach(var type in dataList){
+                foreach(var str in type)
+                {
+                     Debug.Log(str);
+                }
+               
+            }
         }
     }
 
+    //ë°‘ì€ ë‚˜ì¤‘ì— ê²€í† í•¨(ë°•ì¤€ê±´)
     /// <summary>
-    /// Æ¯Á¤ ÆÄÀÏÀÇ Æ¯Á¤ ÀÎµ¦½º µ¥ÀÌÅÍ °¡Á®¿À±â
+    /// íŠ¹ì • íŒŒì¼ì˜ íŠ¹ì • ì¸ë±ìŠ¤ ë°ì´í„° ê°€ì ¸ì˜¤ê¸°
     /// </summary>
-    /// <param name="fileName">ÆÄÀÏ ÀÌ¸§</param>
-    /// <param name="index">°¡Á®¿Ã ÀÎµ¦½º</param>
-    /// <returns>µ¥ÀÌÅÍ ¹è¿­ (null ¹İÈ¯ °¡´É)</returns>
+    /// <param name="fileName">íŒŒì¼ ì´ë¦„</param>
+    /// <param name="index">ê°€ì ¸ì˜¬ ì¸ë±ìŠ¤</param>
+    /// <returns>ë°ì´í„° ë°°ì—´ (null ë°˜í™˜ ê°€ëŠ¥)</returns>
     public string[] GetRowByIndex(string fileName, int index)
     {
         if (!loadedData.ContainsKey(fileName))
         {
-            Debug.LogError($"ÆÄÀÏ ÀÌ¸§ '{fileName}'¿¡ ÇØ´çÇÏ´Â µ¥ÀÌÅÍ°¡ ¾ø½À´Ï´Ù.");
+            Debug.LogError($"íŒŒì¼ ì´ë¦„ '{fileName}'ì— í•´ë‹¹í•˜ëŠ” ë°ì´í„°ê°€ ì—†ìŠµë‹ˆë‹¤.");
             return null;
         }
 
@@ -78,20 +106,20 @@ public abstract class FileManager : MonoBehaviour
         if (index >= 0 && index < dataList.Count)
             return dataList[index];
 
-        Debug.LogWarning($"Àß¸øµÈ ÀÎµ¦½º ¿äÃ»: {index} (ÆÄÀÏ: {fileName})");
+        Debug.LogWarning($"ì˜ëª»ëœ ì¸ë±ìŠ¤ ìš”ì²­: {index} (íŒŒì¼: {fileName})");
         return null;
     }
 
     /// <summary>
-    /// Æ¯Á¤ ÆÄÀÏÀÇ ÃÑ Çà ¼ö ¹İÈ¯
+    /// íŠ¹ì • íŒŒì¼ì˜ ì´ í–‰ ìˆ˜ ë°˜í™˜
     /// </summary>
-    /// <param name="fileName">ÆÄÀÏ ÀÌ¸§</param>
-    /// <returns>ÃÑ Çà ¼ö</returns>
+    /// <param name="fileName">íŒŒì¼ ì´ë¦„</param>
+    /// <returns>ì´ í–‰ ìˆ˜</returns>
     public int GetRowCount(string fileName)
     {
         if (!loadedData.ContainsKey(fileName))
         {
-            Debug.LogWarning($"ÆÄÀÏ ÀÌ¸§ '{fileName}'¿¡ ÇØ´çÇÏ´Â µ¥ÀÌÅÍ°¡ ¾ø½À´Ï´Ù.");
+            Debug.LogWarning($"íŒŒì¼ ì´ë¦„ '{fileName}'ì— í•´ë‹¹í•˜ëŠ” ë°ì´í„°ê°€ ì—†ìŠµë‹ˆë‹¤.");
             return 0;
         }
 
@@ -99,9 +127,9 @@ public abstract class FileManager : MonoBehaviour
     }
 
     /// <summary>
-    /// ·ÎµåµÈ ÆÄÀÏ ÀÌ¸§ ¸ñ·Ï ¹İÈ¯
+    /// ë¡œë“œëœ íŒŒì¼ ì´ë¦„ ëª©ë¡ ë°˜í™˜
     /// </summary>
-    /// <returns>ÆÄÀÏ ÀÌ¸§ ¸®½ºÆ®</returns>
+    /// <returns>íŒŒì¼ ì´ë¦„ ë¦¬ìŠ¤íŠ¸</returns>
     public List<string> GetLoadedFileNames()
     {
         return new List<string>(loadedData.Keys);
