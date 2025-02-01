@@ -12,4 +12,4 @@
 유 이연|*1이런 일들은 그냥 잊어버리는 게 좋겠죠?\2.5$0.5 그럼요^,\0.99 당연하죠. 그게 맞아요.|Knock|image_nurse_concept_1||voice||끄덕|
 유 이연|*1하지만...$1 혹시라도 이상한 일이 일어난다면,$1 저에게 바로 알려주세요.%|Knock|image_nurse_concept_1|1|downvoice||
 유 이연|*1어떤 일이든,$0.5 우리가 모른 척하면...$1 세상은 변하지 않는답니다.|Knock|image_nurse_concept_1||downvoice||
-유 이연|*1그럼,$0.5 오늘도 평범한 하루를 보내도록 해요.\2.5 그렇죠?|Knock|image_nurse_concept_1||voice||끄덕|어둠
+유 이연|*1그럼,$0.5 오늘도 평범한 하루를 보내도록 해요.|Knock|image_nurse_concept_1||voice||끄덕|어둠

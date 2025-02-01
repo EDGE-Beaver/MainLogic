@@ -11,34 +11,33 @@ public class BreathingFloatEffect : MonoBehaviour
     public float baseSpeed = 2f; // 🎯 기본 속도 (기본 2)
 
     [Header("속도 변화 설정")]
-    public float minSpeedFactor = 0.3f; // 🎯 속도가 최소한으로 느려지는 비율 (기본 30%)
-    public float maxSpeedFactor = 1.5f; // 🎯 속도가 최대한으로 빨라지는 비율 (기본 150%)
-    public float speedChangeDuration = 2f; // 🎯 속도 변화에 걸리는 시간 (기본 2초)
-    public float speedChangeIntervalMin = 3f; // 🎯 속도가 변하기까지 최소 대기 시간 (기본 3초)
-    public float speedChangeIntervalMax = 6f; // 🎯 속도가 변하기까지 최대 대기 시간 (기본 6초)
+    public float minSpeedFactor = 0.3f; // 🎯 최소 속도 비율 (기본 30%)
+    public float maxSpeedFactor = 1.5f; // 🎯 최대 속도 비율 (기본 150%)
+    public float speedChangeDuration = 2f; // 🎯 속도 변화 지속 시간 (기본 2초)
+    public float speedChangeIntervalMin = 3f; // 🎯 속도 변경 최소 대기 시간 (기본 3초)
+    public float speedChangeIntervalMax = 6f; // 🎯 속도 변경 최대 대기 시간 (기본 6초)
 
     private Vector3 originalPosition;
     private float currentSpeed;
-    private bool isChangingSpeed = false; // 🎯 현재 속도를 변화시키는 중인지 확인
+    private bool isChangingSpeed = false; // 🎯 속도 변경 중인지 확인
+    private bool isBreathingActive = true; // 🎯 현재 숨쉬기 효과가 활성화되었는지 확인
 
     void Start()
     {
-        // 🎯 대상이 설정되지 않았다면 자기 자신을 대상으로 설정
         if (targetObject == null)
         {
             targetObject = transform;
         }
 
-        originalPosition = targetObject.localPosition; // 🎯 초기 위치 저장
+        originalPosition = targetObject.localPosition;
         currentSpeed = baseSpeed;
         StartCoroutine(SpeedVariationCycle());
     }
 
     void Update()
     {
-        if (targetObject == null) return;
+        if (targetObject == null || !isBreathingActive) return; // 🎯 숨쉬기 비활성화 시 중단
 
-        // 🎯 부드러운 상하 이동 (Mathf.Sin() 사용, 속도 변화 적용)
         float newY = originalPosition.y + (Mathf.Sin(Time.time * currentSpeed) * floatStrength);
         targetObject.localPosition = new Vector3(originalPosition.x, newY, originalPosition.z);
     }
@@ -47,12 +46,11 @@ public class BreathingFloatEffect : MonoBehaviour
     {
         while (true)
         {
-            // 🎯 랜덤한 시간 후 속도를 서서히 변경
             yield return new WaitForSeconds(Random.Range(speedChangeIntervalMin, speedChangeIntervalMax));
 
-            if (!isChangingSpeed)
+            if (!isChangingSpeed && isBreathingActive)
             {
-                float targetSpeedFactor = Random.Range(minSpeedFactor, maxSpeedFactor); // 🎯 최소 ~ 최대 사이 랜덤 속도
+                float targetSpeedFactor = Random.Range(minSpeedFactor, maxSpeedFactor);
                 StartCoroutine(AdjustSpeed(targetSpeedFactor, speedChangeDuration));
             }
         }
@@ -74,7 +72,6 @@ public class BreathingFloatEffect : MonoBehaviour
 
         yield return new WaitForSeconds(Random.Range(speedChangeIntervalMin, speedChangeIntervalMax));
 
-        // 🎯 원래 속도로 복귀
         elapsedTime = 0f;
         while (elapsedTime < duration)
         {
@@ -84,5 +81,17 @@ public class BreathingFloatEffect : MonoBehaviour
         }
 
         isChangingSpeed = false;
+    }
+
+    // 🎯 숨쉬기 효과 멈추기 ( `()` 을 만나면 실행 )
+    public void StopBreathing()
+    {
+        isBreathingActive = false;
+    }
+
+    // 🎯 숨쉬기 효과 다시 시작 ( `(!)` 을 만나면 실행 )
+    public void StartBreathing()
+    {
+        isBreathingActive = true;
     }
 }
