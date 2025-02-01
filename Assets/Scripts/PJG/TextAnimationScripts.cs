@@ -1,44 +1,40 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-/*
-----------------------------------
-박종혁 작성. 
 
-텍스트 출력 애니메이션 코드
-
-(1/30 기준) 원본 코드 보관 경로 - Script - PJH 폴더
-*/
 public class TextAnimationScripts : MonoBehaviour
 {
-
-    private string text;
     public TMP_Text targetText;
-    [Range(0f, 0.1f)]
-    public float delay;
+    [Range(0f, 0.1f)] public float delay;
+
+    private string fullText;
+    private bool isTyping = false;
+
+    public bool IsTyping => isTyping;
 
     void Start()
     {
-        text = targetText.text.ToString();
-        targetText.text = " ";
-
-        StartCoroutine(textPrint(delay));
+        fullText = targetText.text;
+        targetText.text = "";
+        StartCoroutine(TypeText());
     }
 
-    IEnumerator textPrint(float d)
+    IEnumerator TypeText()
     {
-        int count = 0;
-
-        while(count != text.Length)
+        isTyping = true;
+        targetText.text = "";
+        foreach (char c in fullText)
         {
-            if(count < text.Length)
-            {
-                targetText.text += text[count].ToString();
-                count++;
-            }
-
+            targetText.text += c;
             yield return new WaitForSeconds(delay);
         }
+        isTyping = false;
+    }
+
+    public void SkipTyping()
+    {
+        StopAllCoroutines();
+        targetText.text = fullText;
+        isTyping = false;
     }
 }

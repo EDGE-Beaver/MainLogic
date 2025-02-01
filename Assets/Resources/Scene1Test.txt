@@ -1,2 +1,2 @@
-NPC1|안녕하세요! 여기는 테스트 씬입니다.|se_greeting|npc1_image|Scene1|0
-NPC2|무엇을 도와드릴까요?|se_help|npc2_image|Scene2|1
+NPC1|안녕하세요! 여기는 테스트 씬입니다.|se_greeting|npc1_image|0
+NPC2|무엇을 도와드릴까요?|se_help|npc2_image|1
