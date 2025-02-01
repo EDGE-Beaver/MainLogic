@@ -1,10 +1,10 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ÆÄÀÏ ¸Å´ÏÀú¿¡¼­ »ó¼Ó¹Ş¾Æ¼­ °¡Á®¿Â Å¬·¡½º
-/// ½Ì±ÛÅæÀ» Àû¿ëÇØ¼­ Å¬·¡½º°¡ »ç¶óÁöÁö ¾Êµµ·Ï ÇÔ. 
+/// íŒŒì¼ ë§¤ë‹ˆì €ì—ì„œ ìƒì†ë°›ì•„ì„œ ê°€ì ¸ì˜¨ í´ë˜ìŠ¤
+/// ì‹±ê¸€í†¤ì„ ì ìš©í•´ì„œ í´ë˜ìŠ¤ê°€ ì‚¬ë¼ì§€ì§€ ì•Šë„ë¡ í•¨. 
 /// </summary>
 public class FileManagerLJH: FileManager
 {
@@ -12,19 +12,19 @@ public class FileManagerLJH: FileManager
     private static FileManagerLJH instance = null;
     void Awake()
     {
-        // SoundManager ÀÎ½ºÅÏ½º°¡ ÀÌ¹Ì ÀÖ´ÂÁö È®ÀÎ, ÀÌ »óÅÂ·Î ¼³Á¤
+        // SoundManager ì¸ìŠ¤í„´ìŠ¤ê°€ ì´ë¯¸ ìˆëŠ”ì§€ í™•ì¸, ì´ ìƒíƒœë¡œ ì„¤ì •
         if (instance == null)
         {
             instance = this;
         }
 
-        // ÀÎ½ºÅÏ½º°¡ ÀÌ¹Ì ÀÖ´Â °æ¿ì ¿ÀºêÁ§Æ® Á¦°Å
-        //gameObject¸¸À¸·Îµµ ÀÌ ½ºÅ©¸³Æ®°¡ ÄÄÆ÷³ÍÆ®·Î¼­ ºÙ¾îÀÖ´Â Hierarchy»óÀÇ °ÔÀÓ¿ÀºêÁ§Æ®¶ó´Â ¶æÀÌÁö¸¸, 
-        //³ª´Â Çò°¥¸² ¹æÁö¸¦ À§ÇØ this¸¦ ºÙ¿©ÁÖ±âµµ ÇÑ´Ù.
+        // ì¸ìŠ¤í„´ìŠ¤ê°€ ì´ë¯¸ ìˆëŠ” ê²½ìš° ì˜¤ë¸Œì íŠ¸ ì œê±°
+        //gameObjectë§Œìœ¼ë¡œë„ ì´ ìŠ¤í¬ë¦½íŠ¸ê°€ ì»´í¬ë„ŒíŠ¸ë¡œì„œ ë¶™ì–´ìˆëŠ” Hierarchyìƒì˜ ê²Œì„ì˜¤ë¸Œì íŠ¸ë¼ëŠ” ëœ»ì´ì§€ë§Œ, 
+        //ë‚˜ëŠ” í—·ê°ˆë¦¼ ë°©ì§€ë¥¼ ìœ„í•´ thisë¥¼ ë¶™ì—¬ì£¼ê¸°ë„ í•œë‹¤.
         else if (instance != this)
             Destroy(this.gameObject);
 
-        // ÀÌ·¸°Ô ÇÏ¸é ´ÙÀ½ sceneÀ¸·Î ³Ñ¾î°¡µµ ¿ÀºêÁ§Æ®°¡ »ç¶óÁöÁö ¾Ê½À´Ï´Ù.
+        // ì´ë ‡ê²Œ í•˜ë©´ ë‹¤ìŒ sceneìœ¼ë¡œ ë„˜ì–´ê°€ë„ ì˜¤ë¸Œì íŠ¸ê°€ ì‚¬ë¼ì§€ì§€ ì•ŠìŠµë‹ˆë‹¤.
         DontDestroyOnLoad(this.gameObject);
         LoadAllTextFiles();
     }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public class FileManager : MonoBehaviour  // 🎯 MonoBehaviour 상속 추가
+public class FileManager : MonoBehaviour
 {
     [Header("텍스트 파일 이름 목록 (Resources 폴더 기준)")]
     public List<string> textFilePaths;
@@ -11,10 +11,8 @@ public class FileManager : MonoBehaviour  // 🎯 MonoBehaviour 상속 추가
     [Header("텍스트 파일 구분자")]
     public char delimiter = '|';
 
-    /// <summary>
-    /// 로드된 대화 데이터를 저장하는 딕셔너리
-    /// 키: 파일 이름, 값: 각 줄을 파싱한 데이터 리스트 (각 줄은 문자열 배열)
-    /// </summary>
+    public string currentFile { get; private set; }
+
     private Dictionary<string, List<string[]>> loadedData = new Dictionary<string, List<string[]>>();
 
     void Awake()
@@ -22,9 +20,6 @@ public class FileManager : MonoBehaviour  // 🎯 MonoBehaviour 상속 추가
         LoadAllTextFiles();
     }
 
-    /// <summary>
-    /// 모든 텍스트 파일을 로드하는 함수
-    /// </summary>
     public void LoadAllTextFiles()
     {
         loadedData.Clear();
@@ -34,7 +29,7 @@ public class FileManager : MonoBehaviour  // 🎯 MonoBehaviour 상속 추가
             TextAsset textAsset = Resources.Load<TextAsset>(filePath);
             if (textAsset == null)
             {
-                Debug.LogError($"텍스트 파일을 찾을 수 없습니다: {filePath}");
+                Debug.LogError($"🚨 텍스트 파일을 찾을 수 없습니다: {filePath}");
                 continue;
             }
 
@@ -53,19 +48,34 @@ public class FileManager : MonoBehaviour  // 🎯 MonoBehaviour 상속 추가
             string fileName = Path.GetFileNameWithoutExtension(filePath);
             loadedData[fileName] = dataList;
 
-            Debug.Log($"텍스트 파일 로드 완료: {fileName}");
+            if (string.IsNullOrEmpty(currentFile))
+            {
+                currentFile = fileName;
+            }
+
+            Debug.Log($"📂 텍스트 파일 로드 완료: {fileName}");
         }
     }
 
-    /// <summary>
-    /// 특정 파일의 특정 줄을 가져오는 함수
-    /// </summary>
+    public void SetCurrentFile(string fileName)
+    {
+        if (loadedData.ContainsKey(fileName))
+        {
+            currentFile = fileName;
+            Debug.Log($"📂 현재 파일 변경됨: {currentFile}");
+        }
+        else
+        {
+            Debug.LogWarning($"⚠️ 파일 '{fileName}'이(가) 로드되지 않아 변경할 수 없습니다.");
+        }
+    }
+
     public string[] GetRowByIndex(string fileName, int index)
     {
         if (!loadedData.ContainsKey(fileName))
         {
             Debug.LogWarning($"⚠️ 파일 '{fileName}'이(가) 로드되지 않았습니다.");
-            return new string[] { "" }; // ⚠️ null 반환하지 않고 빈 배열 반환
+            return new string[] { "" };
         }
 
         var dataList = loadedData[fileName];
@@ -73,7 +83,7 @@ public class FileManager : MonoBehaviour  // 🎯 MonoBehaviour 상속 추가
         if (index < 0 || index >= dataList.Count)
         {
             Debug.LogWarning($"⚠️ '{fileName}' 파일의 잘못된 인덱스 요청: {index}");
-            return new string[] { "" }; // ⚠️ null 반환하지 않고 빈 배열 반환
+            return new string[] { "" };
         }
 
         return dataList[index];

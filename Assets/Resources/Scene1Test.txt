@@ -1,2 +1,9 @@
-NPC1|안녕하세요! 여기는 테스트 씬입니다.|se_greeting|npc1_image|0
-NPC2|무엇을 도와드릴까요?|se_help|npc2_image|1
+NPC1|안녕하세요!\2.5 여기는$2 테스트 씬입니다.|Knock|image_nurse_concept_1||voice|run away|끄덕
+NPC1|안녕하세요!\2.5 여기는$2 테스트 씬입니다.|Knock|image_nurse_concept_1||voice|run away|끄덕
+NPC1|안녕하세요! 여기는 테스트 씬입니다.|Knock|image_nurse_concept_1||Talk|run away
+NPC1|안녕하세요! 여기는 테스트 씬입니다.|Knock|image_nurse_concept_1||voice|run away
+NPC1|잠시만요|Knock|image_nurse_concept_1||voice|run away
+NPC2|무엇을 도와드릴까요?|se_help|npc2_image|1|voice|bgm_help
+NPC3|환영합니다! 무엇을 찾고 계신가요?|se_welcome|npc3_image||Talk3|bgm_shop
+NPC1|잠시만 기다려주세요.|se_wait|npc1_image||Talk4|bgm_wait
+NPC4|잘 가세요! 또 오세요!|se_bye|npc4_image||Talk5|bgm_exit

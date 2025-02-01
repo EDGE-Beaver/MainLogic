@@ -6,13 +6,20 @@ using UnityEngine.UI;
 public class DialogueManager : MonoBehaviour
 {
     [Header("파일 매니저 (Inspector에서 지정)")]
-    public FileManager fileManager;  // 🎯 인스펙터에서 지정 가능하도록 변경
+    public FileManager fileManager;
+
+    [Header("끄덕 애니메이션 효과 (Inspector에서 지정)")]
+    public NodEffect nodEffect; // 🎯 NodEffect 인스펙터에서 지정 가능하도록 변경
 
     [Header("UI 요소들")]
     public TMP_Text speakerText;
-    public TMP_Text dialogueText;
+    public TextAnimationScripts textAnimationScript;
     public Image characterImage;
-    public AudioSource audioSource;
+
+    [Header("오디오 소스")]
+    public AudioSource seAudioSource;
+    public AudioSource voiceAudioSource;
+    public AudioSource bgmAudioSource;
 
     [Header("SE (효과음) 기본값")]
     public AudioClip defaultSE;
@@ -21,11 +28,7 @@ public class DialogueManager : MonoBehaviour
     public GameObject choicePanel;
     public Button[] choiceButtons;
 
-    [Header("현재 사용 중인 파일")]
-    public string currentFile;
-
     private int currentIndex = 0;
-    private bool isTyping = false;
 
     void Start()
     {
@@ -38,13 +41,13 @@ public class DialogueManager : MonoBehaviour
         fileManager.LoadAllTextFiles();
         choicePanel.SetActive(false);
 
-        if (!string.IsNullOrEmpty(currentFile))
+        if (!string.IsNullOrEmpty(fileManager.currentFile))
         {
-            LoadDialogue(currentFile);
+            LoadDialogue(fileManager.currentFile);
         }
         else
         {
-            Debug.LogWarning("⚠️ currentFile이 설정되지 않았습니다!");
+            Debug.LogWarning("⚠️ 현재 FileManager가 읽고 있는 파일이 없습니다!");
         }
     }
 
@@ -54,9 +57,9 @@ public class DialogueManager : MonoBehaviour
         {
             if (choicePanel.activeSelf) return;
 
-            if (isTyping)
+            if (textAnimationScript.IsTyping)
             {
-                SkipTyping();
+                textAnimationScript.SkipTyping();
             }
             else
             {
@@ -67,7 +70,7 @@ public class DialogueManager : MonoBehaviour
 
     public void LoadDialogue(string fileName)
     {
-        currentFile = fileName;
+        fileManager.SetCurrentFile(fileName);
         currentIndex = 0;
         ShowNextLine();
     }
@@ -80,11 +83,11 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
-        string[] data = fileManager.GetRowByIndex(currentFile, currentIndex);
+        string[] data = fileManager.GetRowByIndex(fileManager.currentFile, currentIndex);
 
         if (data == null || data.Length == 0)
         {
-            Debug.LogWarning($"⚠️ '{currentFile}' 파일에서 {currentIndex}번째 줄을 찾을 수 없습니다.");
+            Debug.LogWarning($"⚠️ '{fileManager.currentFile}' 파일에서 {currentIndex}번째 줄을 찾을 수 없습니다.");
             return;
         }
 
@@ -93,50 +96,75 @@ public class DialogueManager : MonoBehaviour
         string se = data.Length > 2 ? data[2].Trim() : "";
         string image = data.Length > 3 ? data[3].Trim() : "";
         string choiceIndex = data.Length > 4 ? data[4].Trim() : "";
+        string voice = data.Length > 5 ? data[5].Trim() : "";
+        string bgm = data.Length > 6 ? data[6].Trim() : "";
+        string animationKeyword = data.Length > 7 ? data[7].Trim() : ""; // 🎯 애니메이션 키워드 감지
 
+        // 🎯 화자 이름 설정
         speakerText.text = string.IsNullOrEmpty(speaker) ? " " : speaker;
-        StartCoroutine(TypeText(string.IsNullOrEmpty(dialogue) ? "..." : dialogue));
 
+        // 🎯 Voice 오디오 파일 로드 및 텍스트 출력
+        AudioClip voiceClip = !string.IsNullOrEmpty(voice) ? Resources.Load<AudioClip>($"Audio/Voice/{voice}") : null;
+        textAnimationScript.SetText(dialogue, voiceClip);
+
+        // 🎯 SE 로드 및 재생
         if (!string.IsNullOrEmpty(se))
         {
-            AudioClip clip = Resources.Load<AudioClip>(se);
-            audioSource.PlayOneShot(clip != null ? clip : defaultSE);
+            AudioClip clip = Resources.Load<AudioClip>($"Audio/SE/{se}");
+            if (clip != null)
+            {
+                seAudioSource.clip = clip;
+                seAudioSource.Play();
+            }
         }
 
+        // 🎯 이미지 로드 및 설정
         if (!string.IsNullOrEmpty(image))
         {
-            Sprite sprite = Resources.Load<Sprite>(image);
-            if (sprite != null) characterImage.sprite = sprite;
+            Sprite sprite = Resources.Load<Sprite>($"Graphics/Image/{image}");
+            if (sprite != null)
+            {
+                characterImage.sprite = sprite;
+            }
+        }
+
+        // 🎯 BGM 로드 및 재생
+        if (!string.IsNullOrEmpty(bgm))
+        {
+            AudioClip bgmClip = Resources.Load<AudioClip>($"Audio/BGM/{bgm.Trim()}");
+            if (bgmClip != null)
+            {
+                if (bgmAudioSource.clip != bgmClip)
+                {
+                    bgmAudioSource.clip = bgmClip;
+                    bgmAudioSource.Play();
+                }
+            }
+        }
+
+        // 🎯 "끄덕" 키워드가 포함된 경우 애니메이션 실행
+        if (!string.IsNullOrEmpty(animationKeyword) && animationKeyword == "끄덕")
+        {
+            if (nodEffect != null)
+            {
+                nodEffect.StartNod();
+            }
+            else
+            {
+                Debug.LogWarning("⚠️ NodEffect가 인스펙터에서 연결되지 않았습니다.");
+            }
+        }
+
+        // 🎯 선택지 표시 처리
+        if (!string.IsNullOrEmpty(choiceIndex))
+        {
+            StartCoroutine(ShowChoicePanel(choiceIndex));
         }
 
         currentIndex++;
-
-        if (!string.IsNullOrEmpty(choiceIndex))
-        {
-            StartCoroutine(ShowChoicePanel());
-        }
     }
 
-    IEnumerator TypeText(string text)
-    {
-        isTyping = true;
-        dialogueText.text = "";
-        foreach (char c in text)
-        {
-            dialogueText.text += c;
-            yield return new WaitForSeconds(0.02f);
-        }
-        isTyping = false;
-    }
-
-    void SkipTyping()
-    {
-        StopAllCoroutines();
-        isTyping = false;
-        dialogueText.text = fileManager.GetRowByIndex(currentFile, currentIndex - 1)[1];
-    }
-
-    IEnumerator ShowChoicePanel()
+    IEnumerator ShowChoicePanel(string choiceIndex)
     {
         yield return new WaitForSeconds(0.5f);
         choicePanel.SetActive(true);
