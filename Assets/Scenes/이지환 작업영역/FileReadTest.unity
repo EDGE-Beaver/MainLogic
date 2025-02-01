@@ -253,7 +253,7 @@ MonoBehaviour:
   nodEffect: {fileID: 133293360}
   speakerText: {fileID: 1585393663}
   textAnimationScript: {fileID: 879470855}
-  characterImage: {fileID: 2064996768}
+  characterImage: {fileID: 133293357}
   seAudioSource: {fileID: 79834127}
   voiceAudioSource: {fileID: 879470857}
   bgmAudioSource: {fileID: 249905931}
@@ -722,6 +722,7 @@ GameObject:
   - component: {fileID: 179405576}
   - component: {fileID: 179405575}
   - component: {fileID: 179405574}
+  - component: {fileID: 179405577}
   m_Layer: 5
   m_Name: Item3
   m_TagString: Item
@@ -831,6 +832,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 179405572}
   m_CullTransparentMesh: 1
+--- !u!114 &179405577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 179405572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56ee526e99d56b40b44f3faf3cd3a96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetObject: {fileID: 0}
+  originalScale: {x: 1, y: 1, z: 1}
+  hoverScale: {x: 1.2, y: 1.2, z: 1.2}
+  scaleSpeed: 0.2
 --- !u!1 &249905927
 GameObject:
   m_ObjectHideFlags: 0
@@ -1836,6 +1853,7 @@ GameObject:
   - component: {fileID: 1408720344}
   - component: {fileID: 1408720343}
   - component: {fileID: 1408720342}
+  - component: {fileID: 1408720345}
   m_Layer: 5
   m_Name: Item4
   m_TagString: Item
@@ -1945,6 +1963,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1408720340}
   m_CullTransparentMesh: 1
+--- !u!114 &1408720345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1408720340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56ee526e99d56b40b44f3faf3cd3a96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetObject: {fileID: 0}
+  originalScale: {x: 1, y: 1, z: 1}
+  hoverScale: {x: 1.2, y: 1.2, z: 1.2}
+  scaleSpeed: 0.2
 --- !u!1 &1567172084
 GameObject:
   m_ObjectHideFlags: 0
@@ -2322,6 +2356,7 @@ GameObject:
   - component: {fileID: 1619064616}
   - component: {fileID: 1619064615}
   - component: {fileID: 1619064614}
+  - component: {fileID: 1619064617}
   m_Layer: 5
   m_Name: Item2
   m_TagString: Item
@@ -2431,6 +2466,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1619064612}
   m_CullTransparentMesh: 1
+--- !u!114 &1619064617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1619064612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56ee526e99d56b40b44f3faf3cd3a96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetObject: {fileID: 0}
+  originalScale: {x: 1, y: 1, z: 1}
+  hoverScale: {x: 1.2, y: 1.2, z: 1.2}
+  scaleSpeed: 0.2
 --- !u!1 &1668317719
 GameObject:
   m_ObjectHideFlags: 0
@@ -2668,6 +2719,7 @@ GameObject:
   - component: {fileID: 1929194604}
   - component: {fileID: 1929194603}
   - component: {fileID: 1929194602}
+  - component: {fileID: 1929194605}
   m_Layer: 5
   m_Name: Item1
   m_TagString: Item
@@ -2777,6 +2829,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1929194600}
   m_CullTransparentMesh: 1
+--- !u!114 &1929194605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1929194600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56ee526e99d56b40b44f3faf3cd3a96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetObject: {fileID: 0}
+  originalScale: {x: 1, y: 1, z: 1}
+  hoverScale: {x: 1.2, y: 1.2, z: 1.2}
+  scaleSpeed: 0.2
 --- !u!1 &1951541317
 GameObject:
   m_ObjectHideFlags: 0

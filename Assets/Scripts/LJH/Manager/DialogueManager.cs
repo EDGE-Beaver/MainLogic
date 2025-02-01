@@ -9,7 +9,7 @@ public class DialogueManager : MonoBehaviour
     public FileManager fileManager;
 
     [Header("끄덕 애니메이션 효과 (Inspector에서 지정)")]
-    public NodEffect nodEffect; // 🎯 NodEffect 인스펙터에서 지정 가능하도록 변경
+    public NodEffect nodEffect;
 
     [Header("UI 요소들")]
     public TMP_Text speakerText;
@@ -29,34 +29,37 @@ public class DialogueManager : MonoBehaviour
     public Button[] choiceButtons;
 
     private int currentIndex = 0;
+    private bool isChoicePanelActive = false; // 선택지 패널 활성화 여부
+    private bool isWaitingForText = false;   // 대사 출력이 끝날 때까지 키 입력 방지
 
     void Start()
     {
         if (fileManager == null)
         {
-            Debug.LogError("🚨 FileManager가 설정되지 않았습니다! 인스펙터에서 지정하세요.");
+            Debug.LogError("FileManager가 설정되지 않았습니다!");
             return;
         }
 
         fileManager.LoadAllTextFiles();
         choicePanel.SetActive(false);
+        isChoicePanelActive = false;
+
+        foreach (var button in choiceButtons)
+        {
+            int index = System.Array.IndexOf(choiceButtons, button);
+            button.onClick.AddListener(() => SelectChoice(index));
+        }
 
         if (!string.IsNullOrEmpty(fileManager.currentFile))
-        {
             LoadDialogue(fileManager.currentFile);
-        }
-        else
-        {
-            Debug.LogWarning("⚠️ 현재 FileManager가 읽고 있는 파일이 없습니다!");
-        }
     }
 
     void Update()
     {
+        if (isChoicePanelActive || isWaitingForText) return;
+
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
         {
-            if (choicePanel.activeSelf) return;
-
             if (textAnimationScript.IsTyping)
             {
                 textAnimationScript.SkipTyping();
@@ -77,102 +80,89 @@ public class DialogueManager : MonoBehaviour
 
     void ShowNextLine()
     {
-        if (fileManager == null)
-        {
-            Debug.LogError("🚨 FileManager가 설정되지 않았습니다! 인스펙터에서 설정하세요.");
-            return;
-        }
+        var data = fileManager.GetRowByIndex(fileManager.currentFile, currentIndex);
+        if (data == null || data.Length == 0) return;
 
-        string[] data = fileManager.GetRowByIndex(fileManager.currentFile, currentIndex);
+        string speaker = data[0].Trim();
+        string dialogue = data[1].Trim();
+        string se = data[2].Trim();
+        string image = data[3].Trim();
+        string choiceIndex = data[4].Trim();
+        string voice = data[5].Trim();
+        string bgm = data[6].Trim();
+        string animationKeyword = data.Length > 7 ? data[7].Trim() : "";
 
-        if (data == null || data.Length == 0)
-        {
-            Debug.LogWarning($"⚠️ '{fileManager.currentFile}' 파일에서 {currentIndex}번째 줄을 찾을 수 없습니다.");
-            return;
-        }
-
-        string speaker = data.Length > 0 ? data[0].Trim() : "";
-        string dialogue = data.Length > 1 ? data[1].Trim() : "";
-        string se = data.Length > 2 ? data[2].Trim() : "";
-        string image = data.Length > 3 ? data[3].Trim() : "";
-        string choiceIndex = data.Length > 4 ? data[4].Trim() : "";
-        string voice = data.Length > 5 ? data[5].Trim() : "";
-        string bgm = data.Length > 6 ? data[6].Trim() : "";
-        string animationKeyword = data.Length > 7 ? data[7].Trim() : ""; // 🎯 애니메이션 키워드 감지
-
-        // 🎯 화자 이름 설정
         speakerText.text = string.IsNullOrEmpty(speaker) ? " " : speaker;
 
-        // 🎯 Voice 오디오 파일 로드 및 텍스트 출력
-        AudioClip voiceClip = !string.IsNullOrEmpty(voice) ? Resources.Load<AudioClip>($"Audio/Voice/{voice}") : null;
-        textAnimationScript.SetText(dialogue, voiceClip);
+        var voiceClip = !string.IsNullOrEmpty(voice) ? Resources.Load<AudioClip>($"Audio/Voice/{voice}") : null;
 
-        // 🎯 SE 로드 및 재생
+        // 대사를 출력하고 대사가 끝난 뒤 처리
+        isWaitingForText = true; // 키 입력 방지
+        textAnimationScript.SetText(dialogue, voiceClip,
+            () =>
+            {
+               
+
+                // 선택지가 있는 경우 선택지 패널 활성화
+                if (!string.IsNullOrEmpty(choiceIndex))
+                {
+                    StartCoroutine(ShowChoicePanel());
+                
+
+                }
+                
+            },
+            () =>
+            {
+                if (nodEffect != null) nodEffect.StartNod();
+            });
+
+        // SE 재생
         if (!string.IsNullOrEmpty(se))
-        {
-            AudioClip clip = Resources.Load<AudioClip>($"Audio/SE/{se}");
-            if (clip != null)
-            {
-                seAudioSource.clip = clip;
-                seAudioSource.Play();
-            }
-        }
+            seAudioSource.PlayOneShot(Resources.Load<AudioClip>($"Audio/SE/{se}"));
 
-        // 🎯 이미지 로드 및 설정
+        // 이미지 설정
         if (!string.IsNullOrEmpty(image))
-        {
-            Sprite sprite = Resources.Load<Sprite>($"Graphics/Image/{image}");
-            if (sprite != null)
-            {
-                characterImage.sprite = sprite;
-            }
-        }
+            characterImage.sprite = Resources.Load<Sprite>($"Graphics/Image/{image}");
 
-        // 🎯 BGM 로드 및 재생
+        // BGM 재생
         if (!string.IsNullOrEmpty(bgm))
         {
-            AudioClip bgmClip = Resources.Load<AudioClip>($"Audio/BGM/{bgm.Trim()}");
-            if (bgmClip != null)
+            var bgmClip = Resources.Load<AudioClip>($"Audio/BGM/{bgm}");
+            if (bgmClip != bgmAudioSource.clip)
             {
-                if (bgmAudioSource.clip != bgmClip)
-                {
-                    bgmAudioSource.clip = bgmClip;
-                    bgmAudioSource.Play();
-                }
+                bgmAudioSource.clip = bgmClip;
+                bgmAudioSource.Play();
             }
         }
 
-        // 🎯 "끄덕" 키워드가 포함된 경우 애니메이션 실행
+        // 애니메이션 처리
         if (!string.IsNullOrEmpty(animationKeyword) && animationKeyword == "끄덕")
         {
             if (nodEffect != null)
-            {
                 nodEffect.StartNod();
-            }
-            else
-            {
-                Debug.LogWarning("⚠️ NodEffect가 인스펙터에서 연결되지 않았습니다.");
-            }
         }
 
-        // 🎯 선택지 표시 처리
-        if (!string.IsNullOrEmpty(choiceIndex))
+        // 선택지가 없을 경우 바로 다음 대사로 이동
+        if (string.IsNullOrEmpty(choiceIndex))
         {
-            StartCoroutine(ShowChoicePanel(choiceIndex));
+            isWaitingForText = false;
+            currentIndex++;
         }
-
-        currentIndex++;
     }
 
-    IEnumerator ShowChoicePanel(string choiceIndex)
+    IEnumerator ShowChoicePanel()
     {
         yield return new WaitForSeconds(0.5f);
         choicePanel.SetActive(true);
+        isChoicePanelActive = true;
     }
 
     public void SelectChoice(int choiceIndex)
     {
         choicePanel.SetActive(false);
+        isChoicePanelActive = false;
+        currentIndex++;
         ShowNextLine();
     }
 }
