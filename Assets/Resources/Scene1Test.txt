@@ -1,2 +1,15 @@
-NPC1|안녕하세요! 여기는 테스트 씬입니다.|se_greeting|npc1_image|Scene1|0
-NPC2|무엇을 도와드릴까요?|se_help|npc2_image|Scene2|1
+유 이연|*0 ...*1환자분,$1 이쪽으로.|Knock|image_nurse_concept_2||voice||
+유 이연|지금 기분이 어떠세요?\1.5$0.5 어디 아픈 곳은\0.5 없나요?||image_nurse_concept_1||voice|간호사_기본|
+유 이연|괜찮아요.$1 천천히 숨 쉬세요.\2.5$0.5 깊게*0 ...$0.5 *1천천히*0 ...||image_nurse_concept_1||downvoice||
+유 이연|*1후후,$0.2 역시*0...$1 *1환자분도 저와 같은 생각이겠죠?||image_nurse_concept_2||voice||
+유 이연|*1여긴 안전한 곳이에요.\2.5$0.5 아무 \1.2걱정할 필요 없어요.||image_nurse_concept_2||voice||
+유 이연|*1이곳은 아주...$0.2 조용하죠.$0.5 평온하고,$0.3 변함없고...||image_nurse_concept_2||voice||
+유 이연|*1사람들은 변화를 원하지만,$0.5 사실 변화가 꼭 좋은 건 아니에요.||image_nurse_concept_2||voice||
+유 이연|*1하루하루 같은 일상이 반복되는 게$0.1 가장 이상적인 거라고 저는 생각해요.||image_nurse_concept_2||voice||
+유 이연|*1그런데\1.2*0 ... *1환자분은\0.5 어떤가요?\2.5$0.5 혹시*0 ...$1 *1#-0.03 이상한\0.5 걸 #0.03보셨나요?||image_nurse_concept_1||voice||
+유 이연|*1아.$1 환각증세가 있을수도 있으니깐요.\2.5$1 저는 항상 기록을 남기거든요.||image_nurse_concept_1||voice||
+유 이연|*1클립보드에 적어둘게요.*0\2.5$2 "이변 없음".*1\0.99 오늘도 평범한 하루네요.||image_nurse_concept_2||voice||
+유 이연|*1이런 일들은 그냥 잊어버리는 게 좋겠죠?\2.5$0.5 그럼요^,\0.99 당연하죠. 그게 맞아요.|Knock|image_nurse_concept_1||voice||끄덕|
+유 이연|*1하지만...$1 혹시라도 이상한 일이 일어난다면,$1 저에게 바로 알려주세요.%|Knock|image_nurse_concept_1|1|downvoice||
+유 이연|*1어떤 일이든,$0.5 우리가 모른 척하면...$1 세상은 변하지 않는답니다.|Knock|image_nurse_concept_1||downvoice||
+유 이연|*1그럼,$0.5 오늘도 평범한 하루를 보내도록 해요.|Knock|image_nurse_concept_1||voice||끄덕|어둠
