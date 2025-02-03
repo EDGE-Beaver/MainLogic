@@ -1,23 +1,26 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class HoverChangeColor : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     private SpriteRenderer spriteRenderer; // 2D SpriteRenderer
-    private Color originalColor;          // ¿ø·¡ »ö»ó
-    public Color hoverColor = Color.green; // È£¹ö ½Ã »ö»ó (ÃÊ·Ï»öÀÌ ÀÏ´Ü Æ÷ÀÎÆ® ÄÃ·¯¶ó°í °¡Á¤ÇÏ°í ÇßÀ½)
+
+    [Header("ì¸ìŠ¤í™í„°ì—ì„œ ìƒ‰ìƒ ì§€ì •")]
+    public Color originalColor = Color.white; // ì›ë˜ ìƒ‰ìƒ (ê¸°ë³¸ê°’: í°ìƒ‰)
+    public Color hoverColor = Color.green; // í˜¸ë²„ ì‹œ ìƒ‰ìƒ (ê¸°ë³¸ê°’: ì´ˆë¡ìƒ‰)
 
     void Start()
     {
-        // SpriteRenderer ÄÄÆ÷³ÍÆ® °¡Á®¿À±â
+        // SpriteRenderer ì»´í¬ë„ŒíŠ¸ ê°€ì ¸ì˜¤ê¸°
         spriteRenderer = GetComponent<SpriteRenderer>();
+
         if (spriteRenderer != null)
         {
-            originalColor = spriteRenderer.color; // ¿ø·¡ »ö»ó ÀúÀå
+            spriteRenderer.color = originalColor; // ğŸ¯ ì¸ìŠ¤í™í„°ì—ì„œ ì§€ì •í•œ ê¸°ë³¸ ìƒ‰ìƒ ì ìš©
         }
         else
         {
-            Debug.LogError("ÀÌ°Å ¾ÈµÇ¸é ÀÎ½ºÆåÅÍ Ã¢ ÁöÁ¤ °¡´ÉÀ¸·Î ¼öÁ¤ÇÏ¼Å");
+            Debug.LogError("ğŸš¨ SpriteRendererê°€ ì—†ìŠµë‹ˆë‹¤! ì¸ìŠ¤í™í„°ì—ì„œ ìƒ‰ìƒì„ ìˆ˜ë™ìœ¼ë¡œ ì§€ì •í•˜ì„¸ìš”.");
         }
     }
 
@@ -25,7 +28,7 @@ public class HoverChangeColor : MonoBehaviour, IPointerEnterHandler, IPointerExi
     {
         if (spriteRenderer != null)
         {
-            spriteRenderer.color = hoverColor; // È£¹ö ½Ã ÃÊ·Ï»öÀ¸·Î º¯°æ
+            spriteRenderer.color = hoverColor; // ğŸ¯ í˜¸ë²„ ì‹œ ì¸ìŠ¤í™í„°ì—ì„œ ì§€ì •í•œ ìƒ‰ìƒ ì ìš©
         }
     }
 
@@ -33,7 +36,7 @@ public class HoverChangeColor : MonoBehaviour, IPointerEnterHandler, IPointerExi
     {
         if (spriteRenderer != null)
         {
-            spriteRenderer.color = originalColor; // È£¹ö ÇØÁ¦ ½Ã ¿ø·¡ »ö»óÀ¸·Î º¹±¸
+            spriteRenderer.color = originalColor; // ğŸ¯ í˜¸ë²„ í•´ì œ ì‹œ ì›ë˜ ìƒ‰ìƒ ë³µêµ¬
         }
     }
 }
