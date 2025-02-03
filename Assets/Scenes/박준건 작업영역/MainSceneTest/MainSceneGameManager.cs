@@ -37,7 +37,7 @@ public class MainSceneGameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(isEnterScene1){
+        if(DoEnterScene1){
             //씬 1을 방문했는지 테스트하기 위함
             TextManager textManager = TextManager.GetComponent<TextManager>();
             textManager.ScenarioText.text = "씬 1을 방문했음";

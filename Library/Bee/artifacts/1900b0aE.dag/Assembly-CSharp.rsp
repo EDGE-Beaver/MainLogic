@@ -341,7 +341,6 @@
 -analyzer:"C:/Program Files/Unity 2022.3.22f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll"
 -analyzer:"C:/Program Files/Unity 2022.3.22f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll"
 "Assets/Scenes/박준건 작업영역/MainSceneTest/BtnScripts.cs"
-"Assets/Scenes/박준건 작업영역/MainSceneTest/EnterScene1Scripts.cs"
 "Assets/Scenes/박준건 작업영역/MainSceneTest/FileManagerMain.cs"
 "Assets/Scenes/박준건 작업영역/MainSceneTest/MainSceneGameManager.cs"
 "Assets/Scenes/박준건 작업영역/MainSceneTest/TextManager.cs"
