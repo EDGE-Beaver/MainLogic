@@ -1,9 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
-using TMPro;
-using UnityEngine.UI;
-
-
+﻿
 // ===========================================
 // 📌 [대사 데이터 파일 구조 설명]
 // ===========================================
@@ -70,7 +65,10 @@ using UnityEngine.UI;
 // ===========================================
 // 📌 이 주석은 대사 데이터 파일을 쉽게 이해하고 관리할 수 있도록 작성되었습니다.
 // ===========================================
-
+using System.Collections;
+using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
 {
