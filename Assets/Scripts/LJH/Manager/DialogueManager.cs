@@ -95,6 +95,9 @@ public class DialogueManager : MonoBehaviour
     public GameObject choicePanel;
     public Button[] choiceButtons;
 
+    [Header("선택지 매니저 (Inspector에서 지정)")]
+    public ChoiceManager choiceManager; // ✅ 선택지 매니저 연결
+
     private int currentIndex = 0;
     private bool isChoicePanelActive = false; // 선택지 패널 활성화 여부
     private bool isWaitingForText = false;   // 대사 출력이 끝날 때까지 키 입력 방지
@@ -123,20 +126,23 @@ public class DialogueManager : MonoBehaviour
 
     void Update()
     {
-        if (isChoicePanelActive || isWaitingForText) return;
+        if (isChoicePanelActive) return; // 선택지 패널이 활성화된 경우 키 입력 차단
 
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
         {
-            if (textAnimationScript.IsTyping)
+            if (textAnimationScript.IsTyping) // 텍스트 애니메이션 중이면 스킵
             {
                 textAnimationScript.SkipTyping();
             }
-            else
+            else if (!isWaitingForText) // 대사 출력이 끝났다면 다음 대사로 이동
             {
+                currentIndex++;
                 ShowNextLine();
             }
         }
     }
+
+
 
     public void LoadDialogue(string fileName)
     {
@@ -145,91 +151,256 @@ public class DialogueManager : MonoBehaviour
         ShowNextLine();
     }
 
-    void ShowNextLine()
+    public void ShowNextLineAfterChoice()
     {
+        currentIndex++; // 🔹 선택지 이후 다음 인덱스로 이동
+        ShowNextLine();
+    }
+
+    public void ShowNextLine()
+    {
+        if (isChoicePanelActive) return; // 선택지 패널이 활성화되었을 때 키 입력 차단
+
+        // 🔹 현재 데이터 가져오기
         var data = fileManager.GetRowByIndex(fileManager.currentFile, currentIndex);
-        if (data == null || data.Length == 0) return;
 
-        string speaker = data[0].Trim();
-        string dialogue = data[1].Trim();
-        string se = data[2].Trim();
-        string image = data[3].Trim();
-        string choiceIndex = data[4].Trim();
-        string voice = data[5].Trim();
-        string bgm = data[6].Trim();
-        string animationKeyword = data.Length > 7 ? data[7].Trim() : "";
+        if (data == null || data.Length == 0)
+        {
+            Debug.Log($"⚠️ 대사 파일의 마지막 줄에 도달했습니다. (currentIndex: {currentIndex})");
+            return;
+        }
 
+        Debug.Log($"✅ ShowNextLine 호출 (currentIndex: {currentIndex})");
+
+        // 🔹 데이터 필드 분리
+        string speaker = data[0]?.Trim();
+        string dialogue = data[1]?.Trim();
+        string se = data[2]?.Trim();
+        string image = data[3]?.Trim();
+        string choiceField = data[4]?.Trim();  // 선택지 파일명:ID (공백이면 선택지 없음)
+        string voice = data[5]?.Trim();
+        string bgm = data[6]?.Trim();
+        string animationKeyword = data.Length > 7 ? data[7]?.Trim() : "";
+
+        Debug.Log($"✅ 대사 정보 - 화자: {speaker}, 대사: {dialogue}, 선택지 데이터: {choiceField}");
+
+        // 🔹 UI 텍스트 설정
         speakerText.text = string.IsNullOrEmpty(speaker) ? " " : speaker;
+        // 🔹 `^` 기호 제거
+        if (dialogue.Contains("^"))
+        {
+            dialogue = dialogue.Replace("^", ""); // `^` 태그 제거
+            Debug.Log("✅ 끄덕 태그(^): 제거됨");
+        }
+        // 🔹 `%` 태그 제거 및 선택지 여부 확인
+        bool hasChoice= dialogue.Contains("%");
+        if (hasChoice)
+        {
+            dialogue = dialogue.Replace("%", ""); // `%` 태그 제거
+            Debug.Log("✅ 선택지 태그(%): 선택지 있음");
+        }
 
-        var voiceClip = !string.IsNullOrEmpty(voice) ? Resources.Load<AudioClip>($"Audio/Voice/{voice}") : null;
+        // 🔹 음성 클립 로드
+        var voiceClip = !string.IsNullOrEmpty(voice)
+            ? Resources.Load<AudioClip>($"Audio/Voice/{voice}")
+            : null;
 
-        // 대사를 출력하고 대사가 끝난 뒤 처리
-        isWaitingForText = true; // 키 입력 방지
+        // 🔹 선택지 관련 변수 초기화
+        string choiceFile = null;
+        int choiceID = -1;
+      
+        if (!string.IsNullOrEmpty(choiceField))
+        {
+            if (choiceField.Contains(":"))
+            {
+                string[] choiceParts = choiceField.Split(':'); // "파일명:ID" 형식
+                if (choiceParts.Length == 2)
+                {
+                    choiceFile = choiceParts[0].Trim();
+                    if (int.TryParse(choiceParts[1].Trim(), out choiceID))
+                    {
+                        hasChoice= true; // 선택지가 있음
+                        Debug.Log($"✅ 선택지 파싱 성공: choiceFile = {choiceFile}, choiceID = {choiceID}");
+                    }
+                    else
+                    {
+                        Debug.LogError($"⚠️ 선택지 ID 변환 실패: {choiceParts[1]}");
+                    }
+                }
+                else
+                {
+                    Debug.LogError($"⚠️ 선택지 필드 형식이 잘못되었습니다: {choiceField}");
+                }
+            }
+            else
+            {
+                Debug.LogError($"⚠️ 선택지 필드에 ':'가 없습니다: {choiceField}");
+            }
+        }
+
+
+        // 🔹 선택지가 없는 경우 → 언제든 키 입력 가능하도록 설정
+        if (!hasChoice)
+        {
+            isWaitingForText = false;
+            Debug.Log("✅ 선택지가 없음. 키 입력 시 다음 대사로 이동 가능.");
+        }
+        else
+        {
+            isWaitingForText = true;
+            Debug.Log("✅ 선택지가 있음. 대사가 출력될 때까지 키 입력 차단.");
+            if (hasChoice)
+            {
+                // 🔹 선택지가 있는 경우 선택지 패널 호출
+                Debug.Log($"✅ 선택지 패널 호출 준비: choiceFile = {choiceFile}, choiceID = {choiceID}");
+                isChoicePanelActive = true; // 🔹 선택지 활성화 상태 설정 (다음 대사로 넘어가지 않음)
+            }
+            else
+            {
+                // 🔹 선택지가 없는 경우 → 키 입력 가능하도록 설정
+                isWaitingForText = false;
+                Debug.Log("✅ 선택지가 없음. 키 입력 대기 중.");
+            }
+        }
+
+        // 🔹 텍스트 애니메이션 실행 (도중 `%` 태그를 만나면 선택지 패널 호출)
         textAnimationScript.SetText(dialogue, voiceClip,
             () =>
             {
-               
+                Debug.Log($"✅ 대사 출력 완료 (currentIndex: {currentIndex})");
 
-                // 선택지가 있는 경우 선택지 패널 활성화
-                if (!string.IsNullOrEmpty(choiceIndex))
+                if (hasChoice)
                 {
-                    StartCoroutine(ShowChoicePanel());
-                
-
+                    Debug.Log($"✅ 선택지 패널 호출 준비: choiceFile = {choiceFile}, choiceID = {choiceID}");
+                    StartCoroutine(ShowChoicePanel(choiceFile, choiceID));
+                    isChoicePanelActive = true;
                 }
-                
+                else
+                {
+                    isWaitingForText = false;
+                    Debug.Log("✅ 선택지가 없음. 키 입력 대기 중.");
+                }
             },
             () =>
             {
-                if (nodEffect != null) nodEffect.StartNod();
+                // 🎯 **텍스트 애니메이션 도중 `%` 태그를 만나면 즉시 선택지를 띄움**
+                if (hasChoice)
+                {
+                    Debug.Log("🎯 % 태그 감지됨 → 선택지 패널 즉시 띄우기");
+                    StartCoroutine(ShowChoicePanel(choiceFile, choiceID));
+                    isChoicePanelActive = true;
+                }
             });
 
-        // SE 재생
+
+        // 🔹 효과음(SE) 재생
         if (!string.IsNullOrEmpty(se))
-            seAudioSource.PlayOneShot(Resources.Load<AudioClip>($"Audio/SE/{se}"));
+        {
+            var seClip = Resources.Load<AudioClip>($"Audio/SE/{se}");
+            if (seClip != null)
+            {
+                seAudioSource.PlayOneShot(seClip);
+            }
+            else
+            {
+                Debug.LogWarning($"⚠️ SE 파일을 찾을 수 없습니다: {se}");
+            }
+        }
 
-        // 이미지 설정
+        // 🔹 캐릭터 이미지 설정
         if (!string.IsNullOrEmpty(image))
-            characterImage.sprite = Resources.Load<Sprite>($"Graphics/Image/{image}");
+        {
+            var sprite = Resources.Load<Sprite>($"Graphics/Image/{image}");
+            if (sprite != null)
+            {
+                characterImage.sprite = sprite;
+            }
+            else
+            {
+                Debug.LogWarning($"⚠️ 이미지 파일을 찾을 수 없습니다: {image}");
+            }
+        }
 
-        // BGM 재생
+        // 🔹 배경음악(BGM) 재생
         if (!string.IsNullOrEmpty(bgm))
         {
             var bgmClip = Resources.Load<AudioClip>($"Audio/BGM/{bgm}");
-            if (bgmClip != bgmAudioSource.clip)
+            if (bgmClip != null && bgmClip != bgmAudioSource.clip)
             {
                 bgmAudioSource.clip = bgmClip;
                 bgmAudioSource.Play();
             }
         }
 
-        // 애니메이션 처리
+        // 🔹 애니메이션 처리
         if (!string.IsNullOrEmpty(animationKeyword) && animationKeyword == "끄덕")
         {
             if (nodEffect != null)
+            {
+                Debug.Log("✅ 끄덕 애니메이션 실행");
                 nodEffect.StartNod();
-        }
-
-        // 선택지가 없을 경우 바로 다음 대사로 이동
-        if (string.IsNullOrEmpty(choiceIndex))
-        {
-            isWaitingForText = false;
-            currentIndex++;
+            }
         }
     }
 
-    IEnumerator ShowChoicePanel()
+
+
+
+    IEnumerator ShowChoicePanel(string choiceFile, int choiceID)
     {
+        Debug.Log($"📂 ShowChoicePanel 호출됨: choiceFile = {choiceFile}, choiceID = {choiceID}");
+
+        if (choiceManager == null)
+        {
+            Debug.LogError("⚠️ choiceManager가 null입니다!");
+            yield break;
+        }
+
         yield return new WaitForSeconds(0.5f);
+
         choicePanel.SetActive(true);
+        choiceManager.LoadChoices(choiceFile, choiceID);
         isChoicePanelActive = true;
+        Debug.Log("✅ 선택지 패널 활성화 완료");
+    }
+
+
+    public void OnChoiceSelected(string nextFile, int nextIndex)
+    {
+        Debug.Log($"📂 OnChoiceSelected 호출됨: nextFile = {nextFile}, nextIndex = {nextIndex}");
+
+        if (!string.IsNullOrEmpty(nextFile))
+        {
+            fileManager.SetCurrentFile(nextFile);
+            currentIndex = nextIndex-1; // 다음 인덱스로 이동
+       
+        }
+        else
+        {
+            Debug.Log("✅ 다음 파일이 없음. 현재 파일 유지하고 다음 대사 출력.");
+            currentIndex = nextIndex-1; // 기존 파일에서 다음 인덱스로 이동
+       
+        }
+
+        isChoicePanelActive = false;
+        isWaitingForText = false;
+
+        ShowNextLine();
     }
 
     public void SelectChoice(int choiceIndex)
     {
         choicePanel.SetActive(false);
         isChoicePanelActive = false;
-        currentIndex++;
-        ShowNextLine();
     }
+    public int GetCurrentIndex()
+    {
+        return currentIndex;
+    }
+
+    public void SetCurrentIndex(int newIndex)
+    {
+        currentIndex = newIndex;
+    }
+
 }

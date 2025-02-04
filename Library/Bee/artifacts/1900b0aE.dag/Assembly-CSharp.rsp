@@ -346,6 +346,7 @@
 "Assets/Scripts/LJH/Manager/EnemyManager.cs"
 "Assets/Scripts/LJH/Manager/FileManager.cs"
 "Assets/Scripts/LJH/Manager/FileManagerLJH.cs"
+"Assets/Scripts/LJH/Manager/VariableManager.cs"
 "Assets/Scripts/LJH/Settings/Title/TitleScreen.cs"
 "Assets/Scripts/LJH/Settings/Title/UI/Breath.cs"
 "Assets/Scripts/LJH/Settings/Title/UI/HoverChangeColor.cs"
