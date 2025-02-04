@@ -12,6 +12,7 @@ public class ChoiceManager : MonoBehaviour
     public GameObject choicePanel;
     public Button[] choiceButtons;
     public TMP_Text[] choiceTexts;
+    public Transform choiceContainer; // 📌 버튼을 감싸는 부모 (VerticalLayoutGroup 적용)
     private string[] nextFiles = new string[4];
     private int[] nextIndexes = new int[4];
 

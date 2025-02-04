@@ -253,7 +253,6 @@ public class DialogueManager : MonoBehaviour
             {
                 // 🔹 선택지가 있는 경우 선택지 패널 호출
                 Debug.Log($"✅ 선택지 패널 호출 준비: choiceFile = {choiceFile}, choiceID = {choiceID}");
-                StartCoroutine(ShowChoicePanel(choiceFile, choiceID));
                 isChoicePanelActive = true; // 🔹 선택지 활성화 상태 설정 (다음 대사로 넘어가지 않음)
             }
             else
@@ -264,7 +263,7 @@ public class DialogueManager : MonoBehaviour
             }
         }
 
-        // 🔹 대사 출력 및 완료 후 처리
+        // 🔹 텍스트 애니메이션 실행 (도중 `%` 태그를 만나면 선택지 패널 호출)
         textAnimationScript.SetText(dialogue, voiceClip,
             () =>
             {
@@ -272,26 +271,27 @@ public class DialogueManager : MonoBehaviour
 
                 if (hasChoice)
                 {
-                    // 🔹 선택지가 있는 경우 선택지 패널 호출
                     Debug.Log($"✅ 선택지 패널 호출 준비: choiceFile = {choiceFile}, choiceID = {choiceID}");
                     StartCoroutine(ShowChoicePanel(choiceFile, choiceID));
-                    isChoicePanelActive = true; // 🔹 선택지 활성화 상태 설정 (다음 대사로 넘어가지 않음)
+                    isChoicePanelActive = true;
                 }
                 else
                 {
-                    // 🔹 선택지가 없는 경우 → 키 입력 가능하도록 설정
                     isWaitingForText = false;
                     Debug.Log("✅ 선택지가 없음. 키 입력 대기 중.");
                 }
             },
             () =>
             {
-                if (nodEffect != null)
+                // 🎯 **텍스트 애니메이션 도중 `%` 태그를 만나면 즉시 선택지를 띄움**
+                if (hasChoice)
                 {
-                    Debug.Log("✅ 끄덕 애니메이션 실행");
-                    nodEffect.StartNod();
+                    Debug.Log("🎯 % 태그 감지됨 → 선택지 패널 즉시 띄우기");
+                    StartCoroutine(ShowChoicePanel(choiceFile, choiceID));
+                    isChoicePanelActive = true;
                 }
             });
+
 
         // 🔹 효과음(SE) 재생
         if (!string.IsNullOrEmpty(se))
