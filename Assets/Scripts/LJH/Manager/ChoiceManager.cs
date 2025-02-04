@@ -136,9 +136,25 @@ public class ChoiceManager : MonoBehaviour
                 Debug.Log($"✅ 버튼 {i} 숨김");
             }
         }
+
+        // 🎯 **선택지 개수에 따라 Panel의 y 좌표 조정**
+        RectTransform panelRect = choicePanel.GetComponent<RectTransform>();
+        if (panelRect != null)
+        {
+            float newY = -35f; // 기본값
+            switch (choices.Length)
+            {
+                case 1: newY = -35f; break;
+                case 2: newY = 57f; break;
+                case 3: newY = 158f; break;
+                case 4: newY = 239f; break;
+            }
+            panelRect.anchoredPosition = new Vector2(panelRect.anchoredPosition.x, newY);
+            Debug.Log($"🎯 선택지 개수: {choices.Length}, Panel Y 좌표 변경: {newY}");
+        }
+
         Debug.Log("✅ 선택지 패널 설정 완료");
     }
-
     public void SelectChoice(int index, string nextFile, int nextIndex)
     {
         // 🔥 선택 후 대사 이동 처리
