@@ -1,7 +1,16 @@
 ﻿/*
  * 📌 ChoiceManager
  * 
- * 📂 기능 개요:
+ * 📜 선택지 파일 구조
+ * 인덱스 | 선택지 내용 | 선택지에 따른 변수 변경 | 다음으로 읽을 파일(분기 결과) | 다음으로 읽을 파일의 인덱스
+ * 
+ * 반드시 다음으로 읽을 파일과 인덱스를 지정해두어야함
+ * 변수는 생략가능
+ * 선택지의 개수는 1~4개로 범용적 사용 가능
+ * 
+ * 
+ * 
+ * 📂 아래는 스크립트 설명
  * - 선택지 UI를 관리하는 클래스입니다.
  * - 선택지를 동적으로 로드하여 버튼을 생성하고, 선택된 항목에 따라 다음 대사 또는 이벤트를 실행합니다.
  * - 선택지 파일(.txt)에서 데이터를 불러와 버튼을 설정하고, 변수 변경 및 다음 대사 진행을 처리합니다.
@@ -46,7 +55,7 @@ public class ChoiceManager : MonoBehaviour
     public GameObject choicePanel;
     public Button[] choiceButtons;
     public TMP_Text[] choiceTexts;
-    public Transform choiceContainer; // 📌 버튼을 감싸는 부모 (VerticalLayoutGroup 적용)
+    public Transform choiceContainer; 
     private string[] nextFiles = new string[4];
     private int[] nextIndexes = new int[4];
 
@@ -114,22 +123,22 @@ public class ChoiceManager : MonoBehaviour
 
         Debug.Log($"✅ 선택지 줄 찾음: {selectedLine}");
 
-        string[] sections = selectedLine.Split('|');
+        string[] sections = selectedLine.Split('|');//선택지 영역 구분자로 활용
         if (sections.Length < 5)
         {
             Debug.LogError($"⚠️ 선택지 파일 {choiceFileName}의 선택지 {choiceID}가 올바르지 않습니다! (필드 개수 부족)");
             return;
         }
 
-        string[] choices = sections[1].Split(',').Select(s => s.Trim()).ToArray();
+        string[] choices = sections[1].Split(',').Select(s => s.Trim()).ToArray();//선택지 항목 구분자로 활용
         variableChanges = sections[2].Split(',').Select(s => s.Trim()).ToArray();
 
-        // **🔹 nextFiles 배열이 비어있는 경우 기본값으로 설정**
+        // ** nextFiles 배열이 비어있는 경우 기본값으로 설정**
         nextFiles = sections.Length > 3 && !string.IsNullOrEmpty(sections[3])
             ? sections[3].Split(',').Select(s => s.Trim()).ToArray()
             : new string[choices.Length];
 
-        // **🔹 nextIndexes 배열이 비어있는 경우 기본값으로 설정**
+        // ** nextIndexes 배열이 비어있는 경우 기본값으로 설정**
         nextIndexes = sections.Length > 4 && !string.IsNullOrEmpty(sections[4])
             ? sections[4].Split(',').Select(s => int.TryParse(s.Trim(), out var result) ? result : -1).ToArray()
             : Enumerable.Repeat(-1, choices.Length).ToArray();
@@ -171,11 +180,11 @@ public class ChoiceManager : MonoBehaviour
             }
         }
 
-        // 🎯 **선택지 개수에 따라 Panel의 y 좌표 조정**
+        // 선택지 개수에 따라 Panel의 y 좌표 조정 
         RectTransform panelRect = choicePanel.GetComponent<RectTransform>();
         if (panelRect != null)
         {
-            float newY = -35f; // 기본값
+            float newY = -35f; // 기본값 (선택지 1개임)
             switch (choices.Length)
             {
                 case 1: newY = -35f; break;
@@ -191,7 +200,7 @@ public class ChoiceManager : MonoBehaviour
     }
     public void SelectChoice(int index, string nextFile, int nextIndex)
     {
-        // 🔥 선택 후 대사 이동 처리
+        //  선택 후 대사 이동 처리
         if (!string.IsNullOrEmpty(nextFile) && nextIndex >= 0)
         {
             dialogueManager.OnChoiceSelected(nextFile,nextIndex);
@@ -203,7 +212,7 @@ public class ChoiceManager : MonoBehaviour
         else
         {
             Debug.Log("✅ 다음 파일이 없음. 현재 파일 유지하고 다음 대사 출력.");
-            dialogueManager.ShowNextLineAfterChoice(); // 다음 대사 출력
+            dialogueManager.ShowNextLineAfterChoice(); // 다음 대사 출력함
         }
 
         Debug.Log($"✅ SelectChoice 호출됨: index = {index}, nextFile = {nextFile}, nextIndex = {nextIndex}");
@@ -229,8 +238,7 @@ public class ChoiceManager : MonoBehaviour
     }
     private IEnumerator WaitAndShowNextLine()
     {
-        Debug.Log($"므야");
-        yield return new WaitForEndOfFrame(); // 한 프레임 대기 (로드 완료 대기)
+        yield return new WaitForEndOfFrame(); // 프레임 대기인데 솔직히 없어도 문제는 없을 듯
         dialogueManager.ShowNextLine(); // 다음 대사 출력
     }
 
