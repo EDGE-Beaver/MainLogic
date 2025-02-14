@@ -127,10 +127,10 @@ public class FileManager : MonoBehaviour
                 }
             }
             
-            // string fileName = Path.GetFileNameWithoutExtension(filePath); 
-            //filename = filepath일 확률이 굉장히 높으므로 지움
+            string fileName = Path.GetFileNameWithoutExtension(filePath); 
+            //filename = filepath일 확률이 굉장히 높으므로 지웠는데..
 
-            loadedData[filePath] = dataList;
+            loadedData[fileName] = dataList;
 
             
             // if (string.IsNullOrEmpty(currentFile))
@@ -139,7 +139,7 @@ public class FileManager : MonoBehaviour
             // }
             //currentFile은 SetCurrentfile에서 대체 가능하다고 생각했기 때문에 지움. 
 
-            Debug.Log($"📂 텍스트 파일 로드 완료: {filePath}");
+            Debug.Log($"📂 텍스트 파일 로드 완료: {fileName}");
         }
     }
      public void LoadAllChoiceFiles()
