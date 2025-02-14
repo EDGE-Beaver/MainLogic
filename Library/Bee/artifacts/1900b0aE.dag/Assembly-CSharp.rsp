@@ -353,6 +353,8 @@
 "Assets/Scripts/LJH/Settings/Title/UI/HoverScale.cs"
 "Assets/Scripts/LJH/Settings/Title/UI/HoverTextEffect.cs"
 "Assets/Scripts/LJH/Settings/Title/UI/NodEffect.cs"
+"Assets/Scripts/NewBehaviourScript.cs"
+"Assets/Scripts/Old/OldFileManager.cs"
 "Assets/Scripts/PJG/BtnScripts.cs"
 "Assets/Scripts/PJG/FileManagerMain.cs"
 "Assets/Scripts/PJG/MainSceneGameManager.cs"

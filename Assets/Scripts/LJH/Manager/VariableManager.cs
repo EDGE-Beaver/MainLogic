@@ -8,23 +8,41 @@ using System;
  *
  * @review : 박준건(2/10)
  
- [리뷰]
-
- 1. 변수는 지정한 범위 내에서만 사용할 예정이라, SetVariable같은 기능은 필요 없을듯
-    1.1 우리가 사용해야 할 변수를 사전에 정해두고 운용 가능하기 때문에, 실시간으로 변수를 넣을 수 있는 구조보단
-        이미 존재하는 변수들을 하드 코딩헤놓는 방향성이 최적화에 좋을 것으로 사료됨. 
-
- 2. 비슷한 변수를 그룹화하는 방향으로 변수를 운용하는게 좋지 않을까? 
-    2.1 예를 들어, 배드엔딩으로 갈지에 대한 여부를 판정하는 변수는 BenEndingVariable 딕셔너리에 관리한다던지 관한 여부. 
-
- 3. 만일 변수가 존재하지 않을 경우 0을 리턴하는 구조는 오류가 생길 가능성이 있어 보임. 
-    3.1 스크립트 내부에서 ContainsValue를 돌려주는 것을 필요로 해야 할듯. 
- 4. 
+ [수정사항(2/14)]
+ 
+ 1. 함수 설명 추가
+ 2. int 부분을 nullable으로 변경. 이제 더는 null을 리턴하지 않습니다. 
 
  * 📂 [스크립트 설명]
  * -게임 내 변수(상태값)을 저장하고 관리하는 클래스입니다
  * - 전역적으로 변수 값을 저장하고, 변경 및 조회할 수 있도록 지원합니다.
  * - 싱글톤(Singleton) 패턴을 사용하여 모든 씬에서 변수를 공유할 수 있도록 설계되었습니다.
+
+ * [함수 설명]
+ 
+  - Awake()
+    
+    게임이 시작할 때 이 매니저가 포함된 오브젝트를 싱글톤으로 만듭니다. 
+
+  - SetVariable(key, Value)
+    주어진 String값에 대응하는 딕셔너리 내부 변수값을 Value값으로 설정합니다. 
+    만일 변수가 존재하지 않는다면 새로 만듭니다. 
+
+  - int GetVariable(string key)
+
+    함수값을 읽어옵니다. 
+    만일 존재하지 않을 시 debug.err 메세지와 함께 null을 리턴합니다. 
+
+  - void ModifyVariable(string key, int change)
+
+    함수값을 증가하거나 감소시킵니다. 
+    만일 존재하지 않는 변수에 접근한다면 오류 메세지를 리턴합니다. 
+
+ * [변수 설명]
+
+  -  Dictionary<string, int> variables = new Dictionary<string, int>(); 
+    변수가 들어가는 딕셔너리입니다. 
+    String 타입의 키로 식별하고, int 타입의 값을 저장하고 있습니다. 
  *
  * 🛠️ [주요 기능]
  *
@@ -108,16 +126,16 @@ public class VariableManager : MonoBehaviour
     /// <param name="key"> 확인을 원하는 변수의 인덱스 번호를 기입하십시오</param>
     /// <returns>변수의 값을 리턴합니다. </returns>
 
-    public int GetVariable(string key)
+    public int? GetVariable(string key)
     {
         //try - catch로 잘못된 곳에 접근할 시 에러를 표시하도록 했음. (2/10 수정사항)
         try{
             return variables[key];
         }catch(NullReferenceException err){
             Debug.LogError(this.name + "의 GetVariable에서 발생한 에러입니다.\n 딕셔너리 내부에 존재하지 않는 값에 접근했습니다"); 
-            Debug.LogError("해당 연산의 결과로 0이 전달되었을 것입니다");
+            Debug.LogError("해당 연산의 결과로 null이 전달되었을 것입니다");
             Debug.LogError("다음은 에러 메세지입니다 : " + err.Message);
-            return 0;
+            return null;
         }
         
     }

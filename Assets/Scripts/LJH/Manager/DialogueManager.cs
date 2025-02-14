@@ -76,6 +76,7 @@ using System.Collections;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.IO;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -104,6 +105,7 @@ public class DialogueManager : MonoBehaviour
 
     [Header("선택지 매니저 (Inspector에서 지정)")]
     public ChoiceManager choiceManager; // ✅ 선택지 매니저 연결
+    public FileManager filea = new FileManager();
 
     private int currentIndex = 0;
     private bool isChoicePanelActive = false; // 선택지 패널 활성화 여부
