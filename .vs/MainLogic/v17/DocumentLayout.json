@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Library\\PackageCache\\com.unity.ugui@1.0.0\\Runtime\\UI\\Core\\GraphicRaycaster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Library\\PackageCache\\com.unity.ugui@1.0.0\\Runtime\\UI\\Core\\GraphicRaycaster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Assets\\Scripts\\LJH\\Manager\\VariableManager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts\\LJH\\Manager\\VariableManager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -80,7 +84,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -92,7 +96,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 0,
+              "Title": "GraphicRaycaster.cs",
+              "DocumentMoniker": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Library\\PackageCache\\com.unity.ugui@1.0.0\\Runtime\\UI\\Core\\GraphicRaycaster.cs",
+              "RelativeDocumentMoniker": "Library\\PackageCache\\com.unity.ugui@1.0.0\\Runtime\\UI\\Core\\GraphicRaycaster.cs",
+              "ToolTip": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Library\\PackageCache\\com.unity.ugui@1.0.0\\Runtime\\UI\\Core\\GraphicRaycaster.cs",
+              "RelativeToolTip": "Library\\PackageCache\\com.unity.ugui@1.0.0\\Runtime\\UI\\Core\\GraphicRaycaster.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAADwvwAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-13T18:07:04.125Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
               "Title": "Scene2Test.txt",
               "DocumentMoniker": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Assets\\Resources\\Scene2Test.txt",
               "RelativeDocumentMoniker": "Assets\\Resources\\Scene2Test.txt",
@@ -104,7 +121,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "Scene1Test.txt",
               "DocumentMoniker": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Assets\\Resources\\Scene1Test.txt",
               "RelativeDocumentMoniker": "Assets\\Resources\\Scene1Test.txt",
@@ -112,12 +129,11 @@
               "RelativeToolTip": "Assets\\Resources\\Scene1Test.txt",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAAAVAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
-              "WhenOpened": "2025-02-01T12:30:34.412Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-01T12:30:34.412Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "Scene1Choice.txt",
               "DocumentMoniker": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Assets\\Resources\\Choices\\Scene1Choice.txt",
               "RelativeDocumentMoniker": "Assets\\Resources\\Choices\\Scene1Choice.txt",
@@ -125,12 +141,11 @@
               "RelativeToolTip": "Assets\\Resources\\Choices\\Scene1Choice.txt",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAAABAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
-              "WhenOpened": "2025-02-04T15:33:27.873Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-04T15:33:27.873Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "VariableManager.cs",
               "DocumentMoniker": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Assets\\Scripts\\LJH\\Manager\\VariableManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\LJH\\Manager\\VariableManager.cs",
@@ -143,7 +158,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "ChoiceManager.cs",
               "DocumentMoniker": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Assets\\Scripts\\LJH\\Manager\\ChoiceManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\LJH\\Manager\\ChoiceManager.cs",
@@ -151,12 +166,11 @@
               "RelativeToolTip": "Assets\\Scripts\\LJH\\Manager\\ChoiceManager.cs",
               "ViewState": "AQIAABgAAAAAAAAAAAAAAAoAAAADAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-04T12:46:34.097Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-04T12:46:34.097Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "DialogueManager.cs",
               "DocumentMoniker": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Assets\\Scripts\\LJH\\Manager\\DialogueManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\LJH\\Manager\\DialogueManager.cs",
@@ -168,7 +182,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "TextAnimationScripts.cs",
               "DocumentMoniker": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Assets\\Scripts\\PJG\\TextAnimationScripts.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\PJG\\TextAnimationScripts.cs",
@@ -180,7 +194,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "GameManager.cs",
               "DocumentMoniker": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Assets\\Scripts\\LJH\\Manager\\GameManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\LJH\\Manager\\GameManager.cs",
@@ -191,7 +205,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "DialogueUI.cs",
               "DocumentMoniker": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Assets\\Scripts\\LJH\\Settings\\Title\\UI\\DialogueUI.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\LJH\\Settings\\Title\\UI\\DialogueUI.cs",
@@ -202,7 +216,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "FileManagerMain.cs",
               "DocumentMoniker": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Assets\\Scripts\\PJG\\FileManagerMain.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\PJG\\FileManagerMain.cs",
@@ -214,7 +228,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "HoverChangeColor.cs",
               "DocumentMoniker": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Assets\\Scripts\\LJH\\Settings\\Title\\UI\\HoverChangeColor.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\LJH\\Settings\\Title\\UI\\HoverChangeColor.cs",
@@ -226,7 +240,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "FileManager.cs",
               "DocumentMoniker": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Assets\\Scripts\\LJH\\Manager\\FileManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\LJH\\Manager\\FileManager.cs",
@@ -238,7 +252,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "HoverScale.cs",
               "DocumentMoniker": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Assets\\Scripts\\LJH\\Settings\\Title\\UI\\HoverScale.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\LJH\\Settings\\Title\\UI\\HoverScale.cs",
@@ -250,7 +264,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "HoverTextEffect.cs",
               "DocumentMoniker": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Assets\\Scripts\\LJH\\Settings\\Title\\UI\\HoverTextEffect.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\LJH\\Settings\\Title\\UI\\HoverTextEffect.cs",
@@ -262,7 +276,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "Breath.cs",
               "DocumentMoniker": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Assets\\Scripts\\LJH\\Settings\\Title\\UI\\Breath.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\LJH\\Settings\\Title\\UI\\Breath.cs",
@@ -274,7 +288,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 16,
               "Title": "NodEffect.cs",
               "DocumentMoniker": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Assets\\Scripts\\LJH\\Settings\\Title\\UI\\NodEffect.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\LJH\\Settings\\Title\\UI\\NodEffect.cs",
@@ -286,7 +300,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 17,
               "Title": "EnterScene1Scripts.cs",
               "DocumentMoniker": "C:\\Users\\\uBC15\uC900\uAC74\\Documents\\Game Develop\\MainLogic\\Assets\\Scenes\\\uBC15\uC900\uAC74 \uC791\uC5C5\uC601\uC5ED\\MainSceneTest\\EnterScene1Scripts.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\..\\\uBC15\uC900\uAC74\\Documents\\Game Develop\\MainLogic\\Assets\\Scenes\\\uBC15\uC900\uAC74 \uC791\uC5C5\uC601\uC5ED\\MainSceneTest\\EnterScene1Scripts.cs",
@@ -297,7 +311,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 18,
               "Title": "DialogueUI.cs",
               "DocumentMoniker": "C:\\Users\\mire0\\Documents\\coding\\and they all lived happily ever after\\MainLogic\\Assets\\Scripts\\DialogueUI.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\and they all lived happily ever after\\MainLogic\\Assets\\Scripts\\DialogueUI.cs",
