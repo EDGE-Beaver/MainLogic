@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Transition
-  m_Shader: {fileID: -6465566751694194690, guid: f65e0e5b6fbca1e408a8de664050b28e, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: d3cd06a8923bfc640b37d8f16b19847a, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
