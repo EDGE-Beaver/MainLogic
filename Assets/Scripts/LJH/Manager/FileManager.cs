@@ -11,41 +11,69 @@
 //      1. Resources 폴더 내의 텍스트 파일을 로드하여 데이터를 관리합니다.
 //      2. 특정 파일을 선택하여 데이터를 가져올 수 있습니다.
 //      3. 인덱스를 기반으로 텍스트 데이터를 검색할 수 있습니다.
+//
+// 구조도
+// 1. File을 읽어옴 
+// 2. Setcurrentfile로 외부에서 어떤 file을 읽어올지 지정
+// 3. Currentfile에서
+//    3.1 GetRowbyindex = 인덱스에 따라 줄을 읽어옴
+//    3.2 GetCurrentFileSize = 파일의 사이즈를 읽어옴. 
 // ===============================================================
 
 /* [변경사항 및 리뷰] (2/14, 박준건)
 * 1. 함수 설명 추가
 * 2. Dialog 파일과 선택지 파일을 전부 가지고 있게 변경. 
 * 3. GetAllDialogFileNameItHave() 추가
+* 4. 다른 기능들 추가
+* 5. currentFIle을 중심으로 동작하도록 로직 변경
+* 6. 오류 점검 및 테스트(통과)
 */
 
 //==============[함수 설명]===================
 /*
 
- [Awake()]
+ * [Awake()]
 
- 내용 - 인스펙터 창에 지정된 내용대로 파일을 읽어옵니다. 
+ 인스펙터 창에 지정된 내용대로 파일을 읽어옵니다. 
  
- [LoadedAllTextFile] / [LoadedAllChoiceFile]
+ * [LoadedAllTextFile] / [LoadedAllChoiceFile]
 
  - 지정된 파일들의 내부 텍스트 값을 읽어와서, 딕셔너리에 저장합니다. 
    이후 파일 이름을 키로 접근해서, 파일 내부 값들을 확인할 수 있습니다. 
 
  - 선택지 파일과 텍스트 파일을 전부 읽어서 저장해둡니다. 
 
- - (사용 변수 목록)
-    loadedData, loadedChoiceData
+
+ * [SetCurrentFile(string fileName)]
+
+   - CurrentFile을 지정합니다. 
+
+   이후 getRowIndex나, GetCurrentFileSize등의 모든 메소드는
+   이 함수를 통해 지정된 currentfile에서 동작합니다. 
+   만일 없다면 오류를 리턴합니다. 
 
 
- [GetAllDialogFileNameItHave()]
+ * [GetRowByIndex(int index)]
+
+   - CurrentFIle에서, 매개변수로 받은 index에 위치하는 string[]을 리턴합니다. 
+
+  유 이연|지금 기분이 어떠세요?\1.5$0.5 어디 아픈 곳은\0.5 없나요?||image_nurse_concept_1||voice|간호사_기본|
+  이런 문장을 리턴합니다. 
+
+
+ * [GetCurrentFileLength()]
+
+ - CurrentFile의 길이를 리턴합니다. 
+   null을 가질 수 있습니다. 
+
+ * [GetAllDialogFileNameItHave()]
  
  현재 이 씬에서 Filemanager가 가지고 있는 모든 텍스트 파일 이름을 리턴합니다. 
 
- (사용 변수 목록)
- loadedData
 
  (테스트 여부)
  2/15 정상작동 확인
+ ============================================================
 */
 
 using System;
@@ -66,7 +94,7 @@ public class FileManager : MonoBehaviour
 
 
     /// <summary>
-    /// 현재 파일의 이름을 제공해줍니다. 
+    /// 현재 읽고 있는 파일입니다.
     /// <para>
     /// get - set 캡슐화가 적용되어 있습니다. 
     /// </para>
@@ -74,12 +102,21 @@ public class FileManager : MonoBehaviour
     public string currentFile { get; private set; }
 
     /// <summary>
+    /// 현재 \읽고 있는 선택지 파일입니다.  
+    /// <para>
+    /// get - set 캡슐화가 적용되어 있습니다. 
+    /// </para>
+    /// </summary
+    public string currentChoiceFile{get; private set;}
+
+
+    /// <summary>
     /// string : 파일 이름, List : 파일 저장 형태(스트링 형태로 저장)
     /// <para>
     /// 화자 이름|대사 내용|효과음|캐릭터 이미지|선택지ID|음성(캐릭터 목소리)|배경음악|애니메이션 키워드
     /// </para>
     /// <para>
-    /// 이런 형태의 데이터들이 저장되어 있습니다
+    /// 이런 형태의 데이터 한 줄 한 줄이 string[]로, 전체는 list로 저장되어 저장되어 있습니다
     /// </para>
     /// </summary>
     private Dictionary<string, List<string[]>> loadedData = new Dictionary<string, List<string[]>>();
@@ -107,14 +144,6 @@ public class FileManager : MonoBehaviour
     /// </summary>
     public void LoadAllTextFiles()
     {
-        /*============[작동 원리]==============
-
-        0. 만일 로드된 데이터들이 있다면, 죄다 지워버린다. 
-        1. 이후 읽어야 하는 파일들마다 읽어오는 과정을 반복한다. 
-            1.1. line = 개행문자 단위로 나눠둠
-            이후 임시로 읽은 데이터를 저장해둘 dataList 만들고
-            Data리스트에 
-        */
         loadedData.Clear();
 
         //읽어야 하는 파일들마다 반복
@@ -160,9 +189,9 @@ public class FileManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// FileManager가 어떤 파일을 CurrentFile로 지정할지 정합니다.
     /// </summary>
-    /// <param name="fileName"></param>
+    /// <param name="fileName">파일의 이름입니다.</param>
     public void SetCurrentFile(string fileName)
     {
         if (loadedData.ContainsKey(fileName))
@@ -175,24 +204,101 @@ public class FileManager : MonoBehaviour
             Debug.LogWarning($"⚠️ 파일 '{fileName}'이(가) 로드되지 않아 변경할 수 없습니다.");
         }
     }
-
-    public string[] GetRowByIndex(string fileName, int index)
+     public void SetCurrentChoiceFile(string fileName)
     {
-        if (!loadedData.ContainsKey(fileName))
+        if (loadedChoiceData.ContainsKey(fileName))
         {
-            Debug.LogWarning($"⚠️ 파일 '{fileName}'이(가) 로드되지 않았습니다.");
+            currentChoiceFile = fileName;
+            Debug.Log($"📂 현재 파일 변경됨: {currentChoiceFile}");
+        }
+        else
+        {
+            Debug.LogWarning($"⚠️ 파일 '{fileName}'이(가) 로드되지 않아 변경할 수 없습니다.");
+        }
+    }
+
+    /// <summary>
+    /// 다이얼로그 텍스트 규칙에 맞는 텍스트를 얻어오는 함수입니다.
+    /// <para>
+    /// CurrentFIle에서 데이터를 리턴합니다. 만일 변경을 원하신다면 SetCurrentfile 하십시오.
+    /// </para>
+    /// </summary>
+    /// <param name="index">몇번 인덱스의 정보를 리턴할지 정합니다.</param>
+    /// <returns>화자 | 데이터 | 등등.. 으로 이루어진 string 배열을 리턴합니다. </returns>
+    public string[] GetRowByIndex(int index)
+    {
+        // if (!loadedData.ContainsKey(currentFile))
+        // {
+        //     Debug.LogWarning($"⚠️ 파일 '{currentFile}'이(가) 로드되지 않았습니다.");
+        //     return new string[] { "" };
+        // }
+        //currentfile에서 읽어오도록 변경했기 때문에 확인 절차가 필요 없음
+        if(currentFile == null){
+            Debug.LogError("GetRowByIndex에서의 오류");
+            Debug.LogError("CurrentFile이 존재하지 않습니다.");
+        }
+        var dataList = loadedData[currentFile];
+        if (index < 0 || index >= dataList.Count)
+        {
+            Debug.LogWarning($"⚠️ '{currentFile}' 파일의 잘못된 인덱스 요청: {index}");
             return new string[] { "" };
         }
+        return dataList[index];
+    }
+    /// <summary>
+    /// 현재 파일의 전체 길이를 읽어오는 함수입니다. 
+    /// <para>
+    /// CurrentFIle에서 데이터를 리턴합니다. 만일 변경을 원하신다면 SetCurrentfile 하십시오.
+    /// </para>
+    /// </summary>
+    /// <param name="index">몇번 인덱스의 정보를 리턴할지 정합니다.</param>
+    /// <returns>화자 | 데이터 | 등등.. 으로 이루어진 string 배열을 리턴합니다. </returns>
+    public string[] GetChoiceRowByIndex(int index)
+    {
+        // if (!loadedChoiceData.ContainsKey(fileName))
+        // {
+        //     Debug.LogWarning($"⚠️ 파일 '{fileName}'이(가) 로드되지 않았습니다.");
+        //     return new string[] { "" };
+        // }
+        //choicefile도 비슷한 이유로 삭제
+        if(currentChoiceFile == null){
+            Debug.LogError("GetChoiceRowByIndex에서의 오류");
+            Debug.LogError("CurrentChoiceFile이 존재하지 않습니다.");
+        }
 
-        var dataList = loadedData[fileName];
+        var dataList = loadedData[currentChoiceFile];
 
         if (index < 0 || index >= dataList.Count)
         {
-            Debug.LogWarning($"⚠️ '{fileName}' 파일의 잘못된 인덱스 요청: {index}");
+            Debug.LogWarning($"⚠️ '{currentChoiceFile}' 파일의 잘못된 인덱스 요청: {index}");
             return new string[] { "" };
         }
 
         return dataList[index];
+    }
+    
+    /// <summary>
+    /// currentFile의 길이를 리턴합니다. null을 가질 수 있습니다.
+    /// </summary>
+    /// <returns>currentfile의 길이</returns>
+    public int? GetCurrentFileLength(){
+        if(currentFile != null ){
+            return loadedData[currentFile].Count;
+        }else{
+            Debug.LogError("GetCurrentFileLength에서 발생한 오류"); 
+            Debug.LogError("CurrentFile이 존재하지 않습니다");
+            return null;
+        }
+        //테스트 오나료. 
+    }
+    public int? GetCurrentChoiceFileLength(){
+        if(currentFile != null ){
+            return loadedChoiceData[currentChoiceFile].Count;
+        }else{
+            Debug.LogError("GetCurrentChoiceFileLength에서 발생한 오류"); 
+            Debug.LogError("CurrentChoiceFile이 존재하지 않습니다");
+            return null;
+        }
     }
     /// <summary>
     /// 현재 씬에서 이 FilaManager가 가지고 있는 모든 텍스트 파일 이름을 리턴합니다. 

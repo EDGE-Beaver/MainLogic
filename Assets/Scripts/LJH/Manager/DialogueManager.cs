@@ -169,7 +169,7 @@ public class DialogueManager : MonoBehaviour
         if (isChoicePanelActive) return; // 선택지 패널이 활성화되었을 때 키 입력 차단
 
         // 🔹 현재 데이터 가져오기
-        var data = fileManager.GetRowByIndex(fileManager.currentFile, currentIndex);
+        var data = fileManager.GetRowByIndex(currentIndex);
 
         if (data == null || data.Length == 0)
         {

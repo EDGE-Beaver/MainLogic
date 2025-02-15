@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Packages.Rider.Editor.UnitTesting;
 using UnityEngine;
 using UnityEngine.Windows;
 
@@ -15,6 +17,16 @@ public class TestScripts : MonoBehaviour
 
         foreach(var testStr in testVariable){
             Debug.Log(testStr);
+        }
+
+        test.SetCurrentFile(test.textFilePaths[0]);
+        for(int i = 0; i< test.GetCurrentFileLength(); i++){
+            string[] testVariable2 = test.GetRowByIndex(i);
+            foreach(var str1 in testVariable2){
+                Debug.Log(str1);
+            }
+
+
         }
     }
 
