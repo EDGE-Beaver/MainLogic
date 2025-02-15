@@ -362,6 +362,7 @@
 "Assets/Scripts/PJG/TextAnimationScripts.cs"
 "Assets/Scripts/PJG/TextManager.cs"
 "Assets/Scripts/PJH/DialogueUI_TextDisplay.cs"
+"Assets/TestScripts.cs"
 "Assets/TextMesh Pro/Examples & Extras/Scripts/Benchmark01.cs"
 "Assets/TextMesh Pro/Examples & Extras/Scripts/Benchmark01_UGUI.cs"
 "Assets/TextMesh Pro/Examples & Extras/Scripts/Benchmark02.cs"

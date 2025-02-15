@@ -16,6 +16,7 @@
 /* [변경사항 및 리뷰] (2/14, 박준건)
 * 1. 함수 설명 추가
 * 2. Dialog 파일과 선택지 파일을 전부 가지고 있게 변경. 
+* 3. GetAllDialogFileNameItHave() 추가
 */
 
 //==============[함수 설명]===================
@@ -35,12 +36,23 @@
  - (사용 변수 목록)
     loadedData, loadedChoiceData
 
+
+ [GetAllDialogFileNameItHave()]
+ 
+ 현재 이 씬에서 Filemanager가 가지고 있는 모든 텍스트 파일 이름을 리턴합니다. 
+
+ (사용 변수 목록)
+ loadedData
+
+ (테스트 여부)
+ 2/15 정상작동 확인
 */
 
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 
 public class FileManager : MonoBehaviour
@@ -183,11 +195,19 @@ public class FileManager : MonoBehaviour
         return dataList[index];
     }
     /// <summary>
-    /// 현재 씬에서 이 FilaManager가 가지고 있는 모든 파일 이름들을 리턴합니다.
+    /// 현재 씬에서 이 FilaManager가 가지고 있는 모든 텍스트 파일 이름을 리턴합니다. 
     /// </summary>
     /// <returns>이 FileManage가 가지고 있는 모든 파일들의 이름이 담긴 String 배열입니다.</returns>
-    public string[] GetAllFileNameItHave(){
-        Collection<string> thisTextFile = this.
-        //여기까지 작성하는 중이었음(2/14)
+    public string[] GetAllDialogFileNameItHave(){
+        var thisTextFile = this.loadedData.Keys.ToArray();
+        return thisTextFile;
+    }
+    /// <summary>
+    /// 현재 씬에서 이 FilaManager가 가지고 있는 모든 텍스트 파일 이름을 리턴합니다. 
+    /// </summary>
+    /// 
+     public string[] GetAllChoiceFileNameItHave(){
+        var thisChoiceFile = this.loadedChoiceData.Keys.ToArray();
+        return thisChoiceFile;
     }
 }
