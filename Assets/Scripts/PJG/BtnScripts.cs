@@ -21,7 +21,7 @@ public class BtnScripts : MonoBehaviour
     }
     public void EnterScene1BtnClick(){
         Debug.Log("버튼은 클릭되는중");
-        manager.isEnterScene1 = true;
+        manager.DoEnterScene1 = true;
         SceneManager.LoadScene("SceneTestScene1");
 
     }

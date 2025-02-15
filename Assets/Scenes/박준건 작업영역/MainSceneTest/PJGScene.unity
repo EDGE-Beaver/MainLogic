@@ -256,9 +256,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6af242b31d2b3c64ca9d47769fecc371, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isEnterScene1: 0
-  TextManager: {fileID: 1853125713}
-  BtnManager: {fileID: 1640167089}
+  DoEnterScene1: 0
+  TextManager: {fileID: 0}
+  BtnManager: {fileID: 0}
 --- !u!1 &183630849
 GameObject:
   m_ObjectHideFlags: 0
@@ -386,7 +386,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.00018310547, y: 36.575623}
+  m_AnchoredPosition: {x: 0.00018310547, y: 36.57556}
   m_SizeDelta: {x: 1419.2, y: 1602.4098}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &356213550
@@ -507,7 +507,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 432298160}
-  - component: {fileID: 432298159}
+  - component: {fileID: 432298161}
   m_Layer: 0
   m_Name: FileManager
   m_TagString: Untagged
@@ -515,21 +515,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &432298159
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 432298158}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 491fa213d410d5447be954e89562b880, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textFilePaths:
-  - Scene1Test
-  delimiter: 124
 --- !u!4 &432298160
 Transform:
   m_ObjectHideFlags: 0
@@ -545,6 +530,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &432298161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 432298158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 491fa213d410d5447be954e89562b880, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textFilePaths:
+  - Scene1Test
+  delimiter: 124
 --- !u!1 &584065892
 GameObject:
   m_ObjectHideFlags: 0
@@ -938,8 +938,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.00012207031}
-  m_SizeDelta: {x: -17, y: 1675.5623}
+  m_AnchoredPosition: {x: 0, y: -0.00024414062}
+  m_SizeDelta: {x: -17, y: 3493.6008}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &894688380
 GameObject:
@@ -1023,8 +1023,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1452069610}
   m_HandleRect: {fileID: 1452069609}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.859244
+  m_Value: 1.0000001
+  m_Size: 0.41218162
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1368,7 +1368,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1640167091}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: BtnScripts, Assembly-CSharp
         m_MethodName: EnterScene1BtnClick
         m_Mode: 1
@@ -1652,7 +1652,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab819bfb173335740808236345f85486, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ScenarioText: {fileID: 356213550}
+  ScenarioText: {fileID: 0}
 --- !u!1 &2106627762
 GameObject:
   m_ObjectHideFlags: 0

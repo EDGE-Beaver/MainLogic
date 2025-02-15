@@ -5,7 +5,7 @@ using UnityEngine;
 public class MainSceneGameManager : MonoBehaviour
 {
     [Header("어떤 씬을 들렀는지 여부를 체크하는 변수")]
-    public bool isEnterScene1 = false;
+    public bool DoEnterScene1 = false;
     [Header("씬 내부 오브젝트 들어가는 변수")]
     [Tooltip("텍스트가 전부 다 여기로 들어감")]
     public GameObject TextManager;
@@ -37,7 +37,7 @@ public class MainSceneGameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(isEnterScene1){
+        if(DoEnterScene1){
             //씬 1을 방문했는지 테스트하기 위함
             TextManager textManager = TextManager.GetComponent<TextManager>();
             textManager.ScenarioText.text = "씬 1을 방문했음";

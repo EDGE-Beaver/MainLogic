@@ -1,9 +1,15 @@
 ﻿
 // ===========================================
-// 📌 [대사 데이터 파일 구조 설명]
+// 📌 [대사 파일 구조 설명]
 // ===========================================
-// 각 줄은 하나의 대사를 의미하며, "|"로 구분된 여러 개의 필드를 포함합니다.
-// 필드별 역할 및 데이터 형식 설명은 아래와 같습니다.
+// 각 줄은 하나의 대사를 의미하며, "|"로 구분된 여러 개의 필드를 포함함
+// 필드별 역할 및 데이터 형식 설명은 아래와 같음
+//
+//
+//📜 대사 파일 구조
+//화자 이름|대사 내용|효과음|캐릭터 이미지|선택지ID|음성(캐릭터 목소리)|배경음악|애니메이션 키워드
+//
+// 배경 이미지 변경은 VariableManager에서 처리(이유는 스크립트 볼륨, 배경 이미지 사용 빈도 낮음)
 //
 // [필드 1] 화자 이름
 //   - 대사를 말하는 캐릭터의 이름을 지정합니다.
@@ -63,12 +69,14 @@
 // - 태그를 올바르게 사용하여 연출을 풍부하게 만들 수 있습니다.
 //
 // ===========================================
-// 📌 이 주석은 대사 데이터 파일을 쉽게 이해하고 관리할 수 있도록 작성되었습니다.
+//  아래 스크립트는 대사 파일을 관리하는 다이얼로그 매니저입니다.
+//  파일 매니저, 텍스트애니메이션스크립트, 선택지매니저와 상속관계이므로 함부로 수정하지 말 것
 // ===========================================
 using System.Collections;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.IO;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -97,6 +105,7 @@ public class DialogueManager : MonoBehaviour
 
     [Header("선택지 매니저 (Inspector에서 지정)")]
     public ChoiceManager choiceManager; // ✅ 선택지 매니저 연결
+    public FileManager filea = new FileManager();
 
     private int currentIndex = 0;
     private bool isChoicePanelActive = false; // 선택지 패널 활성화 여부
@@ -141,8 +150,6 @@ public class DialogueManager : MonoBehaviour
             }
         }
     }
-
-
 
     public void LoadDialogue(string fileName)
     {
