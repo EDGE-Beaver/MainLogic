@@ -1,0 +1,67 @@
+# Unity 관련 파일 및 폴더 제외
+
+# Unity 숨김 메타데이터
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Mm]emoryCaptures/
+
+# 유니티 패키지 캐시 (재설치 가능)
+/[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin
+/[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.hash
+/[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.json
+/[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.resource
+
+# Visual Studio 파일 (Windows)
+.vscode/
+*.csproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+
+# Rider IDE 관련 파일 (JetBrains)
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Unity 빌드 결과물
+/[Bb]uilds/
+/[Bb]uild/
+/[Dd]ist/
+/[Rr]eleases/
+
+# 유니티 설정 파일 (개인 설정)
+/[Uu]ser[Ss]ettings/
+
+# 유니티 로그 및 디버깅 관련 파일
+*.log
+*.tlog
+*.ilk
+*.aps
+
+# MacOS 관련 파일 제외
+.DS_Store
+
+# 기타 불필요한 파일
+Thumbs.db
+Desktop.ini
+
+# URP 관련 캐시 파일 (필수 설정 제외)
+Library/ShaderCache/
+Library/ScriptAssemblies/
+Library/ShaderCache.db
+Library/ShaderCache/
+Library/Bee/
+Library/GI/
+
+# URP 설정 파일은 포함해야 함 (예: Assets/Settings/UniversalRenderPipelineAsset.asset)
