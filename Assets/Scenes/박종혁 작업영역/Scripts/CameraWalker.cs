@@ -1,11 +1,69 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
+using System.Threading.Tasks;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class CameraWalker : MonoBehaviour
 {
-    [Header("===== 카메라 이동 효과 =====")]
+    /*인스펙터 변수 기본 세팅
+     * 카메라 이동 속도 : 5, 5
+     * 페이드 아웃 시간 : 5 (디버깅시 5-1000 전환)
+     * */
+
+    private void Start()
+    {
+        //===== 카메라 이동 효과 =====
+        //카메라 이동 목적지 받아오기
+        titlePos = new Vector3(camPos_Title.transform.localPosition.x, camPos_Title.transform.localPosition.y, cam.transform.localPosition.z);
+        lobbyPos = new Vector3(camPos_MainLobby.transform.localPosition.x, camPos_MainLobby.transform.localPosition.y, cam.transform.localPosition.z);
+        bookPos = new Vector3(camPos_Book.transform.localPosition.x, camPos_Book.transform.localPosition.y, cam.transform.localPosition.z);
+
+        //(디버그)좌표 확인용
+        //Debug.Log(titlePos + ", " + lobbyPos + ", " + bookPos);
+
+        //카메라 이동 목적지 기본값
+        targetPos = cam.transform.localPosition;
+        targetSize = cam.orthographicSize;
+
+        //처음엔 타이틀에서 시작
+        inTitle = true;
+        inLobby = false;
+        inBook = false;
+
+        //===== 시작할때 페이드 연출 & 카메라 효과 =====
+        can = fadeoutBlack.GetComponent<CanvasGroup>();
+        canq = fadeoutBlack_QUIT.GetComponent<CanvasGroup>();
+        fadeoutBlack_QUIT.SetActive(false);
+        TitleStart();
+    }
+
+    private void Update()
+    {
+        //===== 카메라 이동 효과 =====
+        //카메라 이동
+        cam.transform.localPosition = Vector3.Lerp(transform.localPosition, targetPos, camSpeed * Time.deltaTime);
+        cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetSize, zoomSpeed * Time.deltaTime);
+
+        //Lerp 무한지속 방지턱(딱히 의미 없어짐)
+        speedCheck1 = cam.velocity.sqrMagnitude;
+        if(cam.velocity.sqrMagnitude <= 0.00001 && speedCheck1 < speedCheck2)
+        {
+            cam.transform.localPosition = targetPos;
+        }
+        speedCheck2 = speedCheck1;
+
+        //Esc 누르면 타이틀로 탈출
+        if (!inTitle && Input.GetKeyDown(KeyCode.Escape))
+        {
+            ToTitle();
+        }
+    }
+
+    [Header("===== 1. 카메라 이동 효과 =====")]
 
     //인스펙터 지정
     [Header("카메라")]
@@ -34,57 +92,21 @@ public class CameraWalker : MonoBehaviour
     private bool inLobby;
     private bool inBook;
 
-    private void Start()
-    {
-        //카메라 이동 목적지 받아오기
-        titlePos = new Vector3(camPos_Title.transform.localPosition.x, camPos_Title.transform.localPosition.y, cam.transform.localPosition.z);
-        lobbyPos = new Vector3(camPos_MainLobby.transform.localPosition.x, camPos_MainLobby.transform.localPosition.y, cam.transform.localPosition.z);
-        bookPos = new Vector3(camPos_Book.transform.localPosition.x, camPos_Book.transform.localPosition.y, cam.transform.localPosition.z);
-
-        //좌표 확인용
-        Debug.Log(titlePos + ", " + lobbyPos + ", " + bookPos);
-
-        //카메라 이동 목적지 기본값
-        targetPos = cam.transform.localPosition;
-        targetSize = cam.orthographicSize;
-
-        //처음엔 타이틀에서 시작
-        inTitle = true;
-        inLobby = false;
-        inBook = false;
-
-        //책 기울어진 각도 저장
-        targetRotation = bookCover.transform.rotation;
-    }
-
-    private void Update()
-    {
-        //카메라 이동
-        cam.transform.localPosition = Vector3.Lerp(transform.localPosition, targetPos, camSpeed * Time.deltaTime);
-        cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetSize, zoomSpeed * Time.deltaTime);
-
-        //Esc 누르면 타이틀로 탈출
-        if(!inTitle && Input.GetKeyDown(KeyCode.Escape))
-        {
-            Debug.Log("Esc 입력");
-            ToTitle();
-        }
-
-        //책 페이지 회전
-        if (isFliping)
-        {
-            bookCover.transform.rotation = Quaternion.Slerp(bookCover.transform.rotation, targetRotation, flipSpeed * Time.deltaTime);
-            
-            if (Quaternion.Angle(bookCover.transform.rotation, targetRotation) < 1f)
-            {
-                isFliping = false;
-            }
-        }
-    }
-
     //카메라 이동 목적지 지정
-    public void ToTitle()
+    public void ToTitleCam()
     {
+        if (titleIntro)
+        {
+            camSpeed = 1f;
+            fadeTime = 1000f;
+            titleIntro = false;
+            FadeIn();
+        }
+        else
+        {
+            fadeTime = 5f;
+            camSpeed = 5f;
+        }
         targetPos = titlePos;
         targetSize = 5f;
         inTitle = true;
@@ -92,8 +114,9 @@ public class CameraWalker : MonoBehaviour
         inBook = false;
     }
 
-    public void ToLobby()
+    public void ToLobbyCam()
     {
+        camSpeed = 5f;
         targetPos = lobbyPos;
         targetSize = 16f;
         inTitle = false;
@@ -101,8 +124,9 @@ public class CameraWalker : MonoBehaviour
         inBook = false;
     }
 
-    public void ToBook()
+    public void ToBookCam()
     {
+        camSpeed = 5f;
         targetPos = bookPos;
         targetSize = 16f;
         inTitle = false;
@@ -110,29 +134,140 @@ public class CameraWalker : MonoBehaviour
         inBook = true;
     }
 
-    [Header("===== 책 펼쳐지는 효과 =====")]
+    //게임 켰을때 타이틀 카메라 이동
+    private float speedCheck1 = 0f, speedCheck2 = 0f;
+    private bool titleIntro = false;
+    public void TitleStart()
+    {
+        cam.transform.localPosition = new Vector3(cam.transform.localPosition.x, cam.transform.localPosition.y - 150f, cam.transform.localPosition.z);
+        titleIntro = true;
+        ToTitleCam();
+    }
+
+    [Header("===== 2. 페이드 아웃 연출 =====")]
 
     //인스펙터 지정
-    [Header("책 표지")]
-    public GameObject bookCover;
-    [Header("넘기는 속도")]
-    public float flipSpeed;
-    [Header("감속 효과?")]
-    public float smoothTime;
+    [Header("페이드 아웃용 검정색 판떼기")]
+    public GameObject fadeoutBlack;
+    public GameObject fadeoutBlack_QUIT;
 
-    private bool isFliping = false;
-    private Quaternion targetRotation;
-    private float velocity = 0f;
+    [Header("페이드 아웃 시간")]
+    public float fadeTime;
 
-    public void FlipPage()
+    //효과 구현을 위한 CanvasGroup 지정
+    private CanvasGroup can;
+    private CanvasGroup canq;
+
+    //페이드 인
+    public void FadeIn()
     {
-        if (!isFliping)
+        StartCoroutine(FadeInEffect());
+    }
+    IEnumerator FadeInEffect()
+    {
+        fadeoutBlack.SetActive(true);
+        can.interactable = false;
+        can.blocksRaycasts = false;
+        float elapsedTime = 0f;
+        while (elapsedTime < fadeTime)
         {
-            isFliping = true;
-            Vector3 pivotPoint = bookCover.transform.position + bookCover.transform.right * -0.5f;
-            float newYAngle = (Mathf.Abs(bookCover.transform.localEulerAngles.y - 180) < 1f) ? 0 : 180;
-            targetRotation = Quaternion.Euler(bookCover.transform.localEulerAngles.x, newYAngle, bookCover.transform.localEulerAngles.z);
-            bookCover.transform.RotateAround(pivotPoint, bookCover.transform.up, (newYAngle - bookCover.transform.localEulerAngles.y));
+            can.alpha = Mathf.Lerp(can.alpha, 0f, elapsedTime / fadeTime);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        fadeoutBlack.SetActive(false);
+    }
+
+    //페이드 아웃
+    public void FadeOut()
+    {
+        StartCoroutine(FadeOutEffect());
+    }
+    IEnumerator FadeOutEffect()
+    {
+        fadeoutBlack.SetActive(true);
+        can.interactable = true;
+        can.blocksRaycasts = true;
+        float elapsedTime = 0f;
+        while (elapsedTime < fadeTime)
+        {
+            if (onGameQuit) //게임 종료용 페이드아웃
+            {
+                fadeoutBlack_QUIT.SetActive(true);
+                canq.interactable = true;
+                canq.blocksRaycasts = true;
+                canq.alpha = Mathf.MoveTowards(can.alpha, 1f, elapsedTime * 4f);
+            }
+            else //일반적인 케이스
+            {
+                can.alpha = Mathf.Lerp(can.alpha, 1f, elapsedTime / fadeTime);
+            }
+            elapsedTime += Time.deltaTime;
+            yield return null;
         }
     }
+
+    //게임 종료
+    private bool onGameQuit = false;
+    public async void QuitGame()
+    {
+        StopAllCoroutines();
+        onGameQuit = true;
+        FadeOut();
+        await Task.Delay(500);
+#if UNITY_EDITOR
+        EditorApplication.ExitPlaymode();
+#else
+        Application.Quit();
+#endif
+    }
+
+    [Header("===== 3. 타이틀 메뉴별 화면 전환 =====")]
+
+    //인스펙터 지정
+    [Header("책 페이지(표지 포함)")]
+    public GameObject book_whole;
+    public GameObject book_title;
+    public GameObject book_load;
+    public GameObject book_credit;
+    public GameObject book_setting;
+    
+    public void ToLoad()
+    {
+        book_whole.SetActive(true);
+        ToBookCam();
+        book_title.SetActive(false);
+        book_load.SetActive(true);
+        book_credit.SetActive(false);
+        book_setting.SetActive(false);
+    }
+    public void ToCredit()
+    {
+        book_whole.SetActive(true);
+        ToBookCam();
+        book_title.SetActive(false);
+        book_load.SetActive(false);
+        book_credit.SetActive(true);
+        book_setting.SetActive(false);
+    }
+    public void ToSetting()
+    {
+        book_whole.SetActive(true);
+        ToBookCam();
+        book_title.SetActive(false);
+        book_load.SetActive(false);
+        book_credit.SetActive(false);
+        book_setting.SetActive(true);
+    }
+    public void ToTitle()
+    {
+        ToTitleCam();
+        book_title.SetActive(true);
+        book_load.SetActive(false);
+        book_credit.SetActive(false);
+        book_setting.SetActive(false);
+        book_whole.SetActive(false);
+    }
+
+
 }
