@@ -139,6 +139,9 @@ public class FileManager : MonoBehaviour
         LoadAllChoiceFiles();
     }
 
+    void Start()
+    {
+    }
     /// <summary>
     /// 이 씬에 할당된 텍스트 파일을 읽어옵니다. 
     /// </summary>

@@ -89,7 +89,11 @@ public class DialogueManager : MonoBehaviour
     [Header("UI 요소들")]
     public TMP_Text speakerText;
     public TextAnimationScripts textAnimationScript;
+    public TMP_Text DialogueText;
     public Image characterImage;
+    
+    [Header("텍스트 출력 설정")]
+    [Range(0f, 0.1f)] public float defaultDelay = 0.05f;
 
     [Header("오디오 소스")]
     public AudioSource seAudioSource;
@@ -111,15 +115,18 @@ public class DialogueManager : MonoBehaviour
     private bool isChoicePanelActive = false; // 선택지 패널 활성화 여부
     private bool isWaitingForText = false;   // 대사 출력이 끝날 때까지 키 입력 방지
 
-    void Start()
+    void Awake()
     {
         if (fileManager == null)
         {
             Debug.LogError("FileManager가 설정되지 않았습니다!");
             return;
         }
+    }
 
-        fileManager.LoadAllTextFiles();
+    void Start()
+    {
+
         choicePanel.SetActive(false);
         isChoicePanelActive = false;
 
@@ -397,6 +404,8 @@ public class DialogueManager : MonoBehaviour
 
     public void SelectChoice(int choiceIndex)
     {
+        //골랐을 때 여기로 넘어간다. 
+        //버튼을 끄는 것이다.  
         choicePanel.SetActive(false);
         isChoicePanelActive = false;
     }

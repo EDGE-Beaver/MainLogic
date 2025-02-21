@@ -61,10 +61,15 @@ public class ChoiceManager : MonoBehaviour
 
     private DialogueManager dialogueManager;
     private string[] variableChanges = new string[4];
+    void Awake()
+    {
+        if(dialogueManager == null){
+            dialogueManager = FindObjectOfType<DialogueManager>();
+        }
+    }
 
     void Start()
     {
-        dialogueManager = FindObjectOfType<DialogueManager>();
         choicePanel.SetActive(false);
 
         if (choiceButtons.Length != choiceTexts.Length)
