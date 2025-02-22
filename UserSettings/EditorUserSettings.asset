@@ -5,52 +5,6 @@ EditorUserSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 4
   m_ConfigSettings:
-    RecentlyUsedSceneGuid-0:
-      value: 555506510751085d085e0a2445720a444316482f282b25622b7b1865b3e1326c
-      flags: 0
-    RecentlyUsedSceneGuid-1:
-<<<<<<< HEAD
-      value: 025055035c575903080b5e7616775b43404f19787c2d22642c7c1f6bb6b16160
-      flags: 0
-    RecentlyUsedSceneGuid-2:
-      value: 5757030457500d5d5f0f097048770c15424f4c28287a77327b7f4d32e4b6373c
-      flags: 0
-    RecentlyUsedSceneGuid-3:
-      value: 57040105505759095a585e2344775b11411649792f7877657c714f6bb2b36c69
-      flags: 0
-    RecentlyUsedSceneGuid-4:
-      value: 5350510250565b5f5e5f5a721677074117164c7b7e7f23357d794961e0b6306e
-      flags: 0
-    RecentlyUsedSceneGuid-5:
-      value: 5b520d0503545b0d0c0c0a2715770748154f4d2c7d7d7e627a7d4a35b4e1646a
-      flags: 0
-    RecentlyUsedSceneGuid-6:
-      value: 53030700550d0b5f0f570a23437a5e44134e4973782e73637e7c1861b0e13139
-      flags: 0
-    RecentlyUsedSceneGuid-7:
-      value: 52055557540d595d0b5d587640740c44101548292d7e73357e281f6bb1b43269
-      flags: 0
-    RecentlyUsedSceneGuid-8:
-      value: 5557055204545c59555e582712735944441640797d7b7f627b2c1c62e3e6633e
-      flags: 0
-    UnityEditor.ShaderGraph.Blackboard:
-      value: 18135939215a0a5004000b0e15254b524c1119263f2d6a722016393ce1eb3d36e5d339f9a560393d3511ea7046333e09f7181d02f50a06241708ee0b05bd4a435f9548954a994a4e9e414b96944d87b1809a96e7e7c3e8cad7c5affce0f1e2d7f3f7b6febeeaa690e4ffb2f3a2fdf4cddbcff59ed784d185e0808183f0839e91c094df8289d7968bc490
-      flags: 0
-    UnityEditor.ShaderGraph.FloatingWindowsLayout2:
-      value: 181344140043005e1a220d3b1f364b524c0c5a27130c293326201334cee5322ca0bd30e8eb293a707b0fd0180b3d0a36fc0d3d04e649500d1002ee0b5dbd1d2c27c00ad113cb1e10e41f1addc80993b9859884a69ae6d8f0d1cda9e8fbfefaf9f9dea3fdb9ade882f0f7b0e1e380cafbf2c3adc18e9cd285a2908b82ec879c84808fdc8e8ed0818980dbf8daf7dce5bdd1fbf5c4c1ebc1fbcdcecdea33e2ff35323130e2a1a5ab
-      flags: 0
-    UnityEditor.ShaderGraph.InspectorWindow:
-      value: 18135939215a0a5004000b0e15254b524c1119263f2d6a722016393ce1eb3d36e5d339f9a5602b2e2c07a37e0901373ae01e0008f707250d171df81a53a5405d41895ac825e0100ec20313c0d91cddccd3d0c7efcca9bd88908fecb0f9cfddf1eff4e7a1b1eae482f0fcaee1e1928b86d888ed969b938795ea828182ec8182848985d4848e9ac5
-      flags: 0
-    UnityEditor.ShaderGraph.ToggleSettings:
-      value: 18135d1527590858060c032302276919051e1a26296a7c243f3c187fa0e92708f0e220e0e22d09352a0bed30017c5b2be01f0c47b40219221f1ded0b12eb1f0127cc0bcc18c41a5e910d0edbc85193e0dadadbf8e8f9e8ced7dba5e0b6aaaca4dbfeabfef4eae1
-=======
-      value: 5557055204545c59555e582712735944441640797d7b7f627b2c1c62e3e6633e
-      flags: 0
-    RecentlyUsedSceneGuid-2:
-      value: 5a09525707000c5a09565f2447205e44154f4a792a29716928284d6ae7e1666e
->>>>>>> origin/PJHBranch_V2
-      flags: 0
     vcSharedLogLevel:
       value: 0d5e400f0650
       flags: 0
