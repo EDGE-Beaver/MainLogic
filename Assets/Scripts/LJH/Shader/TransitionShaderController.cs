@@ -1,5 +1,9 @@
 ﻿using UnityEngine;
 
+
+
+
+
 public class TransitionShaderController : MonoBehaviour
 {
     public Material transitionMaterial; // 적용할 Shader Material
@@ -13,7 +17,7 @@ public class TransitionShaderController : MonoBehaviour
 
     void Start()
     {
-        // 게임 시작 시 자동으로 화면 닫히는 효과 실행 (페이드 인)
+        // 게임 시작 시 자동으로 화면 열리는 효과 페이드 아웃
         StartFadeOut();
     }
 
