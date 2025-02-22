@@ -78,12 +78,13 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
     <Compile Include="Assets\Scripts\NewBehaviourScript.cs" />
     <Compile Include="Assets\Scripts\LJH\Manager\ChoiceManager.cs" />
+    <Compile Include="Assets\Scripts\Manager\VariableManager.cs" />
     <Compile Include="Assets\Scripts\PJG\TextAnimationScripts.cs" />
     <Compile Include="Assets\Scripts\LJH\Settings\Title\UI\HoverChangeColor.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_ExampleScript_01.cs" />
-    <Compile Include="Assets\Scripts\LJH\Manager\VariableManager.cs" />
+    <Compile Include="Assets\Scripts\Manager\CharacterImageManager.cs" />
     <Compile Include="Assets\Scripts\LJH\Settings\Title\TitleScreen.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\DropdownSample.cs" />
@@ -94,7 +95,6 @@
     <Compile Include="Assets\Scripts\LJH\Camera\CameraFilterManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />
-    <Compile Include="Assets\Scripts\LJH\Manager\FileManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ShaderPropAnimator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
@@ -110,6 +110,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_PhoneNumberValidator.cs" />
     <Compile Include="Assets\Scripts\PJG\MainSceneGameManager.cs" />
     <Compile Include="Assets\Scripts\Manager\DirectingManager.cs" />
+    <Compile Include="Assets\Scripts\Manager\FileManager.cs" />
     <Compile Include="Assets\Scenes\박종혁 작업영역\Scripts\TitleSelectionEffect.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
     <Compile Include="Assets\Scripts\LJH\Manager\EnemyManager.cs" />

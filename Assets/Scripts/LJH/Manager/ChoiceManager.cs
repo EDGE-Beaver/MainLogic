@@ -1,4 +1,4 @@
-﻿/*
+/*
  * 📌 ChoiceManager
  * 
  * 📜 선택지 파일 구조
@@ -48,6 +48,14 @@ using System.Linq;
 using System.Collections;
 public class ChoiceManager : MonoBehaviour
 {
+    [Header("변수 매니저")]
+    public GameObject variableManagerObj;//변수 매니저가 들어있는 오브젝트
+    private VariableManager variableManager;//실제 변수 매니저
+
+    [Header("다이얼로그 매니저")]
+    public GameObject dialogueManagerObj;
+    private DialogueManager dialogueManager;
+    
     [Header("선택지 파일 (Inspector에서 지정 가능)")]
     public string choiceFileName;
 
@@ -59,18 +67,18 @@ public class ChoiceManager : MonoBehaviour
     private string[] nextFiles = new string[4];
     private int[] nextIndexes = new int[4];
 
-    private DialogueManager dialogueManager;
     private string[] variableChanges = new string[4];
     void Awake()
     {
         if(dialogueManager == null){
             dialogueManager = FindObjectOfType<DialogueManager>();
         }
+
+        choicePanel.SetActive(false);//꺼버리고
     }
 
     void Start()
     {
-        choicePanel.SetActive(false);
 
         if (choiceButtons.Length != choiceTexts.Length)
         {
@@ -230,7 +238,7 @@ public class ChoiceManager : MonoBehaviour
             string[] parts = variableChanges[index].Split('+');
             if (parts.Length == 2 && int.TryParse(parts[1], out int value))
             {
-                VariableManager.Instance.ModifyVariable(parts[0], value);
+                variableManager.ModifyVariable(parts[0], value);
                 Debug.Log($"✅ 변수 변경: {parts[0]} += {value}");
             }
             else

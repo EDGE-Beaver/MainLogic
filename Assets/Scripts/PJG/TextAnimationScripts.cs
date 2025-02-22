@@ -34,9 +34,10 @@ public class TextAnimationScripts : MonoBehaviour
     private string fullText;
     private string displayText;
     private bool isTyping = false;
+    public bool IsTyping => isTyping;
     private static readonly Regex tagRegex = new Regex(@"[\\$@#*%^]-?\d+(\.\d+)?", RegexOptions.Compiled);
 
-    public bool IsTyping => isTyping;
+    
 
     public void SetText(string newText, AudioClip voiceClip, System.Action onComplete, System.Action onTrigger)
     {

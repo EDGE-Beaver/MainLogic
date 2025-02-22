@@ -77,14 +77,21 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System.IO;
+using System;
+using System.Text.RegularExpressions;
+
 
 public class DialogueManager : MonoBehaviour
 {
     [Header("파일 매니저 (Inspector에서 지정)")]
     public FileManager fileManager;
 
-    [Header("끄덕 애니메이션 효과 (Inspector에서 지정)")]
-    public NodEffect nodEffect;
+    [Header("사운드 매니저(Insperctor에서 지정)")]
+    public SoundManager soundManager;
+
+    [Header("이미지 매니저(인스펙터에서 지정)")]
+    public CharacterImageManager characterImageManager;
+
 
     [Header("UI 요소들")]
     public TMP_Text speakerText;
@@ -92,16 +99,10 @@ public class DialogueManager : MonoBehaviour
     public TMP_Text DialogueText;
     public Image characterImage;
     
-    [Header("텍스트 출력 설정")]
+    [Header("텍스트 애니메이션 설정")]
+    public TMP_Text targetText;
     [Range(0f, 0.1f)] public float defaultDelay = 0.05f;
-
-    [Header("오디오 소스")]
-    public AudioSource seAudioSource;
-    public AudioSource voiceAudioSource;
-    public AudioSource bgmAudioSource;
-
-    [Header("SE (효과음) 기본값")]
-    public AudioClip defaultSE;
+    public bool isTyping;
 
     [Header("선택지 패널")]
     public GameObject choicePanel;
@@ -109,7 +110,7 @@ public class DialogueManager : MonoBehaviour
 
     [Header("선택지 매니저 (Inspector에서 지정)")]
     public ChoiceManager choiceManager; // ✅ 선택지 매니저 연결
-    public FileManager filea = new FileManager();
+    public bool hasChoice; // 선택지 존재 관련
 
     private int currentIndex = 0;
     private bool isChoicePanelActive = false; // 선택지 패널 활성화 여부
@@ -170,6 +171,27 @@ public class DialogueManager : MonoBehaviour
         currentIndex++; // 🔹 선택지 이후 다음 인덱스로 이동
         ShowNextLine();
     }
+    /// <summary>
+    /// 대사 텍스트의 태그를 제거합니다. 
+    /// </summary>
+    /// <param name="dialogue">대사 텍스트입니다.</param>
+    private void RemoveDialogueTag(string dialogue){
+    //태그 제거 기능을 밖으로 빼놓음. 
+
+        // 🔹 `^` 기호 제거
+        if (dialogue.Contains("^"))
+        {
+            dialogue = dialogue.Replace("^", ""); // `^` 태그 제거
+            Debug.Log("✅ 끄덕 태그(^): 제거됨");
+        }
+        // 🔹 `%` 태그 제거 및 선택지 여부 확인
+        hasChoice = dialogue.Contains("%");
+        if (hasChoice)
+        {
+            dialogue = dialogue.Replace("%", ""); // `%` 태그 제거
+            Debug.Log("✅ 선택지 태그(%): 선택지 있음");
+        }
+    }
 
     public void ShowNextLine()
     {
@@ -177,6 +199,7 @@ public class DialogueManager : MonoBehaviour
 
         // 🔹 현재 데이터 가져오기
         var data = fileManager.GetRowByIndex(currentIndex);
+        //데이터 어떤 형식으로 가져오는지 확인해야 함
 
         if (data == null || data.Length == 0)
         {
@@ -187,42 +210,64 @@ public class DialogueManager : MonoBehaviour
         Debug.Log($"✅ ShowNextLine 호출 (currentIndex: {currentIndex})");
 
         // 🔹 데이터 필드 분리
-        string speaker = data[0]?.Trim();
-        string dialogue = data[1]?.Trim();
+
+         // 🔹 UI 텍스트 설정
+        
+        
+        string speaker = data[0]?.Trim();//파일에서 읽어서 실제로 적용할, 말하는 사람
+        speakerText.text = string.IsNullOrEmpty(speaker) ? " " : speaker;//null일땐 null로, 아닐땐 텍스트로. 
+
+        string dialogue = data[1]?.Trim();//파일에서 읽어서 실제로 적용할, 대사
+        RemoveDialogueTag(dialogue);//다이얼로그 데이터 내부 태그 제거
+
         string se = data[2]?.Trim();
-        string image = data[3]?.Trim();
-        string choiceField = data[4]?.Trim();  // 선택지 파일명:ID (공백이면 선택지 없음)
-        string voice = data[5]?.Trim();
+         // 🔹 효과음 재생 재생
+        if (!string.IsNullOrEmpty(se))
+        {
+           soundManager.SetCurrentSe(se);
+           soundManager.PlayCurrentSe();
+        }
+
         string bgm = data[6]?.Trim();
-        string animationKeyword = data.Length > 7 ? data[7]?.Trim() : "";
+         // 🔹 배경음악(BGM) 재생
+        if (!string.IsNullOrEmpty(bgm))
+        {
+           soundManager.SetCurrentBgm(bgm);
+           soundManager.PlayCurrentBgm();
+        }
+
+        string image = data[3]?.Trim();
+        //이미지쪽 갈아엎어야 함. 
+        if (!string.IsNullOrEmpty(image))
+        {
+            var sprite = Resources.Load<Sprite>($"Graphics/Image/{image}");
+            if (sprite != null)
+            {
+                characterImage.sprite = sprite;
+            }
+            else
+            {
+                Debug.LogWarning($"⚠️ 이미지 파일을 찾을 수 없습니다: {image}");
+            }
+        }
+        
+        string choiceField = data[4]?.Trim();  // 선택지 파일명:ID (공백이면 선택지 없음)
+        hasChoice = choiceField != null? true: false;//선택지가 존재하는지, 존재하지 않는지 확인. 
+
+        string voice = data[5]?.Trim();//보이스(넣을 수 있을지도?)
+        soundManager.SetCurrentVoice(voice);//현재 보이스 설정
+        
+
+        string animationKeyword = data.Length > 7 ? data[7]?.Trim() : "";//애니메이션 키보드
 
         Debug.Log($"✅ 대사 정보 - 화자: {speaker}, 대사: {dialogue}, 선택지 데이터: {choiceField}");
 
-        // 🔹 UI 텍스트 설정
-        speakerText.text = string.IsNullOrEmpty(speaker) ? " " : speaker;
-        // 🔹 `^` 기호 제거
-        if (dialogue.Contains("^"))
-        {
-            dialogue = dialogue.Replace("^", ""); // `^` 태그 제거
-            Debug.Log("✅ 끄덕 태그(^): 제거됨");
-        }
-        // 🔹 `%` 태그 제거 및 선택지 여부 확인
-        bool hasChoice= dialogue.Contains("%");
-        if (hasChoice)
-        {
-            dialogue = dialogue.Replace("%", ""); // `%` 태그 제거
-            Debug.Log("✅ 선택지 태그(%): 선택지 있음");
-        }
 
-        // 🔹 음성 클립 로드
-        var voiceClip = !string.IsNullOrEmpty(voice)
-            ? Resources.Load<AudioClip>($"Audio/Voice/{voice}")
-            : null;
 
         // 🔹 선택지 관련 변수 초기화
         string choiceFile = null;
         int choiceID = -1;
-      
+    
         if (!string.IsNullOrEmpty(choiceField))
         {
             if (choiceField.Contains(":"))
@@ -277,88 +322,164 @@ public class DialogueManager : MonoBehaviour
             }
         }
 
+        /*[실제로 다이얼로그에 출력시키는 부분]*/
+
+        string displayText = RemoveTags(dialogue);//실제로 작동시킬 텍스트
+        targetText.text = "";
+        StartCoroutine(TypeText(dialogue, onCompleteTyping, OnTriggerTyping));//전달
+
+
+
         // 🔹 텍스트 애니메이션 실행 (도중 `%` 태그를 만나면 선택지 패널 호출)
-        textAnimationScript.SetText(dialogue, voiceClip,
-            () =>
-            {
-                Debug.Log($"✅ 대사 출력 완료 (currentIndex: {currentIndex})");
-
-                if (hasChoice)
-                {
-                    Debug.Log($"✅ 선택지 패널 호출 준비: choiceFile = {choiceFile}, choiceID = {choiceID}");
-                    StartCoroutine(ShowChoicePanel(choiceFile, choiceID));
-                    isChoicePanelActive = true;
-                }
-                else
-                {
-                    isWaitingForText = false;
-                    Debug.Log("✅ 선택지가 없음. 키 입력 대기 중.");
-                }
-            },
-            () =>
-            {
-                // 🎯 **텍스트 애니메이션 도중 `%` 태그를 만나면 즉시 선택지를 띄움**
-                if (hasChoice)
-                {
-                    Debug.Log("🎯 % 태그 감지됨 → 선택지 패널 즉시 띄우기");
-                    StartCoroutine(ShowChoicePanel(choiceFile, choiceID));
-                    isChoicePanelActive = true;
-                }
-            });
-
-
-        // 🔹 효과음(SE) 재생
-        if (!string.IsNullOrEmpty(se))
-        {
-            var seClip = Resources.Load<AudioClip>($"Audio/SE/{se}");
-            if (seClip != null)
-            {
-                seAudioSource.PlayOneShot(seClip);
-            }
-            else
-            {
-                Debug.LogWarning($"⚠️ SE 파일을 찾을 수 없습니다: {se}");
-            }
-        }
+    
 
         // 🔹 캐릭터 이미지 설정
-        if (!string.IsNullOrEmpty(image))
-        {
-            var sprite = Resources.Load<Sprite>($"Graphics/Image/{image}");
-            if (sprite != null)
-            {
-                characterImage.sprite = sprite;
-            }
-            else
-            {
-                Debug.LogWarning($"⚠️ 이미지 파일을 찾을 수 없습니다: {image}");
-            }
-        }
+        
 
-        // 🔹 배경음악(BGM) 재생
-        if (!string.IsNullOrEmpty(bgm))
-        {
-            var bgmClip = Resources.Load<AudioClip>($"Audio/BGM/{bgm}");
-            if (bgmClip != null && bgmClip != bgmAudioSource.clip)
-            {
-                bgmAudioSource.clip = bgmClip;
-                bgmAudioSource.Play();
-            }
-        }
-
+   
         // 🔹 애니메이션 처리
+        //2/22 -> 나중에 수정할 것(어떤 캐릭터 이미지에 수행할 것인가를 결정하도록. )
         if (!string.IsNullOrEmpty(animationKeyword) && animationKeyword == "끄덕")
         {
-            if (nodEffect != null)
-            {
-                Debug.Log("✅ 끄덕 애니메이션 실행");
-                nodEffect.StartNod();
-            }
+            characterImageManager.nodEffect.StartNod();
         }
     }
+    private void onCompleteTyping(){
+        Debug.Log($"✅ 대사 출력 완료 (currentIndex: {currentIndex})");
+        if (hasChoice)
+        {
+            Debug.Log($"✅ 선택지 패널 호출 준비: choiceFile = {choiceFile}, choiceID = {choiceID}");
+            StartCoroutine(ShowChoicePanel(choiceFile, choiceID));
+            isChoicePanelActive = true;
+        }
+        else
+        {
+            isWaitingForText = false;
+            Debug.Log("✅ 선택지가 없음. 키 입력 대기 중.");
+        }
+
+    }
+    private void OnTriggerTyping(){
+        // 🎯 **텍스트 애니메이션 도중 `%` 태그를 만나면 즉시 선택지를 띄우기 위한 부분**
+        if (hasChoice)
+        {
+            Debug.Log("🎯 % 태그 감지됨 → 선택지 패널 즉시 띄우기");
+            StartCoroutine(ShowChoicePanel(choiceFile, choiceID));
+            isChoicePanelActive = true;
+        }
+    
+    }
+    /*[텍스트 애니메이션 부분]*/
+    private static readonly Regex tagRegex = new Regex(@"[\\$@#*%^]-?\d+(\.\d+)?", RegexOptions.Compiled);
+
+    private string RemoveTags(string input)
+    {
+        
+        return tagRegex.Replace(input, "");
+    }
+    IEnumerator TypeText(string fullText, System.Action onComplete, System.Action onTrigger)
+    {
+        isTyping = true;
+        targetText.text = "";
+        float currentDelay = defaultDelay;
+
+        for (int i = 0; i < fullText.Length; i++)
+        {
+            char c = fullText[i];
+
+            // 속도 변경 (\숫자)
+            if (c == '\\')
+            {
+                int endIdx = i + 1;
+                while (endIdx < fullText.Length && (char.IsDigit(fullText[endIdx]) || fullText[endIdx] == '.'))
+                    endIdx++;
+
+                if (float.TryParse(fullText.Substring(i + 1, endIdx - (i + 1)), out float newSpeed))
+                    currentDelay = defaultDelay * newSpeed;
+
+                i = endIdx - 1;
+                continue;
+            }
+
+            // 대기 ($숫자)
+            if (c == '$')
+            {
+                int endIdx = i + 1;
+                while (endIdx < fullText.Length && (char.IsDigit(fullText[endIdx]) || fullText[endIdx] == '.'))
+                    endIdx++;
+
+                if (float.TryParse(fullText.Substring(i + 1, endIdx - (i + 1)), out float waitTime))
+                    yield return new WaitForSeconds(waitTime);
+
+                i = endIdx - 1;
+                continue;
+            }
+
+            // 크기 변경 (@숫자)
+            if (c == '@')
+            {
+                int endIdx = i + 1;
+                while (endIdx < fullText.Length && (char.IsDigit(fullText[endIdx]) || fullText[endIdx] == '.'))
+                    endIdx++;
+
+                if (float.TryParse(fullText.Substring(i + 1, endIdx - (i + 1)), out float newSize))
+                    targetText.fontSize *= newSize;
+
+                i = endIdx - 1;
+                continue;
+            }
+
+            // 피치 변경 (#숫자)
+            if (c == '#')
+            {
+                // int endIdx = i + 1;
+                // while (endIdx < fullText.Length && (char.IsDigit(fullText[endIdx]) || fullText[endIdx] == '-' || fullText[endIdx] == '.'))
+                //     endIdx++;
+
+                // if (float.TryParse(fullText.Substring(i + 1, endIdx - (i + 1)), out float pitchChange) && voiceAudioSource != null)
+                // {
+                //     voiceAudioSource.pitch += pitchChange; // 🎯 기존 피치 값에 추가
+                //     voiceAudioSource.pitch = Mathf.Clamp(voiceAudioSource.pitch, -3f, 3f); // 🎯 피치 범위 제한 (-3 ~ 3)
+                // }
+
+                // i = endIdx - 1;
+                // continue;
+            }
 
 
+            // 볼륨 변경 (*숫자)
+            if (c == '*')
+            {
+                // int endIdx = i + 1;
+                // while (endIdx < fullText.Length && (char.IsDigit(fullText[endIdx]) || fullText[endIdx] == '.'))
+                //     endIdx++;
 
+                // if (float.TryParse(fullText.Substring(i + 1, endIdx - (i + 1)), out float newVolume) && voiceAudioSource != null)
+                //     voiceAudioSource.volume = Mathf.Clamp01(newVolume);
+
+                // i = endIdx - 1;
+                // continue;
+            }
+
+            // 선택지 (%n) 또는 끄덕 (^n)
+            if (c == '%' || c == '^')
+            {
+                onTrigger?.Invoke();
+                continue;
+            }
+
+            // 한 글자씩 출력
+            targetText.text += c;
+
+            // Voice 효과음 재생
+            soundManager.PlayCurrentVoice();//보이스 설정은 저번에 다 해뒀음. 
+
+            yield return new WaitForSeconds(currentDelay);
+        }
+
+        isTyping = false;
+        onComplete?.Invoke();
+    }
 
     IEnumerator ShowChoicePanel(string choiceFile, int choiceID)
     {
@@ -404,8 +525,6 @@ public class DialogueManager : MonoBehaviour
 
     public void SelectChoice(int choiceIndex)
     {
-        //골랐을 때 여기로 넘어간다. 
-        //버튼을 끄는 것이다.  
         choicePanel.SetActive(false);
         isChoicePanelActive = false;
     }
