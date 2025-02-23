@@ -8,8 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Water
-  m_Shader: {fileID: -6465566751694194690, guid: ec8205e5e1a0d4a49ac539b4988a109f,
-    type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: ec8205e5e1a0d4a49ac539b4988a109f, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -67,8 +66,8 @@ Material:
     - Vector1_DD119790: 1
     - _EnableExternalAlpha: 0
     m_Colors:
-    - Color_4BDDB20F: {r: 0.5471698, g: 0.11098256, b: 0.11098256, a: 1}
-    - Color_A0D31A6A: {r: 0.5377358, g: 0.33129618, b: 0.28662333, a: 1}
+    - Color_4BDDB20F: {r: 0.039546248, g: 0.039546248, b: 0.039546248, a: 1}
+    - Color_A0D31A6A: {r: 0.21960786, g: 0.21960786, b: 0.21960786, a: 1}
     - Vector2_2F7B3F9F: {r: 0.1, g: 1, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
