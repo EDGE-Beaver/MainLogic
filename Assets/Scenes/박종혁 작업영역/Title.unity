@@ -5614,7 +5614,7 @@ MonoBehaviour:
   zoomSpeed: 5
   fadeoutBlack: {fileID: 1201055659}
   fadeoutBlack_QUIT: {fileID: 795465719}
-  fadeTime: 5
+  fadeTime: 1
   book_whole: {fileID: 929130452}
   book_title: {fileID: 409633419}
   book_load: {fileID: 471036527}
