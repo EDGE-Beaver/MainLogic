@@ -1,4 +1,7 @@
 /*
+
+* 어차피 인덱스 단위로 읽을 것 같은데, choiceid가 필요할까? 
+그냥 그 라인을 찾아가게 하면 되는거 아닐까? 
  * 📌 ChoiceManager
  * 
  * 📜 선택지 파일 구조
@@ -55,12 +58,14 @@ public class ChoiceManager : MonoBehaviour
     [Header("다이얼로그 매니저")]
     public GameObject dialogueManagerObj;
     private DialogueManager dialogueManager;
-    
+
     [Header("선택지 파일 (Inspector에서 지정 가능)")]
     public string choiceFileName;
 
     [Header("UI 요소")]
     public GameObject choicePanel;
+    public bool isChoicePanelActive;//패널이 켜져 있는지 꺼져 있는지 식별
+
     public Button[] choiceButtons;
     public TMP_Text[] choiceTexts;
     public Transform choiceContainer; 
@@ -68,6 +73,47 @@ public class ChoiceManager : MonoBehaviour
     private int[] nextIndexes = new int[4];
 
     private string[] variableChanges = new string[4];
+    IEnumerator ShowChoicePanel(string choiceFile, int choiceID)
+    {
+        //선택지 키는 곳. 
+        Debug.Log($"📂 ShowChoicePanel 호출됨: choiceFile = {choiceFile}, choiceID = {choiceID}");
+
+        yield return new WaitForSeconds(0.5f);
+
+        choicePanel.SetActive(true);
+        LoadChoices(choiceFile, choiceID);
+        isChoicePanelActive = true;
+        Debug.Log("✅ 선택지 패널 활성화 완료");
+    }
+
+    public void SetChoice(string choiceField){
+        if(!choiceField.Contains(":"))
+        {
+            Debug.LogError($"⚠️ 선택지 필드에 ':'가 없습니다: {choiceField}");
+        }
+        else
+        {
+            string[] choiceParts = choiceField.Split(':'); // "파일명:ID" 형식
+            if (choiceParts.Length == 2)
+            {
+                string choiceFile = choiceParts[0].Trim();
+                int choiceID;
+                if (int.TryParse(choiceParts[1].Trim(), out choiceID))
+                {
+                    Debug.Log($"✅ 선택지 파싱 성공: choiceFile = {choiceFile}, choiceID = {choiceID}");
+                }
+                else
+                {
+                    Debug.LogError($"⚠️ 선택지 ID 변환 실패: {choiceParts[1]}");
+                }
+            }
+            else
+            {
+                Debug.LogError($"⚠️ 선택지 필드 형식이 잘못되었습니다: {choiceField}");
+            }
+        }
+        //초이스 선택하는 기능. 구현 예정. 
+    }
     void Awake()
     {
         if(dialogueManager == null){
@@ -75,10 +121,22 @@ public class ChoiceManager : MonoBehaviour
         }
 
         choicePanel.SetActive(false);//꺼버리고
+        //다이얼로그 매니저에서 옮겨온 꺼버리는 메서드.
+        foreach (var button in choiceButtons)
+        {
+            int index = System.Array.IndexOf(choiceButtons, button);
+            button.onClick.AddListener(() => SelectChoice(index));
+        }
+    }
+    public void SelectChoice(int choiceIndex)
+    {
+        choicePanel.SetActive(false);
+        isChoicePanelActive = false;
     }
 
     void Start()
     {
+        
 
         if (choiceButtons.Length != choiceTexts.Length)
         {
@@ -128,6 +186,7 @@ public class ChoiceManager : MonoBehaviour
         Debug.Log($"📂 선택지 파일 {choiceFileName} 로드 성공. 총 {lines.Length}줄");
 
         string selectedLine = lines.FirstOrDefault(line => line.Trim().StartsWith(choiceID.ToString() + " |"));
+        //이런 용어로 시작하는것 찾기. 
         if (string.IsNullOrEmpty(selectedLine))
         {
             Debug.LogError($"⚠️ 선택지 파일 {choiceFileName}에서 ID {choiceID}를 찾을 수 없습니다!");

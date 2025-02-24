@@ -85,7 +85,7 @@ using UnityEngine;
 
 public class FileManager : MonoBehaviour
 {
-    [Header("텍스트 파일 이름 목록 (Resources 폴더 기준)")]
+    [Header("텍스트 파일 경로 목록 (Resources 폴더 기준)")]
     public List<string> textFilePaths;
     public List<string> choiceFilePaths;
 
@@ -121,6 +121,10 @@ public class FileManager : MonoBehaviour
     /// </summary>
     private Dictionary<string, List<string[]>> loadedData = new Dictionary<string, List<string[]>>();
     /// <summary>
+    /// 중복 검사 / 존재 검사용 세트
+    /// </summary>
+    public HashSet<string> TextFileNameSet = new HashSet<string>();
+    /// <summary>
     /// string : 파일 이름, List : 파일 저장 형태(스트링 형태로 저장)
     /// <para>
     ///  * 인덱스 | 선택지 내용 | 선택지에 따른 변수 변경 | 다음으로 읽을 파일(분기 결과) | 다음으로 읽을 파일의 인덱스
@@ -130,6 +134,10 @@ public class FileManager : MonoBehaviour
     /// </para>
     /// </summary>
     private Dictionary<string, List<string[]>> loadedChoiceData = new Dictionary<string, List<string[]>>();
+    /// <summary>
+    /// 중복 검사용 / 이름 검사용 세트. 
+    /// </summary>
+    public HashSet<string> choiceFileNameSet = new HashSet<string>();
     void Awake()
     {
         //텍스트 파일 읽어오기
@@ -174,6 +182,7 @@ public class FileManager : MonoBehaviour
             string fileName = Path.GetFileNameWithoutExtension(filePath); 
 
             loadedData[fileName] = dataList;
+            TextFileNameSet.Add(fileName);//해시셋에 저장
 
             
             // if (string.IsNullOrEmpty(currentFile))
@@ -196,7 +205,7 @@ public class FileManager : MonoBehaviour
             TextAsset textAsset = Resources.Load<TextAsset>(filePath);
             if (textAsset == null)
             {
-                Debug.LogError($"🚨 텍스트 파일을 찾을 수 없습니다, LoadAllTextFiles에서의 에러 : {filePath}");
+                Debug.LogError($"🚨 선택지 파일을 찾을 수 없습니다, LoadAllChoiceFiles에서의 에러 : {filePath}");
                 continue;
             }
 
@@ -214,16 +223,10 @@ public class FileManager : MonoBehaviour
             
             string fileName = Path.GetFileNameWithoutExtension(filePath); 
 
-            loadedData[fileName] = dataList;
+            loadedChoiceData[fileName] = dataList;
+            choiceFileNameSet.Add(fileName);
 
-            
-            // if (string.IsNullOrEmpty(currentFile))
-            // {
-            //     currentFile = filePath;
-            // }
-            //currentFile은 SetCurrentfile에서 대체 가능하다고 생각했기 때문에 지움. 
-
-            Debug.Log($"📂 텍스트 파일 로드 완료: {fileName}");
+            Debug.Log($"📂 선택지 파일 로드 완료: {fileName}");
        }
     }
 
@@ -285,37 +288,27 @@ public class FileManager : MonoBehaviour
         return dataList[index];
     }
     /// <summary>
-    /// 현재 파일의 전체 길이를 읽어오는 함수입니다. 
-    /// <para>
-    /// CurrentFIle에서 데이터를 리턴합니다. 만일 변경을 원하신다면 SetCurrentfile 하십시오.
-    /// </para>
+    /// 
     /// </summary>
-    /// <param name="index">몇번 인덱스의 정보를 리턴할지 정합니다.</param>
-    /// <returns>화자 | 데이터 | 등등.. 으로 이루어진 string 배열을 리턴합니다. </returns>
-    public string[] GetChoiceRowByIndex(int index)
+    /// <param name="index"></param>
+    /// <returns></returns>
+
+     public string[] GetChoiceRowByIndex(int index)
     {
-        // if (!loadedChoiceData.ContainsKey(fileName))
-        // {
-        //     Debug.LogWarning($"⚠️ 파일 '{fileName}'이(가) 로드되지 않았습니다.");
-        //     return new string[] { "" };
-        // }
-        //choicefile도 비슷한 이유로 삭제
-        if(currentChoiceFile == null){
+        
+        if(currentFile == null){
             Debug.LogError("GetChoiceRowByIndex에서의 오류");
             Debug.LogError("CurrentChoiceFile이 존재하지 않습니다.");
         }
-
-        var dataList = loadedData[currentChoiceFile];
-
+        var dataList = loadedChoiceData[currentFile];
         if (index < 0 || index >= dataList.Count)
         {
-            Debug.LogWarning($"⚠️ '{currentChoiceFile}' 파일의 잘못된 인덱스 요청: {index}");
+            Debug.LogWarning($"⚠️ '{currentFile}' 파일의 잘못된 인덱스 요청: {index}");
             return new string[] { "" };
         }
-
         return dataList[index];
     }
-    
+
     /// <summary>
     /// currentFile의 길이를 리턴합니다. null을 가질 수 있습니다.
     /// </summary>
@@ -328,7 +321,7 @@ public class FileManager : MonoBehaviour
             Debug.LogError("CurrentFile이 존재하지 않습니다");
             return null;
         }
-        //테스트 오나료. 
+        //테스트 완료.
     }
     public int? GetCurrentChoiceFileLength(){
         if(currentFile != null ){
@@ -344,15 +337,15 @@ public class FileManager : MonoBehaviour
     /// </summary>
     /// <returns>이 FileManage가 가지고 있는 모든 파일들의 이름이 담긴 String 배열입니다.</returns>
     public string[] GetAllDialogFileNameItHave(){
-        var thisTextFile = this.loadedData.Keys.ToArray();
+        var thisTextFile = loadedData.Keys.ToArray();
         return thisTextFile;
     }
     /// <summary>
-    /// 현재 씬에서 이 FilaManager가 가지고 있는 모든 텍스트 파일 이름을 리턴합니다. 
+    /// 현재 씬에서 이 FilaManager가 가지고 있는 모든 선택지 파일 이름을 리턴합니다. 
     /// </summary>
     /// 
      public string[] GetAllChoiceFileNameItHave(){
-        var thisChoiceFile = this.loadedChoiceData.Keys.ToArray();
+        var thisChoiceFile = loadedChoiceData.Keys.ToArray();
         return thisChoiceFile;
     }
 }
