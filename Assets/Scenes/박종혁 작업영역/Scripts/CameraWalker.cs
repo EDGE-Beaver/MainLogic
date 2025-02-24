@@ -50,18 +50,18 @@ public class CameraWalker : MonoBehaviour
 
         //Lerp 무한지속 방지턱(딱히 의미 없어짐)
         speedCheck1 = cam.velocity.sqrMagnitude;
-        if(cam.velocity.sqrMagnitude <= 0.00001 && speedCheck1 < speedCheck2)
+        if (cam.velocity.sqrMagnitude <= 0.00001 && speedCheck1 < speedCheck2)
         {
             cam.transform.localPosition = targetPos;
         }
         speedCheck2 = speedCheck1;
 
         alphaCheck1 = can.alpha;
-        if(can.alpha <= 0.01f && alphaCheck1 < alphaCheck2)
+        if (can.alpha <= 0.01f && alphaCheck1 < alphaCheck2)
         {
             can.alpha = 0f;
         }
-        if(can.alpha >= 0.95f && alphaCheck1 > alphaCheck2)
+        if (can.alpha >= 0.95f && alphaCheck1 > alphaCheck2)
         {
             can.alpha = 1f;
         }
@@ -173,38 +173,40 @@ public class CameraWalker : MonoBehaviour
         if (titleIntro)
         {
             titleIntro = false;
+            StopCoroutine(FadeInEffect_Title());
             StartCoroutine(FadeInEffect_Title());
         }
         else
         {
+            StopCoroutine(FadeInEffect());
             StartCoroutine(FadeInEffect());
         }
     }
-    IEnumerator FadeInEffect()
+    IEnumerator FadeInEffect() //여기 고쳐야됨@@@@@@@@@@@@@@@@@@@@@
     {
         fadeoutBlack.SetActive(true);
         can.interactable = false;
         can.blocksRaycasts = false;
         can.alpha = 1f;
         float elapsedTime = 0f;
-        while (elapsedTime < fadeTime)
+        while (elapsedTime < fadeTime * 500f)
         {
-            can.alpha = Mathf.Lerp(can.alpha, 0f, elapsedTime / fadeTime);
+            can.alpha = Mathf.Lerp(can.alpha, 0f, elapsedTime / (fadeTime * 500f));
             elapsedTime += Time.deltaTime;
             yield return null;
         }
         fadeoutBlack.SetActive(false);
     }
-    IEnumerator FadeInEffect_Title()
+    IEnumerator FadeInEffect_Title() //게임 처음 시작할때용 페이드인
     {
         fadeoutBlack.SetActive(true);
         can.interactable = false;
         can.blocksRaycasts = false;
         can.alpha = 1f;
         float elapsedTime = 0f;
-        while (elapsedTime < (fadeTime * 1000))
+        while (elapsedTime < (fadeTime * 1000f))
         {
-            can.alpha = Mathf.Lerp(can.alpha, 0f, elapsedTime / (fadeTime * 1000));
+            can.alpha = Mathf.Lerp(can.alpha, 0f, elapsedTime / (fadeTime * 1000f));
             elapsedTime += Time.deltaTime;
             yield return null;
         }
@@ -214,29 +216,42 @@ public class CameraWalker : MonoBehaviour
     //페이드 아웃
     public void FadeOut()
     {
-        StartCoroutine(FadeOutEffect());
+        if (onGameQuit)
+        {
+            StopCoroutine(FadeOutEffect_Quit());
+            StartCoroutine(FadeOutEffect_Quit());
+        }
+        else
+        {
+            onGameQuit = false;
+            StopCoroutine(FadeOutEffect());
+            StartCoroutine(FadeOutEffect());
+        }
     }
-    IEnumerator FadeOutEffect() //여기 고쳐야됨
+    IEnumerator FadeOutEffect() //여기 고쳐야됨@@@@@@@@@@@@@@@@@@@@@
     {
+        fadeoutBlack.SetActive(true);
+        can.interactable = true;
+        can.blocksRaycasts = true;
+        can.alpha = 0f;
         float elapsedTime = 0f;
         while (elapsedTime < fadeTime)
         {
-            if (onGameQuit) //게임 종료용 페이드아웃
-            {
-                fadeoutBlack_QUIT.SetActive(true);
-                canq.interactable = true;
-                canq.blocksRaycasts = true;
-                canq.alpha = 0f;
-                canq.alpha = Mathf.MoveTowards(can.alpha, 1f, elapsedTime  * 4f);
-            }
-            else //일반적인 케이스
-            {
-                fadeoutBlack.SetActive(true);
-                can.interactable = true;
-                can.blocksRaycasts = true;
-                can.alpha = 0f;
-                can.alpha = Mathf.Lerp(can.alpha, 1f, elapsedTime / fadeTime);
-            }
+            can.alpha = Mathf.Lerp(can.alpha, 1f, elapsedTime / fadeTime * 100);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+    }
+    IEnumerator FadeOutEffect_Quit() //게임 종료용 페이드아웃
+    {
+        fadeoutBlack_QUIT.SetActive(true);
+        canq.interactable = true;
+        canq.blocksRaycasts = true;
+        canq.alpha = 0f;
+        float elapsedTime = 0f;
+        while (elapsedTime < fadeTime / 4f)
+        {
+            canq.alpha = Mathf.MoveTowards(canq.alpha, 1f, elapsedTime / (fadeTime / 4f));
             elapsedTime += Time.deltaTime;
             yield return null;
         }
@@ -266,7 +281,7 @@ public class CameraWalker : MonoBehaviour
     public GameObject book_load;
     public GameObject book_credit;
     public GameObject book_setting;
-    
+
     public void ToLoad()
     {
         book_whole.SetActive(true);
@@ -304,5 +319,12 @@ public class CameraWalker : MonoBehaviour
         book_whole.SetActive(false);
     }
 
+    /*[Header("===== 4. 타이틀 메뉴별 화면 전환 =====")]
 
+    public GameObject selectedPhoto;
+    
+    public void ShowPhoto(GameObject sel)
+    {
+
+    }*/
 }
