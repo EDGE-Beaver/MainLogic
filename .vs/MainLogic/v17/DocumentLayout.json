@@ -3,6 +3,22 @@
   "WorkspaceRootPath": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Assets\\Scenes\\\uBC15\uC885\uD601 \uC791\uC5C5\uC601\uC5ED\\Scripts\\CameraWalker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scenes\\\uBC15\uC885\uD601 \uC791\uC5C5\uC601\uC5ED\\Scripts\\CameraWalker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Library\\PackageCache\\com.unity.ugui@1.0.0\\Runtime\\EventSystem\\Raycasters\\PhysicsRaycaster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Library\\PackageCache\\com.unity.ugui@1.0.0\\Runtime\\EventSystem\\Raycasters\\PhysicsRaycaster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Assets\\Scenes\\\uBC15\uC885\uD601 \uC791\uC5C5\uC601\uC5ED\\Scripts\\TitleSelectionEffect.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scenes\\\uBC15\uC885\uD601 \uC791\uC5C5\uC601\uC5ED\\Scripts\\TitleSelectionEffect.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Library\\PackageCache\\com.unity.render-pipelines.universal@14.0.10\\Runtime\\2D\\Light2DManager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Library\\PackageCache\\com.unity.render-pipelines.universal@14.0.10\\Runtime\\2D\\Light2DManager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Assets\\Scripts\\LJH\\Manager\\FileManager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts\\LJH\\Manager\\FileManager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -108,7 +124,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 10,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -120,20 +136,71 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "TestScripts.cs",
-              "DocumentMoniker": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Assets\\TestScripts.cs",
-              "RelativeDocumentMoniker": "Assets\\TestScripts.cs",
-              "ToolTip": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Assets\\TestScripts.cs*",
-              "RelativeToolTip": "Assets\\TestScripts.cs*",
-              "ViewState": "AQIAAAQAAAAAAAAAAAAIwBoAAAAAAAAA",
+              "DocumentIndex": 1,
+              "Title": "PhysicsRaycaster.cs",
+              "DocumentMoniker": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Library\\PackageCache\\com.unity.ugui@1.0.0\\Runtime\\EventSystem\\Raycasters\\PhysicsRaycaster.cs",
+              "RelativeDocumentMoniker": "Library\\PackageCache\\com.unity.ugui@1.0.0\\Runtime\\EventSystem\\Raycasters\\PhysicsRaycaster.cs",
+              "ToolTip": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Library\\PackageCache\\com.unity.ugui@1.0.0\\Runtime\\EventSystem\\Raycasters\\PhysicsRaycaster.cs",
+              "RelativeToolTip": "Library\\PackageCache\\com.unity.ugui@1.0.0\\Runtime\\EventSystem\\Raycasters\\PhysicsRaycaster.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAADwvwAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-22T12:57:33.379Z",
+              "WhenOpened": "2025-02-23T04:36:04.184Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 0,
+              "Title": "CameraWalker.cs",
+              "DocumentMoniker": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Assets\\Scenes\\\uBC15\uC885\uD601 \uC791\uC5C5\uC601\uC5ED\\Scripts\\CameraWalker.cs",
+              "RelativeDocumentMoniker": "Assets\\Scenes\\\uBC15\uC885\uD601 \uC791\uC5C5\uC601\uC5ED\\Scripts\\CameraWalker.cs",
+              "ToolTip": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Assets\\Scenes\\\uBC15\uC885\uD601 \uC791\uC5C5\uC601\uC5ED\\Scripts\\CameraWalker.cs",
+              "RelativeToolTip": "Assets\\Scenes\\\uBC15\uC885\uD601 \uC791\uC5C5\uC601\uC5ED\\Scripts\\CameraWalker.cs",
+              "ViewState": "AQIAAPIAAAAAAAAAAAAIwAoBAAAlAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-23T04:28:02.536Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Light2DManager.cs",
+              "DocumentMoniker": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Library\\PackageCache\\com.unity.render-pipelines.universal@14.0.10\\Runtime\\2D\\Light2DManager.cs",
+              "RelativeDocumentMoniker": "Library\\PackageCache\\com.unity.render-pipelines.universal@14.0.10\\Runtime\\2D\\Light2DManager.cs",
+              "ToolTip": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Library\\PackageCache\\com.unity.render-pipelines.universal@14.0.10\\Runtime\\2D\\Light2DManager.cs",
+              "RelativeToolTip": "Library\\PackageCache\\com.unity.render-pipelines.universal@14.0.10\\Runtime\\2D\\Light2DManager.cs",
+              "ViewState": "AQIAABgAAAAAAAAAAAD4vyMAAACrAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-23T03:56:16.217Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "TitleSelectionEffect.cs",
+              "DocumentMoniker": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Assets\\Scenes\\\uBC15\uC885\uD601 \uC791\uC5C5\uC601\uC5ED\\Scripts\\TitleSelectionEffect.cs",
+              "RelativeDocumentMoniker": "Assets\\Scenes\\\uBC15\uC885\uD601 \uC791\uC5C5\uC601\uC5ED\\Scripts\\TitleSelectionEffect.cs",
+              "ToolTip": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Assets\\Scenes\\\uBC15\uC885\uD601 \uC791\uC5C5\uC601\uC5ED\\Scripts\\TitleSelectionEffect.cs",
+              "RelativeToolTip": "Assets\\Scenes\\\uBC15\uC885\uD601 \uC791\uC5C5\uC601\uC5ED\\Scripts\\TitleSelectionEffect.cs",
+              "ViewState": "AQIAAAgAAAAAAAAAAAAIwB4AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-23T03:31:39.853Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "TestScripts.cs",
+              "DocumentMoniker": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Assets\\TestScripts.cs",
+              "RelativeDocumentMoniker": "Assets\\TestScripts.cs",
+              "ToolTip": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Assets\\TestScripts.cs",
+              "RelativeToolTip": "Assets\\TestScripts.cs",
+              "ViewState": "AQIAAAQAAAAAAAAAAAAIwBoAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-22T12:57:33.379Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
               "Title": "ChoiceManager.cs",
               "DocumentMoniker": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Assets\\Scripts\\LJH\\Manager\\ChoiceManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\LJH\\Manager\\ChoiceManager.cs",
@@ -141,12 +208,11 @@
               "RelativeToolTip": "Assets\\Scripts\\LJH\\Manager\\ChoiceManager.cs",
               "ViewState": "AQIAAEMAAAAAAAAAAAD4v04AAABHAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-22T12:31:46.316Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-22T12:31:46.316Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 12,
               "Title": "Scene1Test 1.txt",
               "DocumentMoniker": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Assets\\Resources\\Scene1Test 1.txt",
               "RelativeDocumentMoniker": "Assets\\Resources\\Scene1Test 1.txt",
@@ -154,12 +220,11 @@
               "RelativeToolTip": "Assets\\Resources\\Scene1Test 1.txt",
               "ViewState": "AQIAAAsCAAAAAAAAAAAswBwCAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
-              "WhenOpened": "2025-02-18T13:20:51.248Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-18T13:20:51.248Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 5,
               "Title": "TransitionShaderController.cs",
               "DocumentMoniker": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Assets\\Scripts\\LJH\\Shader\\TransitionShaderController.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\LJH\\Shader\\TransitionShaderController.cs",
@@ -167,12 +232,11 @@
               "RelativeToolTip": "Assets\\Scripts\\LJH\\Shader\\TransitionShaderController.cs",
               "ViewState": "AQIAAAwAAAAAAAAAAAAIwBMAAAAoAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-14T16:36:08.637Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-14T16:36:08.637Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 8,
               "Title": "DialogueManager.cs",
               "DocumentMoniker": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Assets\\Scripts\\LJH\\Manager\\DialogueManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\LJH\\Manager\\DialogueManager.cs",
@@ -180,12 +244,11 @@
               "RelativeToolTip": "Assets\\Scripts\\LJH\\Manager\\DialogueManager.cs",
               "ViewState": "AQIAAKAAAAAAAAAAAAD4v6sAAABUAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-01T15:47:07.28Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-01T15:47:07.28Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 9,
               "Title": "BlendModeController.cs",
               "DocumentMoniker": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Assets\\Shader\\Materials\\BlendModes\\BlendModeController.cs",
               "RelativeDocumentMoniker": "Assets\\Shader\\Materials\\BlendModes\\BlendModeController.cs",
@@ -193,12 +256,11 @@
               "RelativeToolTip": "Assets\\Shader\\Materials\\BlendModes\\BlendModeController.cs",
               "ViewState": "AQIAAEcAAAAAAAAAAAAIwF0AAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-15T20:05:17.035Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-15T20:05:17.035Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 6,
               "Title": "SGController.cs",
               "DocumentMoniker": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Library\\PackageCache\\com.unity.shadergraph@14.0.10\\Editor\\Drawing\\Controllers\\SGController.cs",
               "RelativeDocumentMoniker": "Library\\PackageCache\\com.unity.shadergraph@14.0.10\\Editor\\Drawing\\Controllers\\SGController.cs",
@@ -206,12 +268,11 @@
               "RelativeToolTip": "Library\\PackageCache\\com.unity.shadergraph@14.0.10\\Editor\\Drawing\\Controllers\\SGController.cs",
               "ViewState": "AQIAAJgAAAAAAAAAAAAAAJcAAAAwAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-14T15:37:15.832Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-14T15:37:15.832Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 7,
               "Title": "Sprite-Lit-Default.shader",
               "DocumentMoniker": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Library\\PackageCache\\com.unity.render-pipelines.universal@14.0.10\\Shaders\\2D\\Sprite-Lit-Default.shader",
               "RelativeDocumentMoniker": "Library\\PackageCache\\com.unity.render-pipelines.universal@14.0.10\\Shaders\\2D\\Sprite-Lit-Default.shader",
@@ -219,25 +280,24 @@
               "RelativeToolTip": "Library\\PackageCache\\com.unity.render-pipelines.universal@14.0.10\\Shaders\\2D\\Sprite-Lit-Default.shader",
               "ViewState": "AQIAAEgAAAAAAAAAAAAAAA4AAAAFAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2025-02-14T14:49:57.704Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-14T14:49:57.704Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 4,
               "Title": "FileManager.cs",
               "DocumentMoniker": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Assets\\Scripts\\LJH\\Manager\\FileManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\LJH\\Manager\\FileManager.cs",
               "ToolTip": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Assets\\Scripts\\LJH\\Manager\\FileManager.cs",
               "RelativeToolTip": "Assets\\Scripts\\LJH\\Manager\\FileManager.cs",
-              "ViewState": "AQIAAE4AAAAAAAAAAAAIwIYAAAAsAAAA",
+              "ViewState": "AQIAAEsAAAAAAAAAAAAIwFwAAAAnAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-01T12:40:07.017Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 15,
               "Title": "Rain.shader",
               "DocumentMoniker": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Assets\\Shader\\Materials\\Rain\\Rain.shader",
               "RelativeDocumentMoniker": "Assets\\Shader\\Materials\\Rain\\Rain.shader",
@@ -249,7 +309,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 13,
               "Title": "New Custom Render Texture.shader",
               "DocumentMoniker": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Assets\\Shader\\Materials\\TMPro\\New Custom Render Texture.shader",
               "RelativeDocumentMoniker": "Assets\\Shader\\Materials\\TMPro\\New Custom Render Texture.shader",
@@ -260,7 +320,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 14,
               "Title": "Angela_DistanceField.shader",
               "DocumentMoniker": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Assets\\Shader\\Third Party\\TextMesh Pro\\Resources\\Shaders\\Angela_DistanceField.shader",
               "RelativeDocumentMoniker": "Assets\\Shader\\Third Party\\TextMesh Pro\\Resources\\Shaders\\Angela_DistanceField.shader",
@@ -272,7 +332,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 21,
               "Title": "TextAnimationScripts.cs",
               "DocumentMoniker": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Assets\\Scripts\\PJG\\TextAnimationScripts.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\PJG\\TextAnimationScripts.cs",
@@ -284,7 +344,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 20,
               "Title": "Scene1Test.txt",
               "DocumentMoniker": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Assets\\Resources\\Scene1Test.txt",
               "RelativeDocumentMoniker": "Assets\\Resources\\Scene1Test.txt",
@@ -296,7 +356,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 19,
               "Title": "GameManager.cs",
               "DocumentMoniker": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Assets\\Scripts\\LJH\\Manager\\GameManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\LJH\\Manager\\GameManager.cs",
@@ -307,7 +367,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 18,
               "Title": "DialogueUI.cs",
               "DocumentMoniker": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Assets\\Scripts\\LJH\\Settings\\Title\\UI\\DialogueUI.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\LJH\\Settings\\Title\\UI\\DialogueUI.cs",
@@ -318,7 +378,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 17,
               "Title": "CameraFilterManager.cs",
               "DocumentMoniker": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Assets\\Scripts\\LJH\\Camera\\CameraFilterManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\LJH\\Camera\\CameraFilterManager.cs",
@@ -330,7 +390,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 16,
               "Title": "FileManagerMain.cs",
               "DocumentMoniker": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Assets\\Scripts\\PJG\\FileManagerMain.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\PJG\\FileManagerMain.cs",
@@ -342,7 +402,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 22,
               "Title": "HoverChangeColor.cs",
               "DocumentMoniker": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Assets\\Scripts\\LJH\\Settings\\Title\\UI\\HoverChangeColor.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\LJH\\Settings\\Title\\UI\\HoverChangeColor.cs",
@@ -354,7 +414,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 23,
               "Title": "HoverScale.cs",
               "DocumentMoniker": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Assets\\Scripts\\LJH\\Settings\\Title\\UI\\HoverScale.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\LJH\\Settings\\Title\\UI\\HoverScale.cs",
@@ -366,7 +426,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 25,
               "Title": "HoverTextEffect.cs",
               "DocumentMoniker": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Assets\\Scripts\\LJH\\Settings\\Title\\UI\\HoverTextEffect.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\LJH\\Settings\\Title\\UI\\HoverTextEffect.cs",
@@ -378,7 +438,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 24,
               "Title": "Breath.cs",
               "DocumentMoniker": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Assets\\Scripts\\LJH\\Settings\\Title\\UI\\Breath.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\LJH\\Settings\\Title\\UI\\Breath.cs",
@@ -390,7 +450,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 26,
               "Title": "NodEffect.cs",
               "DocumentMoniker": "C:\\Users\\mire0\\Documents\\coding\\Game\\Unity\\MainLogic\\Assets\\Scripts\\LJH\\Settings\\Title\\UI\\NodEffect.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\LJH\\Settings\\Title\\UI\\NodEffect.cs",
@@ -402,7 +462,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 27,
               "Title": "EnterScene1Scripts.cs",
               "DocumentMoniker": "C:\\Users\\\uBC15\uC900\uAC74\\Documents\\Game Develop\\MainLogic\\Assets\\Scenes\\\uBC15\uC900\uAC74 \uC791\uC5C5\uC601\uC5ED\\MainSceneTest\\EnterScene1Scripts.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\..\\\uBC15\uC900\uAC74\\Documents\\Game Develop\\MainLogic\\Assets\\Scenes\\\uBC15\uC900\uAC74 \uC791\uC5C5\uC601\uC5ED\\MainSceneTest\\EnterScene1Scripts.cs",
@@ -413,7 +473,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 28,
               "Title": "DialogueUI.cs",
               "DocumentMoniker": "C:\\Users\\mire0\\Documents\\coding\\and they all lived happily ever after\\MainLogic\\Assets\\Scripts\\DialogueUI.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\and they all lived happily ever after\\MainLogic\\Assets\\Scripts\\DialogueUI.cs",
