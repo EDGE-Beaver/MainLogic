@@ -75,6 +75,7 @@
     <Compile Include="Assets\Shader\Scripts\PostProcessingManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
     <Compile Include="Assets\Scripts\LJH\Manager\FileManager.cs" />
+    <Compile Include="Assets\Scripts\PJH\NewBehaviourScript.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SimpleScript.cs" />
@@ -112,7 +113,6 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
     <Compile Include="Assets\TestScripts.cs" />
     <Compile Include="Assets\Shader\Materials\BlendModes\BlendModeController.cs" />
-    <Compile Include="Assets\Scripts\NewBehaviourScript.cs" />
     <Compile Include="Assets\Scripts\LJH\Manager\ChoiceManager.cs" />
     <Compile Include="Assets\Scripts\LJH\Settings\Title\UI\HoverChangeColor.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
