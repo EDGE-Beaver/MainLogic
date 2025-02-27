@@ -69,7 +69,7 @@ public class TransitionShaderController : MonoBehaviour
         }
     }
 
-    // ✅ 페이드 인 (1 → 0) - 화면이 바깥에서부터 닫히며 완전히 검정됨
+    //  페이드 인 (1 → 0) - 화면이 바깥에서부터 닫히며 완전히 검정됨
     public void StartFadeIn()
     {
         if (!isTransitioning)
@@ -82,7 +82,7 @@ public class TransitionShaderController : MonoBehaviour
         }
     }
 
-    // ✅ 페이드 아웃 (0 → 1) - 화면이 열리면서 원이 커졌다가 줄어들고 마지막에 확 커짐
+    //  페이드 아웃 (0 → 1) - 화면이 열리면서 원이 커졌다가 줄어들고 마지막에 확 커짐
     public void StartFadeOut()
     {
         if (!isTransitioning)

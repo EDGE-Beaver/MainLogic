@@ -104,7 +104,7 @@ public class DialogueManager : MonoBehaviour
     public Button[] choiceButtons;
 
     [Header("선택지 매니저 (Inspector에서 지정)")]
-    public ChoiceManager choiceManager; // ✅ 선택지 매니저 연결
+    public ChoiceManager choiceManager; //  선택지 매니저 연결
     public FileManager filea = new FileManager();
 
     private int currentIndex = 0;
@@ -173,11 +173,11 @@ public class DialogueManager : MonoBehaviour
 
         if (data == null || data.Length == 0)
         {
-            Debug.Log($"⚠️ 대사 파일의 마지막 줄에 도달했습니다. (currentIndex: {currentIndex})");
+            Debug.Log($" 대사 파일의 마지막 줄에 도달했습니다. (currentIndex: {currentIndex})");
             return;
         }
 
-        Debug.Log($"✅ ShowNextLine 호출 (currentIndex: {currentIndex})");
+        Debug.Log($" ShowNextLine 호출 (currentIndex: {currentIndex})");
 
         // 🔹 데이터 필드 분리
         string speaker = data[0]?.Trim();
@@ -189,7 +189,7 @@ public class DialogueManager : MonoBehaviour
         string bgm = data[6]?.Trim();
         string animationKeyword = data.Length > 7 ? data[7]?.Trim() : "";
 
-        Debug.Log($"✅ 대사 정보 - 화자: {speaker}, 대사: {dialogue}, 선택지 데이터: {choiceField}");
+        Debug.Log($" 대사 정보 - 화자: {speaker}, 대사: {dialogue}, 선택지 데이터: {choiceField}");
 
         // 🔹 UI 텍스트 설정
         speakerText.text = string.IsNullOrEmpty(speaker) ? " " : speaker;
@@ -197,14 +197,14 @@ public class DialogueManager : MonoBehaviour
         if (dialogue.Contains("^"))
         {
             dialogue = dialogue.Replace("^", ""); // `^` 태그 제거
-            Debug.Log("✅ 끄덕 태그(^): 제거됨");
+            Debug.Log(" 끄덕 태그(^): 제거됨");
         }
         // 🔹 `%` 태그 제거 및 선택지 여부 확인
         bool hasChoice= dialogue.Contains("%");
         if (hasChoice)
         {
             dialogue = dialogue.Replace("%", ""); // `%` 태그 제거
-            Debug.Log("✅ 선택지 태그(%): 선택지 있음");
+            Debug.Log(" 선택지 태그(%): 선택지 있음");
         }
 
         // 🔹 음성 클립 로드
@@ -227,21 +227,21 @@ public class DialogueManager : MonoBehaviour
                     if (int.TryParse(choiceParts[1].Trim(), out choiceID))
                     {
                         hasChoice= true; // 선택지가 있음
-                        Debug.Log($"✅ 선택지 파싱 성공: choiceFile = {choiceFile}, choiceID = {choiceID}");
+                        Debug.Log($" 선택지 파싱 성공: choiceFile = {choiceFile}, choiceID = {choiceID}");
                     }
                     else
                     {
-                        Debug.LogError($"⚠️ 선택지 ID 변환 실패: {choiceParts[1]}");
+                        Debug.LogError($" 선택지 ID 변환 실패: {choiceParts[1]}");
                     }
                 }
                 else
                 {
-                    Debug.LogError($"⚠️ 선택지 필드 형식이 잘못되었습니다: {choiceField}");
+                    Debug.LogError($" 선택지 필드 형식이 잘못되었습니다: {choiceField}");
                 }
             }
             else
             {
-                Debug.LogError($"⚠️ 선택지 필드에 ':'가 없습니다: {choiceField}");
+                Debug.LogError($" 선택지 필드에 ':'가 없습니다: {choiceField}");
             }
         }
 
@@ -250,23 +250,23 @@ public class DialogueManager : MonoBehaviour
         if (!hasChoice)
         {
             isWaitingForText = false;
-            Debug.Log("✅ 선택지가 없음. 키 입력 시 다음 대사로 이동 가능.");
+            Debug.Log(" 선택지가 없음. 키 입력 시 다음 대사로 이동 가능.");
         }
         else
         {
             isWaitingForText = true;
-            Debug.Log("✅ 선택지가 있음. 대사가 출력될 때까지 키 입력 차단.");
+            Debug.Log(" 선택지가 있음. 대사가 출력될 때까지 키 입력 차단.");
             if (hasChoice)
             {
                 // 🔹 선택지가 있는 경우 선택지 패널 호출
-                Debug.Log($"✅ 선택지 패널 호출 준비: choiceFile = {choiceFile}, choiceID = {choiceID}");
+                Debug.Log($" 선택지 패널 호출 준비: choiceFile = {choiceFile}, choiceID = {choiceID}");
                 isChoicePanelActive = true; // 🔹 선택지 활성화 상태 설정 (다음 대사로 넘어가지 않음)
             }
             else
             {
                 // 🔹 선택지가 없는 경우 → 키 입력 가능하도록 설정
                 isWaitingForText = false;
-                Debug.Log("✅ 선택지가 없음. 키 입력 대기 중.");
+                Debug.Log(" 선택지가 없음. 키 입력 대기 중.");
             }
         }
 
@@ -274,26 +274,26 @@ public class DialogueManager : MonoBehaviour
         textAnimationScript.SetText(dialogue, voiceClip,
             () =>
             {
-                Debug.Log($"✅ 대사 출력 완료 (currentIndex: {currentIndex})");
+                Debug.Log($" 대사 출력 완료 (currentIndex: {currentIndex})");
 
                 if (hasChoice)
                 {
-                    Debug.Log($"✅ 선택지 패널 호출 준비: choiceFile = {choiceFile}, choiceID = {choiceID}");
+                    Debug.Log($" 선택지 패널 호출 준비: choiceFile = {choiceFile}, choiceID = {choiceID}");
                     StartCoroutine(ShowChoicePanel(choiceFile, choiceID));
                     isChoicePanelActive = true;
                 }
                 else
                 {
                     isWaitingForText = false;
-                    Debug.Log("✅ 선택지가 없음. 키 입력 대기 중.");
+                    Debug.Log(" 선택지가 없음. 키 입력 대기 중.");
                 }
             },
             () =>
             {
-                // 🎯 **텍스트 애니메이션 도중 `%` 태그를 만나면 즉시 선택지를 띄움**
+                // 텍스트 애니메이션 도중 `%` 태그를 만나면 즉시 선택지를 띄움
                 if (hasChoice)
                 {
-                    Debug.Log("🎯 % 태그 감지됨 → 선택지 패널 즉시 띄우기");
+                    Debug.Log(" % 태그 감지됨 → 선택지 패널 즉시 띄우기");
                     StartCoroutine(ShowChoicePanel(choiceFile, choiceID));
                     isChoicePanelActive = true;
                 }
@@ -310,7 +310,7 @@ public class DialogueManager : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning($"⚠️ SE 파일을 찾을 수 없습니다: {se}");
+                Debug.LogWarning($" SE 파일을 찾을 수 없습니다: {se}");
             }
         }
 
@@ -324,7 +324,7 @@ public class DialogueManager : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning($"⚠️ 이미지 파일을 찾을 수 없습니다: {image}");
+                Debug.LogWarning($" 이미지 파일을 찾을 수 없습니다: {image}");
             }
         }
 
@@ -344,7 +344,7 @@ public class DialogueManager : MonoBehaviour
         {
             if (nodEffect != null)
             {
-                Debug.Log("✅ 끄덕 애니메이션 실행");
+                Debug.Log(" 끄덕 애니메이션 실행");
                 nodEffect.StartNod();
             }
         }
@@ -355,11 +355,11 @@ public class DialogueManager : MonoBehaviour
 
     IEnumerator ShowChoicePanel(string choiceFile, int choiceID)
     {
-        Debug.Log($"📂 ShowChoicePanel 호출됨: choiceFile = {choiceFile}, choiceID = {choiceID}");
+        Debug.Log($" ShowChoicePanel 호출됨: choiceFile = {choiceFile}, choiceID = {choiceID}");
 
         if (choiceManager == null)
         {
-            Debug.LogError("⚠️ choiceManager가 null입니다!");
+            Debug.LogError(" choiceManager가 null입니다!");
             yield break;
         }
 
@@ -368,13 +368,13 @@ public class DialogueManager : MonoBehaviour
         choicePanel.SetActive(true);
         choiceManager.LoadChoices(choiceFile, choiceID);
         isChoicePanelActive = true;
-        Debug.Log("✅ 선택지 패널 활성화 완료");
+        Debug.Log(" 선택지 패널 활성화 완료");
     }
 
 
     public void OnChoiceSelected(string nextFile, int nextIndex)
     {
-        Debug.Log($"📂 OnChoiceSelected 호출됨: nextFile = {nextFile}, nextIndex = {nextIndex}");
+        Debug.Log($" OnChoiceSelected 호출됨: nextFile = {nextFile}, nextIndex = {nextIndex}");
 
         if (!string.IsNullOrEmpty(nextFile))
         {
@@ -384,7 +384,7 @@ public class DialogueManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("✅ 다음 파일이 없음. 현재 파일 유지하고 다음 대사 출력.");
+            Debug.Log(" 다음 파일이 없음. 현재 파일 유지하고 다음 대사 출력.");
             currentIndex = nextIndex-1; // 기존 파일에서 다음 인덱스로 이동
        
         }
