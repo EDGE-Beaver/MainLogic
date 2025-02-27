@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scripts/NewBehaviourScript.cs.meta
+guid: d12cafa335216b34e9aa2eec2c6c62b1
+========
+guid: 0efde63d99fea2440baa35a4fd349374
+>>>>>>>> origin/PJHBranch_V2:Assets/Scenes/박종혁 작업영역/Scripts/CameraWalker.cs.meta
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
