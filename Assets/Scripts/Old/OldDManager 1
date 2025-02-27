@@ -1,4 +1,4 @@
-﻿
+
 // ===========================================
 //  [대사 파일 구조 설명]
 // ===========================================
@@ -200,7 +200,7 @@ public class DialogueManager : MonoBehaviour
             Debug.Log(" 끄덕 태그(^): 제거됨");
         }
         // 🔹 `%` 태그 제거 및 선택지 여부 확인
-        bool hasChoice = dialogue.Contains("%");
+        bool hasChoice= dialogue.Contains("%");
         if (hasChoice)
         {
             dialogue = dialogue.Replace("%", ""); // `%` 태그 제거
@@ -215,7 +215,7 @@ public class DialogueManager : MonoBehaviour
         // 🔹 선택지 관련 변수 초기화
         string choiceFile = null;
         int choiceID = -1;
-
+      
         if (!string.IsNullOrEmpty(choiceField))
         {
             if (choiceField.Contains(":"))
@@ -226,7 +226,7 @@ public class DialogueManager : MonoBehaviour
                     choiceFile = choiceParts[0].Trim();
                     if (int.TryParse(choiceParts[1].Trim(), out choiceID))
                     {
-                        hasChoice = true; // 선택지가 있음
+                        hasChoice= true; // 선택지가 있음
                         Debug.Log($" 선택지 파싱 성공: choiceFile = {choiceFile}, choiceID = {choiceID}");
                     }
                     else
@@ -290,7 +290,7 @@ public class DialogueManager : MonoBehaviour
             },
             () =>
             {
-
+               
                 if (hasChoice)
                 {
                     Debug.Log("🎯 % 태그 감지됨 → 선택지 패널 즉시 띄우기");
@@ -379,14 +379,14 @@ public class DialogueManager : MonoBehaviour
         if (!string.IsNullOrEmpty(nextFile))
         {
             fileManager.SetCurrentFile(nextFile);
-            currentIndex = nextIndex - 1; // 다음 인덱스로 이동
-
+            currentIndex = nextIndex-1; // 다음 인덱스로 이동
+       
         }
         else
         {
             Debug.Log(" 다음 파일이 없음. 현재 파일 유지하고 다음 대사 출력.");
-            currentIndex = nextIndex - 1; // 기존 파일에서 다음 인덱스로 이동
-
+            currentIndex = nextIndex-1; // 기존 파일에서 다음 인덱스로 이동
+       
         }
 
         isChoicePanelActive = false;

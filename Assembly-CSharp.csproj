@@ -111,7 +111,6 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
     <Compile Include="Assets\Shader\Third Party\CharTween\Examples\CharTweenExampleSimpleTwo.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
-    <Compile Include="Assets\TestScripts.cs" />
     <Compile Include="Assets\Shader\Materials\BlendModes\BlendModeController.cs" />
     <Compile Include="Assets\Scripts\LJH\Manager\ChoiceManager.cs" />
     <Compile Include="Assets\Scripts\LJH\Settings\Title\UI\HoverChangeColor.cs" />
@@ -130,6 +129,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\PJH\DialogueUI_TextDisplay.cs" />
     <Compile Include="Assets\Shader\Third Party\CharTween\Examples\CharTweenExampleSimple.cs" />
+    <Compile Include="Assets\Scripts\Old\TestScripts.cs" />
     <Compile Include="Assets\Scripts\LJH\Settings\Title\UI\NodEffect.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
     <Compile Include="Assets\Scripts\PJG\MainSceneGameManager.cs" />
