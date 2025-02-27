@@ -3,8 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\birdy\\Desktop\\MainLogic\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{646E2E86-CF04-1E84-DF35-A0D04B9213D5}|Assembly-CSharp.csproj|C:\\Users\\birdy\\Desktop\\MainLogic\\assets\\scenes\\\uBC15\uC885\uD601 \uC791\uC5C5\uC601\uC5ED\\scripts\\camerawalker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{646E2E86-CF04-1E84-DF35-A0D04B9213D5}|Assembly-CSharp.csproj|c:\\users\\birdy\\desktop\\mainlogic\\assets\\scenes\\\uBC15\uC885\uD601 \uC791\uC5C5\uC601\uC5ED\\scripts\\camerawalker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{646E2E86-CF04-1E84-DF35-A0D04B9213D5}|Assembly-CSharp.csproj|solutionrelative:assets\\scenes\\\uBC15\uC885\uD601 \uC791\uC5C5\uC601\uC5ED\\scripts\\camerawalker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{646E2E86-CF04-1E84-DF35-A0D04B9213D5}|Assembly-CSharp.csproj|C:\\Users\\birdy\\Desktop\\MainLogic\\assets\\scenes\\\uBC15\uC885\uD601 \uC791\uC5C5\uC601\uC5ED\\scripts\\titleselectioneffect.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{646E2E86-CF04-1E84-DF35-A0D04B9213D5}|Assembly-CSharp.csproj|solutionrelative:assets\\scenes\\\uBC15\uC885\uD601 \uC791\uC5C5\uC601\uC5ED\\scripts\\titleselectioneffect.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{646E2E86-CF04-1E84-DF35-A0D04B9213D5}|Assembly-CSharp.csproj|C:\\Users\\birdy\\Desktop\\MainLogic\\assets\\scripts\\ljh\\settings\\title\\ui\\hoverscale.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{646E2E86-CF04-1E84-DF35-A0D04B9213D5}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\ljh\\settings\\title\\ui\\hoverscale.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{646E2E86-CF04-1E84-DF35-A0D04B9213D5}|Assembly-CSharp.csproj|C:\\Users\\birdy\\Desktop\\MainLogic\\assets\\scripts\\ljh\\settings\\title\\titlescreen.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{646E2E86-CF04-1E84-DF35-A0D04B9213D5}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\ljh\\settings\\title\\titlescreen.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,8 +26,44 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 3,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "HoverScale.cs",
+              "DocumentMoniker": "C:\\Users\\birdy\\Desktop\\MainLogic\\Assets\\Scripts\\LJH\\Settings\\Title\\UI\\HoverScale.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\LJH\\Settings\\Title\\UI\\HoverScale.cs",
+              "ToolTip": "C:\\Users\\birdy\\Desktop\\MainLogic\\Assets\\Scripts\\LJH\\Settings\\Title\\UI\\HoverScale.cs",
+              "RelativeToolTip": "Assets\\Scripts\\LJH\\Settings\\Title\\UI\\HoverScale.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-20T14:19:42.842Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "TitleScreen.cs",
+              "DocumentMoniker": "C:\\Users\\birdy\\Desktop\\MainLogic\\Assets\\Scripts\\LJH\\Settings\\Title\\TitleScreen.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\LJH\\Settings\\Title\\TitleScreen.cs",
+              "ToolTip": "C:\\Users\\birdy\\Desktop\\MainLogic\\Assets\\Scripts\\LJH\\Settings\\Title\\TitleScreen.cs",
+              "RelativeToolTip": "Assets\\Scripts\\LJH\\Settings\\Title\\TitleScreen.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABYAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-20T14:19:20.726Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "TitleSelectionEffect.cs",
+              "DocumentMoniker": "C:\\Users\\birdy\\Desktop\\MainLogic\\Assets\\Scenes\\\uBC15\uC885\uD601 \uC791\uC5C5\uC601\uC5ED\\Scripts\\TitleSelectionEffect.cs",
+              "RelativeDocumentMoniker": "Assets\\Scenes\\\uBC15\uC885\uD601 \uC791\uC5C5\uC601\uC5ED\\Scripts\\TitleSelectionEffect.cs",
+              "ToolTip": "C:\\Users\\birdy\\Desktop\\MainLogic\\Assets\\Scenes\\\uBC15\uC885\uD601 \uC791\uC5C5\uC601\uC5ED\\Scripts\\TitleSelectionEffect.cs",
+              "RelativeToolTip": "Assets\\Scenes\\\uBC15\uC885\uD601 \uC791\uC5C5\uC601\uC5ED\\Scripts\\TitleSelectionEffect.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-20T12:01:02.071Z"
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -24,9 +72,9 @@
               "RelativeDocumentMoniker": "Assets\\Scenes\\\uBC15\uC885\uD601 \uC791\uC5C5\uC601\uC5ED\\Scripts\\CameraWalker.cs",
               "ToolTip": "C:\\Users\\birdy\\Desktop\\MainLogic\\Assets\\Scenes\\\uBC15\uC885\uD601 \uC791\uC5C5\uC601\uC5ED\\Scripts\\CameraWalker.cs",
               "RelativeToolTip": "Assets\\Scenes\\\uBC15\uC885\uD601 \uC791\uC5C5\uC601\uC5ED\\Scripts\\CameraWalker.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAOgAAAA0AAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAEgBAAAHAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-26T18:58:16.992Z",
+              "WhenOpened": "2025-02-20T04:40:25.807Z",
               "EditorCaption": ""
             }
           ]
