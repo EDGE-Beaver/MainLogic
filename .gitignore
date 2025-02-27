@@ -63,5 +63,6 @@ Library/ShaderCache.db
 Library/ShaderCache/
 Library/Bee/
 Library/GI/
+Library/
 
 # URP 설정 파일은 포함해야 함 (예: Assets/Settings/UniversalRenderPipelineAsset.asset)
