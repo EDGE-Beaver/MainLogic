@@ -7,27 +7,33 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+//카메라 이동 -> UI 이동으로 변경, @@@이 붙어있는 주석은 수정된 부분
 public class CameraWalker : MonoBehaviour
 {
     /*인스펙터 변수 기본 세팅
      * 카메라 이동 속도 : 5, 5
      * 페이드 아웃 시간 : 1
      * */
-
     private void Start()
     {
         //===== 카메라 이동 효과 =====
-        //카메라 이동 목적지 받아오기
-        titlePos = new Vector3(camPos_Title.transform.localPosition.x, camPos_Title.transform.localPosition.y, cam.transform.localPosition.z);
-        lobbyPos = new Vector3(camPos_MainLobby.transform.localPosition.x, camPos_MainLobby.transform.localPosition.y, cam.transform.localPosition.z);
-        bookPos = new Vector3(camPos_Book.transform.localPosition.x, camPos_Book.transform.localPosition.y, cam.transform.localPosition.z);
+        //카메라 이동 목적지 받아오기@@@
+        titlePos_Scale = camPos_Title.transform.localScale;
+        lobbyPos_Scale = camPos_MainLobby.transform.localScale;
+        bookPos_Scale = camPos_Book.transform.localScale;
+
+        titlePos = new Vector3(camPos_Title.transform.localPosition.x / -titlePos_Scale.x, camPos_Title.transform.localPosition.y / -titlePos_Scale.y, UI.transform.localPosition.z);
+        lobbyPos = new Vector3(camPos_MainLobby.transform.localPosition.x / -lobbyPos_Scale.x, camPos_MainLobby.transform.localPosition.y / -lobbyPos_Scale.y, UI.transform.localPosition.z);
+        bookPos = new Vector3(camPos_Book.transform.localPosition.x / -bookPos_Scale.x, camPos_Book.transform.localPosition.y / -bookPos_Scale.y, UI.transform.localPosition.z);
 
         //(디버그)좌표 확인용
         //Debug.Log(titlePos + ", " + lobbyPos + ", " + bookPos);
+        //Debug.Log(titlePos_Scale + ", " + lobbyPos_Scale + ", " + bookPos_Scale);
+        //Debug.Log(UI.transform.localPosition);
 
-        //카메라 이동 목적지 기본값
-        targetPos = cam.transform.localPosition;
-        targetSize = cam.orthographicSize;
+        //카메라 이동 목적지 기본값@@@
+        targetPos = UI.transform.localPosition;
+        targetScale = UI.transform.localScale;
 
         //처음엔 타이틀에서 시작
         inTitle = true;
@@ -44,18 +50,11 @@ public class CameraWalker : MonoBehaviour
     private void Update()
     {
         //===== 카메라 이동 효과 =====
-        //카메라 이동
-        cam.transform.localPosition = Vector3.Lerp(transform.localPosition, targetPos, camSpeed * Time.deltaTime);
-        cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetSize, zoomSpeed * Time.deltaTime);
+        //카메라 이동@@@
+        UI.transform.localPosition = Vector3.Lerp(UI.transform.localPosition, targetPos, camSpeed * Time.deltaTime);
+        UI.transform.localScale = Vector3.Lerp(UI.transform.localScale, targetScale, zoomSpeed * Time.deltaTime);
 
-        //Lerp 무한지속 방지턱(딱히 의미 없어짐)
-        speedCheck1 = cam.velocity.sqrMagnitude;
-        if (cam.velocity.sqrMagnitude <= 0.00001 && speedCheck1 < speedCheck2)
-        {
-            cam.transform.localPosition = targetPos;
-        }
-        speedCheck2 = speedCheck1;
-
+        //Lerp 무한지속 방지턱(딱히 의미 없어짐)@@@(UI 버전은 값이 수렴하는 형식으로 무한히 지속되지 않는 것으로 보임 & 구현하기 번거로움 이슈로 이동속도 방지턱은 제거함)
         alphaCheck1 = can.alpha;
         if (can.alpha <= 0.01f && alphaCheck1 < alphaCheck2)
         {
@@ -76,9 +75,9 @@ public class CameraWalker : MonoBehaviour
 
     [Header("===== 1. 카메라 이동 효과 =====")]
 
-    //인스펙터 지정
-    [Header("카메라")]
-    public Camera cam;
+    //인스펙터 지정@@@(카메라 빼고 UI 추가)
+    [Header("카메라(카메라 대신 이동할 UI)")]
+    public GameObject UI;
 
     [Header("카메라 이동 목적지")]
     public GameObject camPos_Title;
@@ -89,21 +88,25 @@ public class CameraWalker : MonoBehaviour
     public float camSpeed;
     public float zoomSpeed;
 
-    //카메라 이동 목적지 좌표
+    //카메라 이동 목적지 좌표@@@(위치별 Scale 추가)
+    private Vector3 titlePos_Scale;
+    private Vector3 lobbyPos_Scale;
+    private Vector3 bookPos_Scale;
+
     private Vector3 titlePos;
     private Vector3 lobbyPos;
     private Vector3 bookPos;
 
-    //카메라 이동 목적지
+    //카메라 이동 목적지@@@(targetSize 제거, targetScale로 대체)
     private Vector3 targetPos;
-    private float targetSize;
+    private Vector3 targetScale;
 
     //현재 어떤 메뉴에 있는지 확인
     private bool inTitle;
     private bool inLobby;
     private bool inBook;
 
-    //카메라 이동 목적지 지정
+    //카메라 이동 목적지 지정@@@(각 함수마다 targetSize -> targetScale 한 줄씩만 수정)
     public void ToTitleCam()
     {
         if (titleIntro)
@@ -116,7 +119,7 @@ public class CameraWalker : MonoBehaviour
             camSpeed = 5f;
         }
         targetPos = titlePos;
-        targetSize = 5f;
+        targetScale = new Vector3(3.2f / titlePos_Scale.x, 3.2f / titlePos_Scale.y, 3.2f / titlePos_Scale.z);
         inTitle = true;
         inLobby = false;
         inBook = false;
@@ -126,7 +129,7 @@ public class CameraWalker : MonoBehaviour
     {
         camSpeed = 5f;
         targetPos = lobbyPos;
-        targetSize = 16f;
+        targetScale = new Vector3(3.2f / lobbyPos_Scale.x, 3.2f / lobbyPos_Scale.y, 3.2f / lobbyPos_Scale.z);
         inTitle = false;
         inLobby = true;
         inBook = false;
@@ -136,19 +139,18 @@ public class CameraWalker : MonoBehaviour
     {
         camSpeed = 5f;
         targetPos = bookPos;
-        targetSize = 16f;
+        targetScale = new Vector3(3.2f / bookPos_Scale.x, 3.2f / bookPos_Scale.y, 3.2f / bookPos_Scale.z);
         inTitle = false;
         inLobby = false;
         inBook = true;
     }
 
-    //게임 켰을때 타이틀 카메라 이동
-    private float speedCheck1 = 0f, speedCheck2 = 0f;
+    //게임 켰을때 타이틀 카메라 이동@@@(이동속도 Lerp 무한지속 방지턱용 float인 speedCheck1, 2 제거)
     private float alphaCheck1 = 0f, alphaCheck2 = 0f;
     private bool titleIntro = false;
     public void TitleStart()
     {
-        cam.transform.localPosition = new Vector3(cam.transform.localPosition.x, cam.transform.localPosition.y - 150f, cam.transform.localPosition.z);
+        UI.transform.localPosition = new Vector3(titlePos.x, titlePos.y + 150f, titlePos.z);
         titleIntro = true;
         ToTitleCam();
     }
@@ -182,7 +184,7 @@ public class CameraWalker : MonoBehaviour
             StartCoroutine(FadeInEffect());
         }
     }
-    IEnumerator FadeInEffect() //여기 고쳐야됨@@@@@@@@@@@@@@@@@@@@@
+    IEnumerator FadeInEffect() //공사중@@@@@@@@@@@@@@@@@@@@
     {
         fadeoutBlack.SetActive(true);
         can.interactable = false;
@@ -228,7 +230,7 @@ public class CameraWalker : MonoBehaviour
             StartCoroutine(FadeOutEffect());
         }
     }
-    IEnumerator FadeOutEffect() //여기 고쳐야됨@@@@@@@@@@@@@@@@@@@@@
+    IEnumerator FadeOutEffect() //공사중@@@@@@@@@@@@@@@@@@@@@
     {
         fadeoutBlack.SetActive(true);
         can.interactable = true;

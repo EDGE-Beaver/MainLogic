@@ -363,6 +363,8 @@
 -analyzer:"C:/Program Files/Unity/Hub/Editor/2022.3.22f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll"
 "Assets/Scenes/박종혁 작업영역/Scripts/CameraWalker.cs"
 "Assets/Scenes/박종혁 작업영역/Scripts/TitleSelectionEffect.cs"
+"Assets/Scenes/박종혁 작업영역/Title_Legacy/Scripts/CameraWalker_WS.cs"
+"Assets/Scenes/박종혁 작업영역/Title_Legacy/Scripts/TitleSelectionEffect_WS.cs"
 "Assets/Scripts/LJH/Camera/CameraFilterManager.cs"
 "Assets/Scripts/LJH/Manager/ChoiceManager.cs"
 "Assets/Scripts/LJH/Manager/DialogueManager.cs"
