@@ -16,7 +16,7 @@ public class CameraWalker : MonoBehaviour
      * */
     private void Start()
     {
-        //===== 카메라 이동 효과 =====
+        //===== 1. 카메라 이동 효과 =====
         //카메라 이동 목적지 받아오기@@@
         titlePos_Scale = camPos_Title.transform.localScale;
         lobbyPos_Scale = camPos_MainLobby.transform.localScale;
@@ -35,26 +35,27 @@ public class CameraWalker : MonoBehaviour
         targetPos = UI.transform.localPosition;
         targetScale = UI.transform.localScale;
 
-        //처음엔 타이틀에서 시작
-        inTitle = true;
-        inLobby = false;
-        inBook = false;
-
-        //===== 시작할때 페이드 연출 & 카메라 효과 =====
+        //===== 2. 페이드 효과 =====
+        //시작할때 페이드 연출 & 카메라 효과
         can = fadeoutBlack.GetComponent<CanvasGroup>();
         canq = fadeoutBlack_QUIT.GetComponent<CanvasGroup>();
         fadeoutBlack_QUIT.SetActive(false);
         TitleStart();
+
+        //===== 4. 게임 종료 & 메인 메뉴 경고창 =====
+        WarnBox_Q.SetActive(false);
+        WarnBox_QtextM.SetActive(false);
+        WarnBox_QtextQ.SetActive(false);
     }
 
     private void Update()
     {
-        //===== 카메라 이동 효과 =====
+        //===== 1. 카메라 이동 효과 =====
         //카메라 이동@@@
         UI.transform.localPosition = Vector3.Lerp(UI.transform.localPosition, targetPos, camSpeed * Time.deltaTime);
         UI.transform.localScale = Vector3.Lerp(UI.transform.localScale, targetScale, zoomSpeed * Time.deltaTime);
 
-        //Lerp 무한지속 방지턱(딱히 의미 없어짐)@@@(UI 버전은 값이 수렴하는 형식으로 무한히 지속되지 않는 것으로 보임 & 구현하기 번거로움 이슈로 이동속도 방지턱은 제거함)
+        //Lerp 무한지속 방지턱(딱히 의미 없어짐)@@@(이동속도 방지턱은 제거함)
         alphaCheck1 = can.alpha;
         if (can.alpha <= 0.01f && alphaCheck1 < alphaCheck2)
         {
@@ -69,7 +70,21 @@ public class CameraWalker : MonoBehaviour
         //Esc 누르면 타이틀로 탈출
         if (!inTitle && Input.GetKeyDown(KeyCode.Escape))
         {
-            ToTitle();
+            if (isEscWarning)
+            {
+                EscWarning_NO();
+            }
+            else
+            {
+                if (inLobby)
+                {
+                    ToBookCam();
+                }
+                else
+                {
+                    ToTitle();
+                }
+            }
         }
     }
 
@@ -150,12 +165,18 @@ public class CameraWalker : MonoBehaviour
     private bool titleIntro = false;
     public void TitleStart()
     {
+        inTitle = true;
+        inLobby = false;
+        inBook = false;
+
         UI.transform.localPosition = new Vector3(titlePos.x, titlePos.y + 150f, titlePos.z);
+        UI.transform.localScale = new Vector3(3.2f / titlePos_Scale.x, 3.2f / titlePos_Scale.y, 3.2f / titlePos_Scale.z);
         titleIntro = true;
+        ToTitle();
         ToTitleCam();
     }
 
-    [Header("===== 2. 페이드 아웃 연출 =====")]
+    [Header("===== 2. 페이드 효과 =====")]
 
     //인스펙터 지정
     [Header("페이드 아웃용 검정색 판떼기")]
@@ -184,16 +205,21 @@ public class CameraWalker : MonoBehaviour
             StartCoroutine(FadeInEffect());
         }
     }
-    IEnumerator FadeInEffect() //공사중@@@@@@@@@@@@@@@@@@@@
+    IEnumerator FadeInEffect()
     {
         fadeoutBlack.SetActive(true);
         can.interactable = false;
         can.blocksRaycasts = false;
         can.alpha = 1f;
         float elapsedTime = 0f;
-        while (elapsedTime < fadeTime * 500f)
+        while (elapsedTime < fadeTime)
         {
-            can.alpha = Mathf.Lerp(can.alpha, 0f, elapsedTime / (fadeTime * 500f));
+            if (elapsedTime >= fadeTime)
+            {
+                can.alpha = 0f;
+                break;
+            }
+            can.alpha = Mathf.SmoothStep(1f, 0f, elapsedTime / (fadeTime));
             elapsedTime += Time.deltaTime;
             yield return null;
         }
@@ -206,9 +232,14 @@ public class CameraWalker : MonoBehaviour
         can.blocksRaycasts = false;
         can.alpha = 1f;
         float elapsedTime = 0f;
-        while (elapsedTime < (fadeTime * 1000f))
+        while (elapsedTime < fadeTime * 4)
         {
-            can.alpha = Mathf.Lerp(can.alpha, 0f, elapsedTime / (fadeTime * 1000f));
+            if (elapsedTime >= fadeTime * 4)
+            {
+                can.alpha = 0f;
+                break;
+            }
+            can.alpha = Mathf.SmoothStep(1f, 0f, elapsedTime / (fadeTime * 4));
             elapsedTime += Time.deltaTime;
             yield return null;
         }
@@ -230,7 +261,7 @@ public class CameraWalker : MonoBehaviour
             StartCoroutine(FadeOutEffect());
         }
     }
-    IEnumerator FadeOutEffect() //공사중@@@@@@@@@@@@@@@@@@@@@
+    IEnumerator FadeOutEffect()
     {
         fadeoutBlack.SetActive(true);
         can.interactable = true;
@@ -239,7 +270,12 @@ public class CameraWalker : MonoBehaviour
         float elapsedTime = 0f;
         while (elapsedTime < fadeTime)
         {
-            can.alpha = Mathf.Lerp(can.alpha, 1f, elapsedTime / fadeTime * 100);
+            if (elapsedTime >= fadeTime)
+            {
+                can.alpha = 1f;
+                break;
+            }
+            can.alpha = Mathf.SmoothStep(0f, 1f, elapsedTime / (fadeTime));
             elapsedTime += Time.deltaTime;
             yield return null;
         }
@@ -251,9 +287,14 @@ public class CameraWalker : MonoBehaviour
         canq.blocksRaycasts = true;
         canq.alpha = 0f;
         float elapsedTime = 0f;
-        while (elapsedTime < fadeTime / 4f)
+        while (elapsedTime < fadeTime)
         {
-            canq.alpha = Mathf.MoveTowards(canq.alpha, 1f, elapsedTime / (fadeTime / 4f));
+            if (elapsedTime >= fadeTime)
+            {
+                canq.alpha = 1f;
+                break;
+            }
+            canq.alpha = Mathf.SmoothStep(0f, 1f, elapsedTime / (fadeTime));
             elapsedTime += Time.deltaTime;
             yield return null;
         }
@@ -266,7 +307,7 @@ public class CameraWalker : MonoBehaviour
         StopAllCoroutines();
         onGameQuit = true;
         FadeOut();
-        await Task.Delay(500);
+        await Task.Delay((int)fadeTime * 1000);
 #if UNITY_EDITOR
         EditorApplication.ExitPlaymode();
 #else
@@ -321,12 +362,59 @@ public class CameraWalker : MonoBehaviour
         book_whole.SetActive(false);
     }
 
-    /*[Header("===== 4. 타이틀 메뉴별 화면 전환 =====")]
+    [Header("===== 4. 게임 종료 & 메인 메뉴 경고창 =====")]
 
-    public GameObject selectedPhoto;
-    
-    public void ShowPhoto(GameObject sel)
+    //인스펙터 지정
+    [Header("경고창")]
+    public GameObject WarnBox_Q;
+    [Header("메인 메뉴 텍스트")]
+    public GameObject WarnBox_QtextM;
+    [Header("게임 종료 텍스트")]
+    public GameObject WarnBox_QtextQ;
+
+    //경고창이 띄워져있는지, 어떤 경고창인지 확인
+    private bool isEscWarning = false;
+    private bool isEscWarning_Q = false;
+
+    public void Debug_EscWarning_setQtrue()
     {
+        isEscWarning_Q = true;
+    }
 
-    }*/
+    public void EscWarning()
+    {
+        WarnBox_Q.SetActive(true);
+        isEscWarning = true;
+        if (isEscWarning_Q)
+        {
+            WarnBox_QtextQ.SetActive(true);
+        }
+        else
+        {
+            WarnBox_QtextM.SetActive(true);
+        }
+    }
+
+    public void EscWarning_YES()
+    {
+        if (isEscWarning_Q)
+        {
+            EscWarning_NO();
+            QuitGame();
+        }
+        else
+        {
+            EscWarning_NO();
+            TitleStart();
+        }
+    }
+
+    public void EscWarning_NO()
+    {
+        isEscWarning = false;
+        isEscWarning_Q = false;
+        WarnBox_Q.SetActive(false);
+        WarnBox_QtextM.SetActive(false);
+        WarnBox_QtextQ.SetActive(false);
+    }
 }
