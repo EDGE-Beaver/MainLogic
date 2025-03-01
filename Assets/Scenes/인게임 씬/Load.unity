@@ -255,7 +255,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5924529, g: 0.4543085, b: 0.29399073, a: 1}
+  m_Color: {r: 0.21960786, g: 0.21960786, b: 0.21960786, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -573,8 +573,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 534478555}
   - {fileID: 1322680531}
+  - {fileID: 534478555}
   - {fileID: 719878462}
   - {fileID: 1213858285}
   - {fileID: 1674668473}
@@ -876,7 +876,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 534478554}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -885,8 +885,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 24.866943, y: -16.578003}
+  m_SizeDelta: {x: 124.3358, y: 91.1796}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &534478556
 MonoBehaviour:
@@ -908,7 +908,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: f290705dd4b20f54f93ad6ada46a4e70, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -998,7 +998,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.6431373, g: 0.63529414, b: 0.70980394, a: 1}
+  m_Color: {r: 0.21568629, g: 0.21568629, b: 0.21568629, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1808,7 +1808,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 14d4d95a3ae3fbf4ab1ee2855c6e4dc0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b619cee78f593d64faffeb46b4f5c9e7, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1890,8 +1890,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 36, y: 51}
-  m_SizeDelta: {x: 589.34, y: 575.3276}
+  m_AnchoredPosition: {x: 0, y: 139.08}
+  m_SizeDelta: {x: 828.115, y: 801.83}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &719878463
 MonoBehaviour:
@@ -2242,8 +2242,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "Name(\uC774\uB984)"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 5d23a9a4a69639e4fa2ab9d20fc9b792, type: 2}
-  m_sharedMaterial: {fileID: -1388049443049990542, guid: 5d23a9a4a69639e4fa2ab9d20fc9b792, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: b815f707e4a3b144b9b6ede18b9af87b, type: 2}
+  m_sharedMaterial: {fileID: -9199590689395483287, guid: b815f707e4a3b144b9b6ede18b9af87b, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4076,8 +4076,8 @@ MonoBehaviour:
     is being displayed normally. (\uD55C\uAE00 \uC815\uC0C1 \uCD9C\uB825 \uD655\uC778\uC6A9
     \uD14D\uC2A4\uD2B8)"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 5d23a9a4a69639e4fa2ab9d20fc9b792, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: e0f816279ad5864459dd58c68d174793, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: b815f707e4a3b144b9b6ede18b9af87b, type: 2}
+  m_sharedMaterial: {fileID: -9199590689395483287, guid: b815f707e4a3b144b9b6ede18b9af87b, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4182,8 +4182,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 985, y: -649.25}
-  m_SizeDelta: {x: 1920, y: 1248.5}
+  m_AnchoredPosition: {x: 812.5, y: -649.25}
+  m_SizeDelta: {x: 1575, y: 1248.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1536647326
 GameObject:
