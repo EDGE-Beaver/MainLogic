@@ -1421,7 +1421,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textFilePaths:
-  - Scene1Test 1
+  - Scene1Test
+  - Scene2Test
   delimiter: 124
 --- !u!4 &627926498
 Transform:
@@ -1808,7 +1809,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 14d4d95a3ae3fbf4ab1ee2855c6e4dc0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0a6ee2ba60d51b5409276a5fca0f4fc9, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1890,8 +1891,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 36, y: 51}
-  m_SizeDelta: {x: 589.34, y: 575.3276}
+  m_AnchoredPosition: {x: 33, y: 59.6286}
+  m_SizeDelta: {x: 444.6852, y: 575.3276}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &719878463
 MonoBehaviour:
