@@ -191,19 +191,34 @@ public class DialogueManager : MonoBehaviour
 
         Debug.Log($" 대사 정보 - 화자: {speaker}, 대사: {dialogue}, 선택지 데이터: {choiceField}");
 
+        // 🔹 `@` 태그 확인 → 즉시 다음 대사 출력
+        if (dialogue.Contains("@"))
+        {
+            dialogue = dialogue.Replace("@", ""); // `@` 태그 제거
+            speakerText.text = speaker;
+            textAnimationScript.SetText(dialogue, null, () =>
+            {
+                Debug.Log(" `@` 태그 감지 → 자동으로 다음 대사 출력");
+                currentIndex++;
+                ShowNextLine(); // 🔥 다음 대사를 자동 실행
+            }, null); // 🔹 `onTrigger` 매개변수에 `null` 추가
+
+            return;
+        }
+
         // 🔹 UI 텍스트 설정
         speakerText.text = string.IsNullOrEmpty(speaker) ? " " : speaker;
-        // 🔹 `^` 기호 제거
+        // 🔹 ^ 기호 제거
         if (dialogue.Contains("^"))
         {
-            dialogue = dialogue.Replace("^", ""); // `^` 태그 제거
+            dialogue = dialogue.Replace("^", ""); // ^ 태그 제거
             Debug.Log(" 끄덕 태그(^): 제거됨");
         }
-        // 🔹 `%` 태그 제거 및 선택지 여부 확인
-        bool hasChoice= dialogue.Contains("%");
+        // 🔹 % 태그 제거 및 선택지 여부 확인
+        bool hasChoice = dialogue.Contains("%");
         if (hasChoice)
         {
-            dialogue = dialogue.Replace("%", ""); // `%` 태그 제거
+            dialogue = dialogue.Replace("%", ""); // % 태그 제거
             Debug.Log(" 선택지 태그(%): 선택지 있음");
         }
 
@@ -215,7 +230,7 @@ public class DialogueManager : MonoBehaviour
         // 🔹 선택지 관련 변수 초기화
         string choiceFile = null;
         int choiceID = -1;
-      
+
         if (!string.IsNullOrEmpty(choiceField))
         {
             if (choiceField.Contains(":"))
@@ -226,7 +241,7 @@ public class DialogueManager : MonoBehaviour
                     choiceFile = choiceParts[0].Trim();
                     if (int.TryParse(choiceParts[1].Trim(), out choiceID))
                     {
-                        hasChoice= true; // 선택지가 있음
+                        hasChoice = true; // 선택지가 있음
                         Debug.Log($" 선택지 파싱 성공: choiceFile = {choiceFile}, choiceID = {choiceID}");
                     }
                     else
@@ -270,7 +285,7 @@ public class DialogueManager : MonoBehaviour
             }
         }
 
-        // 🔹 텍스트 애니메이션 실행 (도중 `%` 태그를 만나면 선택지 패널 호출)
+        // 🔹 텍스트 애니메이션 실행 (도중 % 태그를 만나면 선택지 패널 호출)
         textAnimationScript.SetText(dialogue, voiceClip,
             () =>
             {
@@ -290,7 +305,7 @@ public class DialogueManager : MonoBehaviour
             },
             () =>
             {
-                // 텍스트 애니메이션 도중 `%` 태그를 만나면 즉시 선택지를 띄움
+                // 텍스트 애니메이션 도중 % 태그를 만나면 즉시 선택지를 띄움
                 if (hasChoice)
                 {
                     Debug.Log(" % 태그 감지됨 → 선택지 패널 즉시 띄우기");
@@ -349,6 +364,8 @@ public class DialogueManager : MonoBehaviour
             }
         }
     }
+
+
 
 
 
