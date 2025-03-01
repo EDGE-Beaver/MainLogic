@@ -2636,7 +2636,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 440964272}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 863619432}
+        m_TargetAssemblyTypeName: CameraWalker, Assembly-CSharp
+        m_MethodName: ToGameStart
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &440964272
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5614,7 +5626,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 977166837}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59fa88b1df4daa0459208847773c2a7f, type: 3}
+  m_Script: {fileID: 11500000, guid: cc3cdc31f1609b948b141c42792ebbf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   bgmClip: {fileID: 8300000, guid: dbd519aeaaf0c3742aaee50564f709c4, type: 3}
@@ -10086,12 +10098,24 @@ PrefabInstance:
     m_TransformParent: {fileID: 862176035}
     m_Modifications:
     - target: {fileID: 1802488258528781626, guid: 201528809b544a241bcfa79a9e06bb5f, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1802488258528781626, guid: 201528809b544a241bcfa79a9e06bb5f, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1802488258528781626, guid: 201528809b544a241bcfa79a9e06bb5f, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1802488258528781626, guid: 201528809b544a241bcfa79a9e06bb5f, type: 3}
       propertyPath: CollisionModule.m_Planes.Array.data[0]
       value: 
       objectReference: {fileID: 736629600}
     - target: {fileID: 1802488258667020169, guid: 201528809b544a241bcfa79a9e06bb5f, type: 3}
       propertyPath: m_Name
-      value: BloodRain
+      value: Rain2
       objectReference: {fileID: 0}
     - target: {fileID: 1802488258667020170, guid: 201528809b544a241bcfa79a9e06bb5f, type: 3}
       propertyPath: m_RootOrder
@@ -10138,9 +10162,45 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1802488258667020171, guid: 201528809b544a241bcfa79a9e06bb5f, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1802488258667020171, guid: 201528809b544a241bcfa79a9e06bb5f, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1802488258667020171, guid: 201528809b544a241bcfa79a9e06bb5f, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1802488258667020171, guid: 201528809b544a241bcfa79a9e06bb5f, type: 3}
+      propertyPath: InitialModule.startColor.minColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1802488258667020171, guid: 201528809b544a241bcfa79a9e06bb5f, type: 3}
+      propertyPath: InitialModule.startColor.minColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1802488258667020171, guid: 201528809b544a241bcfa79a9e06bb5f, type: 3}
+      propertyPath: InitialModule.startColor.minColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1802488258667020171, guid: 201528809b544a241bcfa79a9e06bb5f, type: 3}
       propertyPath: CollisionModule.m_Planes.Array.data[0]
       value: 
       objectReference: {fileID: 736629600}
+    - target: {fileID: 1802488258840693089, guid: 201528809b544a241bcfa79a9e06bb5f, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1802488258840693089, guid: 201528809b544a241bcfa79a9e06bb5f, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1802488258840693089, guid: 201528809b544a241bcfa79a9e06bb5f, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1802488258840693089, guid: 201528809b544a241bcfa79a9e06bb5f, type: 3}
       propertyPath: CollisionModule.m_Planes.Array.data[0]
       value: 
@@ -10203,12 +10263,36 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2585284374351597340, guid: 5d665520a3d6e9842bcedf2f459a8d90, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2585284374351597340, guid: 5d665520a3d6e9842bcedf2f459a8d90, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2585284374351597340, guid: 5d665520a3d6e9842bcedf2f459a8d90, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2585284374351597340, guid: 5d665520a3d6e9842bcedf2f459a8d90, type: 3}
+      propertyPath: InitialModule.startColor.minColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2585284374351597340, guid: 5d665520a3d6e9842bcedf2f459a8d90, type: 3}
+      propertyPath: InitialModule.startColor.minColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2585284374351597340, guid: 5d665520a3d6e9842bcedf2f459a8d90, type: 3}
+      propertyPath: InitialModule.startColor.minColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2585284374351597340, guid: 5d665520a3d6e9842bcedf2f459a8d90, type: 3}
       propertyPath: CollisionModule.m_Planes.Array.data[0]
       value: 
       objectReference: {fileID: 736629600}
     - target: {fileID: 2585284374351597342, guid: 5d665520a3d6e9842bcedf2f459a8d90, type: 3}
       propertyPath: m_Name
-      value: BloodRainBG
+      value: Rain
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
