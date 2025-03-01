@@ -6,15 +6,13 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Title.unity
-    guid: 8c9cfa26abfee488c85f1582747f6a02
+    path: "Assets/Scenes/\uC778\uAC8C\uC784 \uC52C/Title.unity"
+    guid: 8c6a062b51af5854f9394e75800e463c
   - enabled: 1
-    path: "Assets/Scenes/\uC774\uC9C0\uD658 \uC791\uC5C5\uC601\uC5ED/\uBC15\uC900\uAC74
-      \uC791\uC5C5\uC601\uC5ED/MainSceneTest/PJGScene.unity"
-    guid: 14a1180ff3440734fb0ca65e3ab834f1
+    path: "Assets/Scenes/\uC778\uAC8C\uC784 \uC52C/Load.unity"
+    guid: 146ac7993926f3f48ae27b954a72176b
   - enabled: 1
-    path: "Assets/Scenes/\uC774\uC9C0\uD658 \uC791\uC5C5\uC601\uC5ED/\uBC15\uC900\uAC74
-      \uC791\uC5C5\uC601\uC5ED/TextSceneTest/SceneTestScene1.unity"
-    guid: 6c9afb101f007a94985d831746b7c835
+    path: "Assets/Scenes/\uC778\uAC8C\uC784 \uC52C/Ending.unity"
+    guid: 46c40d1c6366ab24f93fa25def22f85f
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 0536796da6a304e36862cf8336c5bd3a, type: 2}
