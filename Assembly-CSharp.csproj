@@ -145,6 +145,7 @@
     <Compile Include="Assets\Shader\Third Party\Demigiant\DOTween\Modules\DOTweenModuleUtils.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
     <Compile Include="Assets\Scripts\LJH\Shader\TransitionShaderController.cs" />
+    <Compile Include="Assets\Scripts\LJH\Manager\BgmManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
