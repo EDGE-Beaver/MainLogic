@@ -1,7 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
@@ -9,12 +7,12 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-//카메라 이동 -> UI 이동으로 변경
-public class CameraWalker : MonoBehaviour
+//카메라 이동 -> UI 이동으로 변경, @@@이 붙어있는 주석은 수정된 부분
+public class CameraWalker_Backup : MonoBehaviour
 {
     /*인스펙터 변수 기본 세팅
-     * 카메라 이동 속도(Cam/Zoom Speed) : 5, 5
-     * 페이드 아웃 시간(Fade Time) : 1
+     * 카메라 이동 속도 : 5, 5
+     * 페이드 아웃 시간 : 1
      * */
     private void Start()
     {
@@ -33,16 +31,14 @@ public class CameraWalker : MonoBehaviour
         targetPos = UI.transform.localPosition;
         targetScale = UI.transform.localScale;
 
-        //===== 페이드 효과 =====
+        inTitle = true;
+        inLobby = false;
+        inBook = false;
+
         can = fadeoutBlack.GetComponent<CanvasGroup>();
         canq = fadeoutBlack_QUIT.GetComponent<CanvasGroup>();
         fadeoutBlack_QUIT.SetActive(false);
         TitleStart();
-
-        //===== 게임 종료 & 메인 메뉴 경고창 =====
-        WarnBox_Q.SetActive(false);
-        WarnBox_QtextM.SetActive(false);
-        WarnBox_QtextQ.SetActive(false);
     }
 
     private void Update()
@@ -51,36 +47,10 @@ public class CameraWalker : MonoBehaviour
         UI.transform.localPosition = Vector3.Lerp(UI.transform.localPosition, targetPos, camSpeed * Time.deltaTime);
         UI.transform.localScale = Vector3.Lerp(UI.transform.localScale, targetScale, zoomSpeed * Time.deltaTime);
 
-        //Lerp 무한지속 방지턱(혹시 모를 오류를 대비해 넣어둠)
-        alphaCheck1 = can.alpha;
-        if (can.alpha <= 0.01f && alphaCheck1 < alphaCheck2)
-        {
-            can.alpha = 0f;
-        }
-        if (can.alpha >= 0.95f && alphaCheck1 > alphaCheck2)
-        {
-            can.alpha = 1f;
-        }
-        alphaCheck2 = alphaCheck1;
-
-        //Esc 누르면 타이틀로 탈출
+        //Esc 누르면 타이틀로 탈출@@@
         if (!inTitle && Input.GetKeyDown(KeyCode.Escape))
         {
-            if (isEscWarning)
-            {
-                EscWarning_NO();
-            }
-            else
-            {
-                if (inLobby)
-                {
-                    ToBookCam();
-                }
-                else
-                {
-                    ToTitle();
-                }
-            }
+            ToTitle();
         }
     }
 
@@ -163,23 +133,15 @@ public class CameraWalker : MonoBehaviour
         }
     }
 
-    private float alphaCheck1 = 0f, alphaCheck2 = 0f;
     private bool titleIntro = false;
-
     public void TitleStart()
     {
-        inTitle = true;
-        inLobby = false;
-        inBook = false;
-
         UI.transform.localPosition = new Vector3(titlePos.x, titlePos.y + 150f, titlePos.z);
-        UI.transform.localScale = new Vector3(3.2f / titlePos_Scale.x, 3.2f / titlePos_Scale.y, 3.2f / titlePos_Scale.z);
         titleIntro = true;
-        ToTitle();
         ToTitleCam();
     }
 
-    [Header("===== 2. 페이드 효과 =====")]
+    [Header("===== 2. 페이드 아웃 연출 =====")]
     public GameObject fadeoutBlack;
     public GameObject fadeoutBlack_QUIT;
     public float fadeTime;
@@ -219,57 +181,23 @@ public class CameraWalker : MonoBehaviour
         PlaySFX(); // 효과음 재생
         StartCoroutine(GameStartSequence());
     }
-    public void FadeOut()
+    private void FadeOut()
     {
-        if (onGameQuit)
-        {
-            StopCoroutine(FadeOutEffect_Quit());
-            StartCoroutine(FadeOutEffect_Quit());
-        }
-        else
-        {
-            onGameQuit = false;
-            StopCoroutine(FadeOutEffect());
-            StartCoroutine(FadeOutEffect());
-        }
+        StartCoroutine(FadeOutEffect());
     }
-    IEnumerator FadeOutEffect()
+    private IEnumerator FadeOutEffect()
     {
         fadeoutBlack.SetActive(true);
-        can.interactable = true;
-        can.blocksRaycasts = true;
+        can = fadeoutBlack.GetComponent<CanvasGroup>();
         can.alpha = 0f;
         float elapsedTime = 0f;
         while (elapsedTime < fadeTime)
         {
-            if (elapsedTime >= fadeTime)
-            {
-                can.alpha = 1f;
-                break;
-            }
-            can.alpha = Mathf.SmoothStep(0f, 1f, elapsedTime / (fadeTime));
+            can.alpha = Mathf.Lerp(0f, 1f, elapsedTime / fadeTime);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-    }
-    IEnumerator FadeOutEffect_Quit() //게임 종료용 페이드아웃
-    {
-        fadeoutBlack_QUIT.SetActive(true);
-        canq.interactable = true;
-        canq.blocksRaycasts = true;
-        canq.alpha = 0f;
-        float elapsedTime = 0f;
-        while (elapsedTime < fadeTime)
-        {
-            if (elapsedTime >= fadeTime)
-            {
-                canq.alpha = 1f;
-                break;
-            }
-            canq.alpha = Mathf.SmoothStep(0f, 1f, elapsedTime / (fadeTime));
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
+        can.alpha = 1f;
     }
     // 씬 변경 전 연출 실행 후 이동
     private IEnumerator GameStartSequence()
@@ -285,21 +213,6 @@ public class CameraWalker : MonoBehaviour
         {
             SceneManager.LoadScene(startSceneName);
         }
-    }
-
-    //게임 종료
-    private bool onGameQuit = false;
-    public async void QuitGame()
-    {
-        StopAllCoroutines();
-        onGameQuit = true;
-        FadeOut();
-        await Task.Delay((int)fadeTime * 1000);
-#if UNITY_EDITOR
-        EditorApplication.ExitPlaymode();
-#else
-        Application.Quit();
-#endif
     }
 
     public void ToLoad()
@@ -321,7 +234,6 @@ public class CameraWalker : MonoBehaviour
         book_credit.SetActive(true);
         book_setting.SetActive(false);
     }
-
     public void FadeIn()
     {
         if (titleIntro)
@@ -340,18 +252,11 @@ public class CameraWalker : MonoBehaviour
     IEnumerator FadeInEffect()
     {
         fadeoutBlack.SetActive(true);
-        can.interactable = false;
-        can.blocksRaycasts = false;
         can.alpha = 1f;
         float elapsedTime = 0f;
         while (elapsedTime < fadeTime)
         {
-            if (elapsedTime >= fadeTime)
-            {
-                can.alpha = 0f;
-                break;
-            }
-            can.alpha = Mathf.SmoothStep(1f, 0f, elapsedTime / (fadeTime));
+            can.alpha = Mathf.Lerp(can.alpha, 0f, elapsedTime / fadeTime);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
@@ -361,18 +266,11 @@ public class CameraWalker : MonoBehaviour
     IEnumerator FadeInEffect_Title()
     {
         fadeoutBlack.SetActive(true);
-        can.interactable = false;
-        can.blocksRaycasts = false;
         can.alpha = 1f;
         float elapsedTime = 0f;
-        while (elapsedTime < fadeTime * 4)
+        while (elapsedTime < fadeTime)
         {
-            if (elapsedTime >= fadeTime * 4)
-            {
-                can.alpha = 0f;
-                break;
-            }
-            can.alpha = Mathf.SmoothStep(1f, 0f, elapsedTime / (fadeTime * 4));
+            can.alpha = Mathf.Lerp(can.alpha, 0f, elapsedTime / fadeTime);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
@@ -387,60 +285,5 @@ public class CameraWalker : MonoBehaviour
         book_load.SetActive(false);
         book_credit.SetActive(false);
         book_setting.SetActive(true);
-    }
-
-    [Header("===== 6. 게임 종료 & 메인 메뉴 경고창 =====")]
-
-    //경고창
-    public GameObject WarnBox_Q;
-    //메인 메뉴 텍스트
-    public GameObject WarnBox_QtextM;
-    //게임 종료 텍스트
-    public GameObject WarnBox_QtextQ;
-
-    //경고창이 띄워져있는지, 어떤 경고창인지 확인
-    private bool isEscWarning = false;
-    private bool isEscWarning_Q = false;
-
-    public void Debug_EscWarning_setQtrue()
-    {
-        isEscWarning_Q = true;
-    }
-
-    public void EscWarning()
-    {
-        WarnBox_Q.SetActive(true);
-        isEscWarning = true;
-        if (isEscWarning_Q)
-        {
-            WarnBox_QtextQ.SetActive(true);
-        }
-        else
-        {
-            WarnBox_QtextM.SetActive(true);
-        }
-    }
-
-    public void EscWarning_YES()
-    {
-        if (isEscWarning_Q)
-        {
-            EscWarning_NO();
-            QuitGame();
-        }
-        else
-        {
-            EscWarning_NO();
-            TitleStart();
-        }
-    }
-
-    public void EscWarning_NO()
-    {
-        isEscWarning = false;
-        isEscWarning_Q = false;
-        WarnBox_Q.SetActive(false);
-        WarnBox_QtextM.SetActive(false);
-        WarnBox_QtextQ.SetActive(false);
     }
 }
