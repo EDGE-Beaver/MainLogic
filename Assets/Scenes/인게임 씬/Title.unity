@@ -3115,7 +3115,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 1
+  m_Value: 0.387
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -5885,7 +5885,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc3cdc31f1609b948b141c42792ebbf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bgmClip: {fileID: 8300000, guid: dbd519aeaaf0c3742aaee50564f709c4, type: 3}
+  bgmClip: {fileID: 8300000, guid: 076771040f0daa44ea93251cac7c1134, type: 3}
   volumeSlider: {fileID: 486260595}
 --- !u!4 &977166839
 Transform:
@@ -6354,7 +6354,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 1
+  m_Value: 0.387
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
