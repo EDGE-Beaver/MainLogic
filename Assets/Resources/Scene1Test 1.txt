@@ -24,7 +24,7 @@
 |사각사각….빗소리||Baek_Face_Wondering|||글씨 쓰는 소리|상담실|
 |우현이 천천히 차트를 넘기며 무언가를 기록한다.|빗소리|Baek_Face_Wondering||||상담실|
 백우현|다음으로 넘어가죠. 최근 증상에 변화가 있나요?|빗소리|Baek_Face_Serious||doctor_voice||상담실|
-백우현|기면증' 말입니다.|빗소리|Baek_Face_Wondering||doctor_voice||상담실|
+백우현|'기면증' 말입니다.|빗소리|Baek_Face_Wondering||doctor_voice||상담실|
 신소혁|글쎼요… 증상 조금 변하는게 의미가 있나요?|빗소리|신소혁||||상담실|
 백우현|아주 사소한 일이라도 중요할 수 있습니다.|빗소리|Baek_Face_Wondering||doctor_voice||상담실|
 백우현|잠에 들 때 감각이 살짝 다르다거나, 깨어나는 시간이 평소보다 빠르다거나|빗소리|Baek_Face_Serious||doctor_voice||상담실|
