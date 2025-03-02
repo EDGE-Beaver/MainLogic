@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System;
+using TMPro;
 
 /*
  * 📌 **VariableManager**
@@ -150,17 +151,21 @@ public class VariableManager : MonoBehaviour
 
     public void ModifyVariable(string key, int change)
     {
-        try{
-            variables[key] += change;
-        }catch(NullReferenceException err){
-            Debug.LogError(this.name + "의 ModifyVariable에서 발생한 에러입니다.\n 딕셔너리 내부에 존재하지 않는 값에 접근했습니다"); 
-            Debug.LogError("다음은 에러 메세지입니다 : " + err.Message);
-        
-        }
-        
         // if (variables.ContainsKey(key))
-        //     variables[key] += change;
+        //     variables[key] = value;
         // else
-        //     variables[key] = change;
+        //     variables.Add(key, value);
+        // try{
+        //     variables[key] += change;
+        // }catch(NullReferenceException err){
+        //     Debug.LogError(this.name + "의 ModifyVariable에서 발생한 에러입니다.\n 딕셔너리 내부에 존재하지 않는 값에 접근했습니다"); 
+        //     Debug.LogError("다음은 에러 메세지입니다 : " + err.Message);
+        
+        // }
+        
+        if (variables.ContainsKey(key))
+            variables[key] += change;
+        else
+            SetVariable(key, change);
     }
 }

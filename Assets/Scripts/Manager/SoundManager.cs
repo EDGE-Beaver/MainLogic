@@ -94,31 +94,31 @@ public class SoundManager : MonoBehaviour
     private AudioSource BgmAudioSource;//Bgm 출력을 관할하는 오브젝트의 오디오 소스
 
     public GameObject VoicListener;//(할 수 있다면) 더빙된 목소리의 출력을 관할하는 오브젝트
-    public AudioSource VoiceAudioSource;//보이스 출력 관할하는 오브젝트의 오디오 소스
+    private AudioSource VoiceAudioSource;//보이스 출력 관할하는 오브젝트의 오디오 소스
 
     void Awake()
     {
         SoundEffectFileRead();//파일 불러오고
-        if(SoundEffectListner == null && GameObject.Find("SoundEffectListener") == null){
+        if(SoundEffectListner == null && GameObject.Find("SeAudioSource") == null){
             //리스터 연결, 리스너가 없는 상황 확인. 
-            Debug.Log("SoundEffectListener가 비어 있습니다! 생성해서 연결해주세요");
+            Debug.LogError("SeAudioSource가 비어 있습니다! 생성해서 연결해주세요");
         }else{
             SeAudioSource = SoundEffectListner.GetComponent<AudioSource>();
         }
 
 
         BgmAudioFileRead();
-         if(BgmListener == null && GameObject.Find("BgmListener") == null){
+         if(BgmListener == null && GameObject.Find("BgmAudioSource") == null){
             //리스터 연결, 리스너가 없는 상황 확인. 
-            Debug.Log("BgmListener가 비어 있습니다! 생성해서 연결해주세요");
+            Debug.LogError("BgmAudioSource가 비어 있습니다! 생성해서 연결해주세요");
         }else{
             BgmAudioSource = BgmListener.GetComponent<AudioSource>();
         }
 
         VoiceAudioFileRead();
-        if(VoicListener == null && GameObject.Find("VoicListener") == null){
+        if(VoicListener == null && GameObject.Find("VoiceAudioSource") == null){
             //리스터 연결, 리스너가 없는 상황 확인. 
-            Debug.Log("VoiceListener가 비어 있습니다! 생성해서 연결해주세요");
+            Debug.LogError("VoiceAudioSource가 비어 있습니다! 생성해서 연결해주세요");
         }else{
             VoiceAudioSource = BgmListener.GetComponent<AudioSource>();
         }
@@ -193,7 +193,7 @@ public class SoundManager : MonoBehaviour
     /// <param name="Name">효과음의 이름입니다</param>
     public void SetCurrentSe(string SeName){
         if(!SoundEffectFileName.Contains(SeName)){
-            Debug.LogError($"SetCurrentSe에서의 에러\n, {SeName}이라는 Se 파일은 존재하지 않습니다.");
+            Debug.LogError($"SetCurrentSe에서의 에러\n{SeName}이라는 Se 파일은 존재하지 않습니다.");
         }
         CurrentSeFile = SeName;
     }
@@ -204,9 +204,9 @@ public class SoundManager : MonoBehaviour
     /// <param name="BgmName">설정하길 원하는 bgm의 이름입니다.</param>
     public void SetCurrentBgm(string BgmName){
          if(!BgmAudioFileName.Contains(BgmName)){
-            Debug.LogError($"SetCurrentBgm에서의 에러\n, {BgmName}이라는 Bgm 파일은 존재하지 않습니다.");
+            Debug.LogError($"SetCurrentBgm에서의 에러\n{BgmName}이라는 Bgm 파일은 존재하지 않습니다.");
         }
-        CurrentSeFile = BgmName;
+        CurrentBgmFile = BgmName;
 
     }
     /// <summary>
@@ -215,9 +215,9 @@ public class SoundManager : MonoBehaviour
     /// <param name="VoiceName">설정하길 원하는 bgm의 이름입니다.</param>
     public void SetCurrentVoice(string VoiceName){
          if(!VoiceAudioFileName.Contains(VoiceName)){
-            Debug.LogError($"SetCurrentVoice에서의 에러\n, {VoiceName}이라는 Bgm 파일은 존재하지 않습니다.");
+            Debug.LogError($"SetCurrentVoice에서의 에러\n{VoiceName}이라는 Voice 파일은 존재하지 않습니다.");
         }
-        CurrentSeFile = VoiceName;
+        CurrentVoiceFile = VoiceName;
 
     }
 
@@ -244,6 +244,27 @@ public class SoundManager : MonoBehaviour
     }
     public void PlayCurrentVoice(){
         VoiceAudioSource.PlayOneShot(VoiceAudio[CurrentVoiceFile]);
+    }
+
+    /*[보이스 소스 조절 부분]*/
+
+    /// <summary>
+    /// 보이스의 피치를 조절합니다. -3 ~ 3까지만 조절 가능합니다.
+    /// </summary>
+    /// <param name="pitch">얼마나 조절할지 결정합니다.</param>
+    public void SetVoicePitch(float pitch){
+        VoiceAudioSource.pitch += pitch;
+        VoiceAudioSource.pitch = Mathf.Clamp(VoiceAudioSource.pitch, -3f, 3f); // 🎯 피치 범위 제한 (-3 ~ 3)
+
+    }
+
+    /// <summary>
+    /// 보이스의 볼륨을 조절합니다. 0 ~ 1까지만 조절 가능합니다.
+    /// </summary>
+    /// <param name="size"></param>
+
+    public void SetVoiceVolum(float size){
+        VoiceAudioSource.volume = Mathf.Clamp01(size);
     }
 }
 

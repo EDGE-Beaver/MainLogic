@@ -81,6 +81,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public class FileManager : MonoBehaviour
@@ -138,6 +140,11 @@ public class FileManager : MonoBehaviour
     /// 중복 검사용 / 이름 검사용 세트. 
     /// </summary>
     public HashSet<string> choiceFileNameSet = new HashSet<string>();
+
+    [Header("테크니컬한 변수 저장되는 곳 - 테스트 끝나면 다 private로 변경")]
+    [Tooltip("")]
+    public bool isTextFileEnd = false;
+    public bool isChoiceFileEnd = false;
     void Awake()
     {
         //텍스트 파일 읽어오기
@@ -196,11 +203,10 @@ public class FileManager : MonoBehaviour
     }
      public void LoadAllChoiceFiles()
     {
-       //향후 추가 예정[박준건]
         loadedChoiceData.Clear();//파일 클리어
 
         //읽어야 하는 파일들마다 반복
-        foreach (var filePath in textFilePaths)
+        foreach (var filePath in choiceFilePaths)
         {
             TextAsset textAsset = Resources.Load<TextAsset>(filePath);
             if (textAsset == null)
@@ -232,6 +238,9 @@ public class FileManager : MonoBehaviour
 
     /// <summary>
     /// FileManager가 어떤 파일을 CurrentFile로 지정할지 정합니다.
+    /// <para>
+    /// 만약 그런 파일 존재하지 않을 경우 예외를 던집니다
+    /// </para>
     /// </summary>
     /// <param name="fileName">파일의 이름입니다.</param>
     public void SetCurrentFile(string fileName)
@@ -244,10 +253,19 @@ public class FileManager : MonoBehaviour
         else
         {
             Debug.LogWarning($"⚠️ 파일 '{fileName}'이(가) 로드되지 않아 변경할 수 없습니다.");
+            throw new FileDoesNotExistError("Filemanager-SetCurrentFile", "FIlemanager에 입력하지 않은 파일을 접근");
         }
     }
-     public void SetCurrentChoiceFile(string fileName)
+    /// <summary>
+    /// FileManager가 어떤 파일을 CurrentchoiceFile로 지정할지 정합니다.
+    /// <para>
+    /// 만약 그런 파일 존재하지 않을 경우 예외를 던집니다
+    /// </para>
+    /// </summary>
+    /// <param name="fileName">파일의 이름입니다.</param>
+    public void SetCurrentChoiceFile(string fileName)
     {
+        Debug.Log("초이스 매니저에서 여기까지 ㄴ들어옴");
         if (loadedChoiceData.ContainsKey(fileName))
         {
             currentChoiceFile = fileName;
@@ -256,6 +274,7 @@ public class FileManager : MonoBehaviour
         else
         {
             Debug.LogWarning($"⚠️ 파일 '{fileName}'이(가) 로드되지 않아 변경할 수 없습니다.");
+            throw new FileDoesNotExistError("Filemanager-SetCurrentChoiceFile", "FIlemanager에 입력하지 않은 파일을 접근");
         }
     }
 
@@ -282,7 +301,10 @@ public class FileManager : MonoBehaviour
         var dataList = loadedData[currentFile];
         if (index < 0 || index >= dataList.Count)
         {
-            Debug.LogWarning($"⚠️ '{currentFile}' 파일의 잘못된 인덱스 요청: {index}");
+            Debug.LogWarning($"⚠️ '{currentFile}' 파일의 잘못된 인덱스 요청: {index}"); 
+            if(index == dataList.Count){
+                isTextFileEnd = true; //끝났다는 것을 알려준다. 
+            }
             return new string[] { "" };
         }
         return dataList[index];
@@ -293,17 +315,17 @@ public class FileManager : MonoBehaviour
     /// <param name="index"></param>
     /// <returns></returns>
 
-     public string[] GetChoiceRowByIndex(int index)
+    public string[] GetChoiceRowByIndex(int index)
     {
         
-        if(currentFile == null){
+        if(currentChoiceFile == null){
             Debug.LogError("GetChoiceRowByIndex에서의 오류");
             Debug.LogError("CurrentChoiceFile이 존재하지 않습니다.");
         }
-        var dataList = loadedChoiceData[currentFile];
+        var dataList = loadedChoiceData[currentChoiceFile];
         if (index < 0 || index >= dataList.Count)
         {
-            Debug.LogWarning($"⚠️ '{currentFile}' 파일의 잘못된 인덱스 요청: {index}");
+            Debug.LogWarning($"⚠️ '{currentChoiceFile}' 파일의 잘못된 인덱스 요청: {index}");
             return new string[] { "" };
         }
         return dataList[index];
@@ -331,6 +353,28 @@ public class FileManager : MonoBehaviour
             Debug.LogError("CurrentChoiceFile이 존재하지 않습니다");
             return null;
         }
+    }
+
+    public string GetCurrentFileName(){
+        if(currentFile != null){
+            return currentFile;
+        }else{
+            Debug.LogError(" GetCurrentFileName에서의 오류");
+            Debug.LogError("CurrentFile이 설정되지 않았습니다");
+            return null;
+        }
+
+    }
+
+    public string GetcurrentChoiceFileName(){
+        if(currentChoiceFile != null){
+            return currentChoiceFile;
+        }else{
+            Debug.LogError(" GetCurrentChoiceFileName에서의 오류");
+            Debug.LogError("CurrentChoiceFile이 설정되지 않았습니다");
+            return null;
+        }
+
     }
     /// <summary>
     /// 현재 씬에서 이 FilaManager가 가지고 있는 모든 텍스트 파일 이름을 리턴합니다. 
