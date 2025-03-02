@@ -1,3 +1,4 @@
+<<<<<<< HEAD:Assets/Scripts/TestScripts.cs
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -36,3 +37,5 @@ public class TestScripts : MonoBehaviour
         
     }
 }
+=======
+>>>>>>> main:Assets/TestScripts.cs
