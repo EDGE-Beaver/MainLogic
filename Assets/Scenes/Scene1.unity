@@ -954,15 +954,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ImageFilePath:
   - Graphics/CharacterImage/Shin_Patient/Shin_Face_Angry
-  - Graphics/CharacterImage/Baek_Doctor/Baek_Face_Afraid
+  - Graphics/CharacterImage/Shin_Patient/Shin_Face_Sweating.png
   - Graphics/CharacterImage/Shin_Patient/Shin_Normal_Stand
+  - Graphics/CharacterImage/Shin_Patient/Shin_Face_RealSmile
+  - Graphics/CharacterImage/Shin_Patient/Shin_Face_Sweating
+  - Graphics/CharacterImage/Yu_ nurse/Yu_Face_Standard
+  - Graphics/CharacterImage/Baek_Doctor/Baek_Face_Afraid
   - Graphics/CharacterImage/Baek_Doctor/Baek_Face_SmileOpen
   - Graphics/CharacterImage/Baek_Doctor/Baek_Face_Serious
   - Graphics/CharacterImage/Baek_Doctor/Baek_Face_Wondering
   - Graphics/CharacterImage/Baek_Doctor/Baek_Face_Angry
-  - Graphics/CharacterImage/Shin_Patient/Shin_Face_RealSmile
   - Graphics/CharacterImage/Yu_ nurse/Yu_Face_Mock
-  - Graphics/CharacterImage/Shin_Patient/Shin_Face_Sweating.png
+  - Graphics/CharacterImage/Yu_ nurse/Yu_Face_Standard.png
+  - Graphics/CharacterImage/Yu_ nurse/Yu_Face_Standard
   ImageObj:
   - {fileID: 1123024302}
   - {fileID: 223597938}
@@ -1996,6 +2000,8 @@ MonoBehaviour:
   LinefullText: 
   remainTextAmout: 0
   isTrandition: 0
+  HavetoTakeBranch: 0
+  WhatBranchITake: 0
 --- !u!4 &1385109489
 Transform:
   m_ObjectHideFlags: 0
@@ -3091,6 +3097,7 @@ MonoBehaviour:
   SoundEffectFile:
   - Audio/SE/Knock
   - "Audio/SE/\uC2EC\uBC8C\uC988\uC5ED\uC7AC\uC0DD"
+  - "Audio/SE/\uC720\uC774\uC5F0\uAC77\uB294\uC18C\uB9AC"
   BgmAudioFile:
   - "Audio/BGM/\uBE57\uC18C\uB9AC"
   - "Audio/BGM/\uADF8 \uBCD1\uC6D0\uC740"

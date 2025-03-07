@@ -185,6 +185,10 @@ public class DialogueManager : MonoBehaviour
     
     public bool isTrandition = false;
 
+    [Tooltip("분기를 택해야 하는지 여부 확인")]
+    public bool HavetoTakeBranch = false;
+    public int WhatBranchITake = 0;
+
     void Awake()
     {
         /*

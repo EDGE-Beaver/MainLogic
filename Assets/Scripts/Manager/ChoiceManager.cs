@@ -16,7 +16,7 @@
  * 변수는 생략가능
  * 선택지의 개수는 1~4개로 범용적 사용 가능
  * 
- * 
+ * //변수 여러개를 변경하고 싶을 때에 대한 여부는 설정이 안되어 있고, 할 시간도 없음. 
  * 
  * 📂 아래는 스크립트 설명
  * - 선택지 UI를 관리하는 클래스입니다.
@@ -265,36 +265,125 @@ public class ChoiceManager : MonoBehaviour
         //사실은 아까 이상한 걸 보았어요, 아무 일 없어요, 수 많은 이들 속 찾았네 BARO, 와.. 정말 Chill 하다. | 신뢰도+10, 의심+5, 정보획득+15, 기본값+0
         
         //선택지 변경 관련해서 처리하는 코드.
-        variableChanges = sections[1].Split(',').Select(s => s.Trim()).ToArray();
+        if(sections.Length >= 3){
+            //선택지 선택에 따라 텍스트 변경이 들어가야 하는 경우
+            dialogueManager.HavetoTakeBranch = true;
 
+            string[] GotoBranch = sections[1].Split(',').Select(s => s.Trim()).ToArray();
+            for(int index = 0; index<GotoBranch.Length; index++){
 
-        for(int index = 0; index<variableChanges.Length; index++){
-
-            if (index < variableChanges.Length && !string.IsNullOrEmpty(variableChanges[index]))
-            {
-                string[] parts = variableChanges[index].Split('+');
-                int value;
-                if (parts.Length == 2 && int.TryParse(parts[1], out value))
+                if (index < GotoBranch.Length && !string.IsNullOrEmpty(GotoBranch[index]))
                 {
-                    //파싱에 성공했을 경우
-                    //-도 적용하는가? 
-                    Action ChangedAction = () => {
-                        variableManager.ModifyVariable(parts[0], value);
-                        };
-                    variableChangeAction.Add(index, ChangedAction);
+                    if(GotoBranch[index].Contains(":")){
+                        //변수 변경까지 겸하는 이동일 경우
+                        string[] MoveAndChange = GotoBranch[index].Split(":");
+                        string[] MovePart = MoveAndChange[0].Split('+');//어디로 이동할지에 대한 파트
+                        string[] ChangePart = MoveAndChange[1].Split('+');//어떤 변수를 변경할지에 대한 파트
+                        int value;
+                        int Branch;
+                        if (ChangePart.Length == 2 && int.TryParse(ChangePart[1], out value) && 
+                           MovePart.Length == 2 && int.TryParse(MovePart[1], out Branch))
+                        {
+                            //파싱에 성공했을 경우
+                            //-도 적용하는가? 
+                            Action ChangedAction = () => {
+                                variableManager.ModifyVariable(ChangePart[0], value);
+                                dialogueManager.WhatBranchITake = Branch;
+                                };
+                            variableChangeAction.Add(index, ChangedAction);
 
-                    Debug.Log($"✅ 변수 변경 액션을 추가함. {index}번째 변경 액션: {parts[0]} += {value}");
-                }
-                else
-                {
-                    Debug.Log($"⚠️ 변수 변경 없음: {variableChanges[index]}");
+                            Debug.Log($"✅ 변수 변경 액션을 추가함. {index}번째 변경 액션: {ChangePart[0]} += {value}");
+                            Debug.Log($"✅ 분기 변경 액션을 추가함. {index}번째 변경 액션: {MovePart[0]} goto {Branch}");
+                        }
+                        else
+                        {
+                            Debug.Log($"⚠️ 변수 변경 없음: {variableChanges[index]}");
+                        }
+
+                    }else{
+                        //단순 이동일 경우
+                        string[] MovePart = GotoBranch[index].Split('+');//어디로 이동할지에 대한 파트
+                        int Branch;
+                        if (MovePart.Length == 2 && int.TryParse(MovePart[1], out Branch))
+                        {
+                            //파싱에 성공했을 경우
+                            //-도 적용하는가? 
+                            Action ChangedAction = () => {
+                                dialogueManager.WhatBranchITake = Branch;
+                                };
+                            variableChangeAction.Add(index, ChangedAction);
+
+                            Debug.Log($"✅ 분기 변경 액션을 추가함. {index}번째 변경 액션: {MovePart[0]} goto {Branch}");
+                        }
+                        else
+                        {
+                            Debug.Log($"⚠️ 변수 변경 없음: {variableChanges[index]}");
+                        }
+
+
+                    }
+                    
                 }
             }
+             for (int i = 0; i < choiceButtons.Length; i++)
+            {
+            if (i < choices.Length && !string.IsNullOrEmpty(choices[i]))
+            {
+                if (choiceTexts[i] != null)
+                {
+                    choiceTexts[i].text = choices[i];//만약 null이 아니라면
+                    Debug.Log($"✅ 버튼 {i} 텍스트 설정 완료: {choiceTexts[i].text}");
+
+                    //버튼 크기~높이 결정하는 곳. 나중에 range로 빼둘 것. 
+                    RectTransform buttonRect = choiceButtons[i].GetComponent<RectTransform>();
+                    float textWidth = choiceTexts[i].preferredWidth + 20f;
+                    buttonRect.sizeDelta = new Vector2(textWidth, buttonRect.sizeDelta.y);
+                    //
+
+
+                    choiceButtons[i].gameObject.SetActive(true);
+
+                    choiceButtons[i].onClick.RemoveAllListeners();//혹시 모르니 모든 리스너 제거 과정. 
+                    int index = i;
+                    choiceButtons[i].onClick.AddListener(() => SelectChoice(index));
+                }
+            }
+            else
+            {
+                //나머지 버튼들은 다 숨겨놓기. 
+                choiceButtons[i].gameObject.SetActive(false);
+                Debug.Log($"✅ {choiceButtons[i].gameObject.name} 사용 안함. 숨김. 현재 선택지의 개수 {choices.Length}");
+            }
+
         }
-        //🔹 변수 변경 적용 (공백인 경우 무시)
-        
-        for (int i = 0; i < choiceButtons.Length; i++)
+        }else
         {
+            variableChanges = sections[1].Split(',').Select(s => s.Trim()).ToArray();
+            for(int index = 0; index<variableChanges.Length; index++){
+
+                if (index < variableChanges.Length && !string.IsNullOrEmpty(variableChanges[index]))
+                {
+                    string[] parts = variableChanges[index].Split('+');
+                    int value;
+                    if (parts.Length == 2 && int.TryParse(parts[1], out value))
+                    {
+                        //파싱에 성공했을 경우
+                        //-도 적용하는가? 
+                        Action ChangedAction = () => {
+                            variableManager.ModifyVariable(parts[0], value);
+                            };
+                        variableChangeAction.Add(index, ChangedAction);
+
+                        Debug.Log($"✅ 변수 변경 액션을 추가함. {index}번째 변경 액션: {parts[0]} += {value}");
+                    }
+                    else
+                    {
+                        Debug.Log($"⚠️ 변수 변경 없음: {variableChanges[index]}");
+                    }
+                }
+            }
+            for (int i = 0; i < choiceButtons.Length; i++)
+            {
             if (i < choices.Length && !string.IsNullOrEmpty(choices[i]))
             {
                 if (choiceTexts[i] != null)
@@ -326,6 +415,10 @@ public class ChoiceManager : MonoBehaviour
                 choiceButtons[i].gameObject.SetActive(false);
                 Debug.Log($"✅ {choiceButtons[i].gameObject.name} 사용 안함. 숨김. 현재 선택지의 개수 {choices.Length}");
             }
+        }
+        //🔹 변수 변경 적용 (공백인 경우 무시)
+        
+       
         }
 
         // 선택지 개수에 따라 Panel의 y 좌표 조정 
