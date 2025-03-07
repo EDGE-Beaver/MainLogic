@@ -1,3 +1,0 @@
-0 | 기분이 좋아요, 별로에요| |Scene1Test,Scene1Test|4,3|
-1 | 사실은 아까 이상한 걸 보았어요,아무 일 없어요,수 많은 이들 속 찾았네 BARO,와.. 정말 Chill 하다.|,,,|Scene2Test,Scene1Test, Scene1Test,Scene1Test|15,15,15,15|
- 

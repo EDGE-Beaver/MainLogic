@@ -48,7 +48,7 @@ public class UIClickEventScripts : MonoBehaviour, IPointerClickHandler
           if(eventData.button == PointerEventData.InputButton.Left){
             Debug.Log(eventData.pointerCurrentRaycast.gameObject.name);
             if(eventData.pointerCurrentRaycast.gameObject == DialogueBox){
-                dialogueManager.SkipTypingAnimation();
+                dialogueManager.isClickDialogueBox = true;
             }
         }
     }

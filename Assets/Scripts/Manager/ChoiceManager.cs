@@ -176,6 +176,7 @@ public class ChoiceManager : MonoBehaviour
         choicePanel.SetActive(true);
         isChoicePanelActive = true;
     }
+    
     /// <summary>
     /// 다이얼로그 매니저에서 받은 정보대로 선택지를 설정합니다.
     /// </summary>
@@ -292,23 +293,6 @@ public class ChoiceManager : MonoBehaviour
         }
         //🔹 변수 변경 적용 (공백인 경우 무시)
         
-
-        //현재로선 필요없는 레거시 코그들.
-
-
-        // // ** nextFiles 배열이 비어있는 경우 기본값으로 설정**
-        // nextFiles = sections.Length > 3 && !string.IsNullOrEmpty(sections[3])
-        //     ? sections[3].Split(',').Select(s => s.Trim()).ToArray()
-        //     : new string[choices.Length];
-
-        // // ** nextIndexes 배열이 비어있는 경우 기본값으로 설정**
-        // nextIndexes = sections.Length > 4 && !string.IsNullOrEmpty(sections[4])
-        //     ? sections[4].Split(',').Select(s => int.TryParse(s.Trim(), out var result) ? result : -1).ToArray()
-        //     : Enumerable.Repeat(-1, choices.Length).ToArray();
-
-
-        // choicePanel.SetActive(true);//이미 위의 코루틴에서 중복 실행
-
         for (int i = 0; i < choiceButtons.Length; i++)
         {
             if (i < choices.Length && !string.IsNullOrEmpty(choices[i]))

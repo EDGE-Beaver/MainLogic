@@ -9,8 +9,9 @@
 //
 //
 //📜 대사 파일 구조
-//화자 이름|대사 내용|효과음|캐릭터 이미지|선택지ID|음성(캐릭터 목소리)|배경음악|애니메이션 키워드
 //
+//
+//화자|대화내용|캐릭터 이미지|효과음|음성|배경음|백그라운드이미지|선택지id|애니메이션키워드
 // 배경 이미지 변경은 VariableManager에서 처리(이유는 스크립트 볼륨, 배경 이미지 사용 빈도 낮음)
 //
 // [필드 1] 화자 이름
@@ -35,36 +36,32 @@
 //   %   : 선택지 표시 (해당 줄이 선택지 패널을 띄우도록 처리)
 //   @N  : 다이얼로그 사이즈를 N만큼으로 만듭니다.
 //   ---------------------------------------------------------
-//
-// [필드 3] 효과음 (SE, Sound Effect)
-//   - 특정 대사에서 재생할 효과음 파일의 이름을 지정합니다.
-//   - 예: "Knock" (Knock.mp3 파일 재생)
-//
-// [필드 4] 캐릭터 이미지
+// [필드 3] 캐릭터 이미지
 //   - 대사 진행 중 변경할 캐릭터의 이미지 파일명과 위치를 지정합니다.
 //   - 예: "image_nurse_concept_1, 0000"
 //   - 1000 <- 캐릭터가 제일 왼쪽에 서있다는 의미고 0001 <- 캐릭터가 제일 오른쪽에 서있다는 얘깁니다.
 //   - 0000 <- 캐릭터를 중앙에 세워놓습니다.
 //   - 주의)0000은 캐릭터가 하나만 있을 때만 받습니다. 예외처리 안 되어 있으니(아직) 주의합시다.
-//
-// [필드 5] 선택지 ID
-//   - 특정 대사에서 선택지가 나타날 경우 해당 선택지의 ID를 설정합니다.
-//   - 없을 경우 빈 문자열("")로 설정합니다.
-//   - 예: "1" (선택지가 있는 경우), "" (선택지가 없는 경우)
-//
-// [필드 6] 음성 (Voice)
+// [필드 4] 효과음 (SE, Sound Effect)
+//   - 특정 대사에서 재생할 효과음 파일의 이름을 지정합니다.
+//   - 예: "Knock" (Knock.mp3 파일 재생)
+// [필드 5] 음성 (Voice)
 //   - 대사에 맞춰 재생할 음성 파일명을 지정합니다.
 //   - 예: "voice" (voice.mp3 파일 재생)
 //
-// [필드 7] 배경 음악 (BGM)
+// [필드 6] 배경 음악 (BGM)
 //   - 특정 대사에서 변경할 배경 음악을 지정합니다.
 //   - 예: "downvoice"
-//
-// [필드 8] 애니메이션 키워드
-//   - 특정 애니메이션을 실행하기 위한 키워드를 지정합니다.
-//   - 예: "끄덕" (끄덕이는 애니메이션 실행), "어둠" (화면 어두워짐 등)
-// [필드 9] 백그라운드 이미지
+// [필드 7] 백그라운드 이미지
 //   - 선택한 것에 맞는 백그라운드 이미지를 재생합니다.
+//[필드 8] 선택지 ID
+//   - 특정 대사에서 선택지가 나타날 경우 해당 선택지의 ID를 설정합니다.
+//   - 없을 경우 빈 문자열("")로 설정합니다.
+//   - 예: "1" (선택지가 있는 경우), "" (선택지가 없는 경우)
+// [필드 9] 애니메이션 키워드
+//   - 특정 애니메이션을 실행하기 위한 키워드를 지정합니다.
+//   - 예: "끄덕" (끄덕이는 애니메이션 실행), "어둠" (화면 어두워짐 등) 
+//   - CircleFadeOut/In = 원으로 작아지는/커지는 효과입니다. 
 //
 // ===========================================
 // 🔹 [파일 예시]
@@ -103,6 +100,7 @@ using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using UnityEditor;
 using UnityEditor.ShaderKeywordFilter;
+using System.Diagnostics.Tracing;
 
 
 
@@ -128,12 +126,14 @@ public class DialogueManager : MonoBehaviour
     public ChoiceManager choiceManager; // ✅ 선택지 매니저 연결
     public GameObject choiceManagerObj;
     public bool hasChoice = false; // 선택지가 존재합니까?
+    [Header("트랜지션 매니저")]
+    public TransitionShaderController transitionShaderController;
+    public GameObject transitionControllerobj;
 
-    [Header("다이얼로그 매니저가 가져가는 UI 요소들")]
+    [Header("UI 요소들")]
     public TMP_Text speakerText;
     public TMP_Text DialogueText;
     public Image TextBox;
-    public Image characterImage;
 
     [Header("텍스트 애니메이션 설정")]
     [Range(0f, 0.1f)] public float defaultDelay = 0.05f;
@@ -172,7 +172,18 @@ public class DialogueManager : MonoBehaviour
     [Tooltip("스킵이 필요한지 안 필요한지 말하는 곳")]
     public bool isSkiping = false;
 
+    [Tooltip("클릭했는지 안 했는지 확인")]
+    public bool isClickDialogueBox;
 
+    [Tooltip("전체 텍스트")]
+    public string LinefullText;
+    public int remainTextAmout;
+
+    [Tooltip("코루틴")]
+    public IEnumerator TextAnimationCor;
+    [Tooltip("트랜지션중인지 아닌지 확인")]
+    
+    public bool isTrandition = false;
 
     void Awake()
     {
@@ -251,21 +262,24 @@ public class DialogueManager : MonoBehaviour
         if (!isDialogueReady) return;//준비 안 됐을 경우 빠꾸
         else if (isChoicePanelActive) return;//선택지 켜져있어도 빠꾸
         else if (isSkipTextAnimation) return;//스킵 중이어도 빠꾸
+        else if (isTrandition) return;
         //둘 다 뛰어넘었을 경우. 그러니까 선택지도 안 켜져 있고 다이얼로그로 레디일 때. 
         //업데이트와 기존 함수는 병렬적으로 적용되는가?
-        if (Input.GetKeyDown(KeyCode.Space) ||  isSkiping)
+        if (Input.GetKeyDown(KeyCode.Space) || isClickDialogueBox)
         {
+            Debug.Log("스페이스바 / UI에 마우스 클릭 감지. 넘어갑니다.");
             //스페이스를 클릭하거나, UIClickEventScripts에서 값을 true로 바꾸면 여기서 반응.
             if (isTyping) // 텍스트 애니메이션 중이면 스킵
             {
-                Debug.Log("스페이스바 / UI에 마우스 클릭 감지. 넘어갑니다.");
+                isClickDialogueBox = false;
                 SkipTypingAnimation();
+                
             }
             else
             {
                 //디렉팅 매니저 쪽에서 checkAll변경점 한번 돌려서 어떻게 바뀌나 테스트하고. 
+                isClickDialogueBox = false;
                 currentIndex++;
-                isSkiping = false;
                 ShowNextLine();
             }
         }
@@ -277,7 +291,15 @@ public class DialogueManager : MonoBehaviour
     public void SkipTypingAnimation()
     {
         isSkipTextAnimation = true;//우선 update 쪽에서 접근 막아주고
+        StopCoroutine(TextAnimationCor);
+        string remainText = RemoveAllTag(LinefullText.Substring(LinefullText.Length - remainTextAmout));
+        Debug.Log(remainText);
+        DialogueText.text += remainText;
+        isSkipTextAnimation = false;
+        isTyping = false;
         Debug.Log("빠른 스킵 진행.");
+        onCompleteTyping();
+      
     }
 
     public void StartShowDialogue()
@@ -311,24 +333,71 @@ public class DialogueManager : MonoBehaviour
 
 
         // 🔹 데이터 필드 분리
+         if(data.Length >=9&&!data[8].Trim().Equals("None")){
+            transitionControllerobj.SetActive(true);
+            //미리 켜놓고
+        }
 
         // 🔹 UI 텍스트 설정
         string speaker = data[0]?.Trim();//파일에서 읽어서 실제로 적용할, 말하는 사람
         speakerText.text = string.IsNullOrEmpty(speaker) ? " " : speaker;//null일땐 null로, 아닐땐 텍스트로. 
 
         string dialogue = data[1]?.Trim();//파일에서 읽어서 실제로 적용할, 대사
+        LinefullText = dialogue;
         Debug.Log(speaker + dialogue + "이 텍스트들 넣으려고 준비중입니다.");
         // RemoveDialogueTag(dialogue);//다이얼로그 데이터 내부 태그 제거 -> 태그 제거는 필요할 때만 하는걸로. 
-
-        string se = data[2]?.Trim();
+        string image = data[2]?.Trim();
+        
+        if (!string.IsNullOrEmpty(image))
+        {
+            if(image.Equals("None")){
+                characterImageManager.SetAllImageFalse();
+            }else{
+                characterImageManager.SetAllImageFalse();//일단 모든 이미지 꺼주고
+                string[] imagetoken = image.Split(",");
+                List<string> imageNameToken = new List<string>();
+                Queue<int> imagePosToken = new Queue<int>();//큐 형태로 꺼낸다
+                int Tempindex = 1;
+                foreach(var token in imagetoken){
+                    if(Tempindex%2 == 1){
+                        imageNameToken.Add(token.Trim());
+                        Tempindex++;
+                        continue;
+                    }
+                    Debug.Log(token.Trim());
+                    //하드코딩잔치
+                    if(token.Trim() == "0000") imagePosToken.Enqueue(0b0000);
+                    else if(token.Trim() == "0001") imagePosToken.Enqueue(0b0001);
+                    else if(token.Trim() == "0010") imagePosToken.Enqueue(0b0010);
+                    else if(token.Trim()== "0100") imagePosToken.Enqueue(0b0100);
+                    else if(token.Trim() == "1000") imagePosToken.Enqueue(0b1000);
+                    Debug.Log(imagePosToken.Count);
+                    Tempindex++;
+                }
+                foreach(var name in imageNameToken){
+                    characterImageManager.showCharcterImage(name, imagePosToken.Dequeue());
+                }
+            }
+            
+        }
+        string se = data[3]?.Trim();
         // 🔹 효과음 재생 재생
         if (!string.IsNullOrEmpty(se))
         {
             soundManager.SetCurrentSe(se);
             soundManager.PlayCurrentSe();
         }
+        string voice = data[4]?.Trim();//보이스(넣을 수 있을지도?)
+        if(!string.IsNullOrEmpty(voice)){
+            soundManager.SetCurrentVoice(voice);//현재 보이스 설정
+        }
+        string bgm = data[5]?.Trim();
+        string background = data[6]?.Trim();
+        if(!string.IsNullOrEmpty(background)){
+            backGroundManager.SetCurrentBackground(background);
 
-        string bgm = data[6]?.Trim();
+        }
+
         Debug.Log("bgm이란 이것 :" + bgm);
         // 🔹 배경음악(BGM) 재생
         if (!string.IsNullOrEmpty(bgm))
@@ -336,57 +405,7 @@ public class DialogueManager : MonoBehaviour
             soundManager.SetCurrentBgm(bgm);
             soundManager.PlayCurrentBgm();
         }
-        Debug.Log("여기까진 옵디다");
-
-        string image = data[3]?.Trim();
-        //이미지쪽 갈아엎어야 함. 
-        if (!string.IsNullOrEmpty(image))
-        {
-            characterImageManager.SetAllImageFalse();//일단 모든 이미지 꺼주고
-            string[] imagetoken = image.Split(",");
-            List<string> imageNameToken = new List<string>();
-            Queue<int> imagePosToken = new Queue<int>();//큐 형태로 꺼낸다
-            int Tempindex = 1;
-            foreach(var token in imagetoken){
-                if(Tempindex%2 == 1){
-                    imageNameToken.Add(token.Trim());
-                    Tempindex++;
-                    continue;
-                }
-                Debug.Log(token.Trim());
-                //하드코딩잔치
-                if(token.Trim() == "0000") imagePosToken.Enqueue(0b0000);
-                else if(token.Trim() == "0001") imagePosToken.Enqueue(0b0001);
-                else if(token.Trim() == "0010") imagePosToken.Enqueue(0b0010);
-                else if(token.Trim()== "0100") imagePosToken.Enqueue(0b0100);
-                else if(token.Trim() == "1000") imagePosToken.Enqueue(0b1000);
-                Debug.Log(imagePosToken.Count);
-                Tempindex++;
-            }
-            foreach(var name in imageNameToken){
-                characterImageManager.showCharcterImage(name, imagePosToken.Dequeue());
-            }
-            
-        }
-
-
-        string voice = data[5]?.Trim();//보이스(넣을 수 있을지도?)
-
-        soundManager.SetCurrentVoice(voice);//현재 보이스 설정
-
-        string animationKeyword = data.Length > 7 ? data[7]?.Trim() : "";//애니메이션 키보드
-
-        //백그라운드 초기화
-        string background = data[8]?.Trim();
-        if(!string.IsNullOrEmpty(background)){
-            backGroundManager.SetCurrentBackground(background);
-
-        }
-
-
-        // 🔹 선택지 관련 변수 초기화
-        string choiceField = data[4]?.Trim();  // 선택지 파일명:ID (공백이면 선택지 없음)
-        Debug.Log(data[4]);
+        string choiceField = data[7]?.Trim();  // 선택지 파일명:ID (공백이면 선택지 없음)
         hasChoice = !string.IsNullOrEmpty(choiceField) ? true : false;//선택지가 존재하는지, 존재하지 않는지 체크
         //만약 선택지 부분이 공백이 아니면 여기서 오류 날 가능성이 존재. 
         if (hasChoice)
@@ -407,10 +426,17 @@ public class DialogueManager : MonoBehaviour
         {
             Debug.Log("✅ 이 라인에선 선택지가 없음.");
         }
+        if(data.Length >=9&&!data[8].Trim().Equals("None")){
+            Debug.Log("데이터" + data[8] + !data[8].Equals("None"));
+            string Animation = data[8]?.Trim();
+            StartAnimation(Animation);
+        }
+        
+    
 
-        /*[실제로 다이얼로그에 출력시키는 부분]*/
 
-        string displayText = RemoveTags(dialogue);//실제로 작동시킬 텍스트
+        
+
 
         //모든 정보가 갖춰졌다. 
         Debug.Log($"✅ 대사 정보 - 화자: {speaker}, 대사: {dialogue}, 선택지 데이터: {choiceField}");
@@ -418,18 +444,8 @@ public class DialogueManager : MonoBehaviour
         isDialogueReady = true;//텍스트 준비 이후 키기
 
         // 🔹 텍스트 애니메이션 실행 (도중 `%` 태그를 만나면 선택지 패널 호출)
-
-        StartCoroutine(TypeText(dialogue));//전달
-
-
-        // 🔹 캐릭터 이미지 설정
-
-        // 🔹 애니메이션 처리
-        //2/22 -> 나중에 수정할 것(어떤 캐릭터 이미지에 수행할 것인가를 결정하도록. )
-        // if (!string.IsNullOrEmpty(animationKeyword) && animationKeyword == "끄덕")
-        // {
-        //     characterImageManager.nodEffect.StartNod();
-        // }
+        TextAnimationCor = TypeText(dialogue);
+        StartCoroutine(TextAnimationCor);//전달
     }
 
     public void ShowNextLineAfterChoice()
@@ -449,7 +465,10 @@ public class DialogueManager : MonoBehaviour
     private void onCompleteTyping()
     {
         Debug.Log($"✅ 대사 출력 완료 (currentIndex: {currentIndex})");
-
+        if(isTrandition){
+            transitionControllerobj.SetActive(false);
+            isTrandition = false;
+        }
         if (hasChoice)
         {
             Debug.Log($"✅ 선택지 패널 호출 준비 - 다이얼로그 매니저");
@@ -465,10 +484,9 @@ public class DialogueManager : MonoBehaviour
     }
 
     /*[텍스트 애니메이션 부분]*/
-    private static readonly Regex tagRegex = new Regex(@"[\\$@#*%^]-?\d+(\.\d+)?", RegexOptions.Compiled);
+    private static readonly Regex tagRegex = new Regex(@"[\\$@#*%^]-?\d+(\.\d+)?|\(end\)", RegexOptions.Compiled);
     private string RemoveTags(string input)
     {
-
         return tagRegex.Replace(input, "");
     }
     IEnumerator TypeText(string fullText)
@@ -481,20 +499,10 @@ public class DialogueManager : MonoBehaviour
         float currentDelay = defaultDelay;
         //defaultDelay = 기본 딜레이
         //currentDelay = 현재 딜레이
-
-
+        remainTextAmout = fullText.Length;
         for (int i = 0; i < fullText.Length; i++)
         {
-            if (isSkipTextAnimation)
-            {
-                string remainText = RemoveAllTag(fullText.Substring(i));
-                DialogueText.text += remainText;
-                isSkipTextAnimation = false;
-                isSkiping = true;
-                break;//여기 하는 중
-            }
             char c = fullText[i];
-
             //출력 속도 변경 (\숫자). 
             if (c == '\\')
             //하나 이스케이프 문자였구나
@@ -539,8 +547,10 @@ public class DialogueManager : MonoBehaviour
                     }
                 }
 
-                if (float.TryParse(fullText.Substring(i + 1, endIdx - (i + 1)), out float waitTime))
+                if (float.TryParse(fullText.Substring(i + 1, endIdx - (i + 1)), out float waitTime)){
                     yield return new WaitForSeconds(waitTime);
+                }
+                
 
                 i = endIdx + 4;
                 continue;
@@ -627,7 +637,7 @@ public class DialogueManager : MonoBehaviour
 
             // 한 글자씩 출력
             DialogueText.text += c;
-
+            remainTextAmout--;
             yield return new WaitForSeconds(currentDelay);
         }
 
@@ -749,6 +759,24 @@ public class DialogueManager : MonoBehaviour
     }
 
 
+    public void StartAnimation(string animeName){
+        switch(animeName){
+            case "CircleFadeIn":
+                isTrandition = true;
+                transitionShaderController.StartFadeIn();
+                
+                break;
+            case "CircleFadeOut":
+                isTrandition = true;
+                transitionShaderController.StartFadeOut();
+          
+                break;
+            default:
+                Debug.LogError("정의되지 않은 애니메이션입니다");
+                break;
+        }
+        
+    }
 
 
     //태크니컬한 메서드들
@@ -786,6 +814,8 @@ public class DialogueManager : MonoBehaviour
         }
 
     }
+
+
 
 
 

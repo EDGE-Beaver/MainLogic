@@ -139,32 +139,4 @@ public class CharacterImageManager : MonoBehaviour
             obj.SetActive(false);
         }
     }
-
-
-
-    //  public void playCharacterAnimation(int IdentifyBinary, string AnimationName){
-    //     switch(AnimationName){
-    //         case "nod": 
-    //             playNodEffect(); 
-    //             break;
-    //     }
-
-    // }
-
-    //애니메이션 실행(캐릭터, 애니메이션)
-    //캐릭터 배치(캐릭터 개수, 바이너리 코드)
-    //
-
-    //
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

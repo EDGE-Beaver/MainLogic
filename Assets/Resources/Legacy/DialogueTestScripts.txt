@@ -1,0 +1,17 @@
+유 이연|*0(end) ...*1(end)환자분,$1(end) 이쪽으로.|Knock|image_nurse_concept_2,0000||voice|||
+유 이연|지금 기분이 어떠세요?\1.5(end)$0.5(end) 어디 아픈 곳은\0.5(end) 없나요?%||image_nurse_concept_1,0000|Scene1ChoiceNew:0|voice|간호사_기본||
+유 이연|괜찮아요.$1(end) 천천히 숨 쉬세요.\2.5(end)$0.5(end) 깊게*0(end) ...$0.5(end) *1(end)천천히*0(end) ...||image_nurse_concept_1,0000||downvoice|||
+유 이연|*1(end)후후,$0.2(end) 역시*0(end)...$1(end) *1(end)환자분도 저와 같은 생각이겠죠?||image_nurse_concept_2,0000||voice|||
+유 이연|*1(end)여긴 안전한 곳이에요.\2.5(end)$0.5(end) 아무 \1.2(end)걱정할 필요 없어요.||image_nurse_concept_2,0000||voice|||
+유 이연|*1(end)이곳은 아주...$0.2(end) 조용하죠.$0.5(end) 평온하고,$0.3(end) 변함없고...||image_nurse_concept_2,0000||voice|||
+유 이연|*1(end)사람들은 변화를 원하지만,$0.5(end) 사실 변화가 꼭 좋은 건 아니에요.||image_nurse_concept_2,0000||voice|||
+유 이연|*1(end)하루하루 같은 일상이 반복되는 게$0.1(end) 가장 이상적인 거라고 저는 생각해요.||image_nurse_concept_2,0000||voice|||
+유 이연|*1(end)그런데\1.2(end)*0(end) ... *1(end)환자분은\0.5(end) 어떤가요?\2.5(end)$0.5(end) 혹시*0(end) ...$1(end) *1(end)#-0.03(end)이상한\0.5(end) 걸 #0.03(end)보셨나요?||image_nurse_concept_1,0000||voice|||
+유 이연|*1(end)아.$1(end) 환각증세가 있을수도 있으니깐요.\2.5(end)$1(end) 저는 항상 기록을 남기거든요.||image_nurse_concept_1,0000||voice|||
+유 이연|*1(end)클립보드에 적어둘게요.*0(end)\2.5(end)$2(end) "이변 없음".*1(end)\0.99(end) 오늘도 평범한 하루네요.||image_nurse_concept_2,0000||voice|||
+유 이연|*1(end)이런 일들은 그냥 잊어버리는 게 좋겠죠?\2.5(end)$0.5 그럼요^,\0.99(end) 당연하죠. 그게 맞아요.|Knock|image_nurse_concept_1,0000||voice||끄덕||
+유 이연|*1(end)하지만...혹시 이상한 일이 있다면 알려주세요%|Knock|image_nurse_concept_1,0000|:1|downvoice|||
+유 이연|*1어떤 일이든,$0.5(end) 우리가 모른 척하면...$1(end) 세상은 변하지 않는답니다.|Knock|image_nurse_concept_1,0000||downvoice|||
+유 이연|*1(end)그럼,$0.5(end) 오늘도 평범한 하루를 보내도록 해요.|Knock|image_nurse_concept_1,0000||voice||끄덕|
+유 이연|*1(end)그럼,$0.5(end) 오늘도 평범한 하루를 보내도록 해요.|Knock|image_nurse_concept_1,0000||voice||끄덕|
+유 이연|*1(end)그럼,$0.5(end) 오늘도 평범한 하루를 보내도록 해요.|Knock|image_nurse_concept_1,0000||voice||끄덕|
