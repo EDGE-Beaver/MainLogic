@@ -57,6 +57,7 @@ using System.Collections;
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using UnityEditor.ProjectWindowCallback;
 public class ChoiceManager : MonoBehaviour
 {
     [Header("변수 매니저")]
@@ -277,23 +278,32 @@ public class ChoiceManager : MonoBehaviour
                     if(GotoBranch[index].Contains(":")){
                         //변수 변경까지 겸하는 이동일 경우
                         string[] MoveAndChange = GotoBranch[index].Split(":");
-                        string[] MovePart = MoveAndChange[0].Split('+');//어디로 이동할지에 대한 파트
+                        string[] MovePart = MoveAndChange[0].Split('~');//어디로 이동할지에 대한 파트
+                        string MoveStart = MovePart[0];
+                        string MoveEnd = MovePart[1]; 
+                        string Destination = MovePart[2];
+
                         string[] ChangePart = MoveAndChange[1].Split('+');//어떤 변수를 변경할지에 대한 파트
                         int value;
-                        int Branch;
+                        int StartIndex;
+                        int EndIndex;
+                        int DestIndex;
                         if (ChangePart.Length == 2 && int.TryParse(ChangePart[1], out value) && 
-                           MovePart.Length == 2 && int.TryParse(MovePart[1], out Branch))
+                           MovePart.Length == 2 && int.TryParse(MoveStart, out StartIndex) &&
+                           int.TryParse(MoveEnd, out EndIndex) && int.TryParse(Destination, out DestIndex))
                         {
                             //파싱에 성공했을 경우
                             //-도 적용하는가? 
                             Action ChangedAction = () => {
                                 variableManager.ModifyVariable(ChangePart[0], value);
-                                dialogueManager.WhatBranchITake = Branch;
+                                dialogueManager.SeleceBranchStartIndex = StartIndex;
+                                dialogueManager.SelectBranchEndIndex = EndIndex;
+                                dialogueManager.SelectBranchDestindex = DestIndex;
                                 };
                             variableChangeAction.Add(index, ChangedAction);
 
                             Debug.Log($"✅ 변수 변경 액션을 추가함. {index}번째 변경 액션: {ChangePart[0]} += {value}");
-                            Debug.Log($"✅ 분기 변경 액션을 추가함. {index}번째 변경 액션: {MovePart[0]} goto {Branch}");
+                            Debug.Log($"✅ 분기 변경 액션을 추가함. {index}번째 변경 액션: {MoveStart}에서 {MoveEnd}까지만 가고 {Destination}으로 이동.");
                         }
                         else
                         {
@@ -302,18 +312,26 @@ public class ChoiceManager : MonoBehaviour
 
                     }else{
                         //단순 이동일 경우
-                        string[] MovePart = GotoBranch[index].Split('+');//어디로 이동할지에 대한 파트
-                        int Branch;
-                        if (MovePart.Length == 2 && int.TryParse(MovePart[1], out Branch))
+                        string[] MovePart = GotoBranch[index].Split('~');//어디로 이동할지에 대한 파트
+                        string MoveStart = MovePart[0];
+                        string MoveEnd = MovePart[1]; 
+                        string Destination = MovePart[2];
+                        int StartIndex;
+                        int EndIndex;
+                        int DestIndex;
+                        if (MovePart.Length == 2 && int.TryParse(MoveStart, out StartIndex) &&
+                           int.TryParse(MoveEnd, out EndIndex) && int.TryParse(Destination, out DestIndex))
                         {
                             //파싱에 성공했을 경우
                             //-도 적용하는가? 
                             Action ChangedAction = () => {
-                                dialogueManager.WhatBranchITake = Branch;
+                                dialogueManager.SeleceBranchStartIndex = StartIndex;
+                                dialogueManager.SelectBranchEndIndex = EndIndex;
+                                dialogueManager.SelectBranchDestindex = DestIndex;
                                 };
                             variableChangeAction.Add(index, ChangedAction);
 
-                            Debug.Log($"✅ 분기 변경 액션을 추가함. {index}번째 변경 액션: {MovePart[0]} goto {Branch}");
+                            Debug.Log($"✅ 분기 변경 액션을 추가함. {index}번째 변경 액션: {MoveStart}에서 {MoveEnd}까지만 가고 {Destination}으로 이동.");
                         }
                         else
                         {

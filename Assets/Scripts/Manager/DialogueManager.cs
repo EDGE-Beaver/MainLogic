@@ -187,7 +187,10 @@ public class DialogueManager : MonoBehaviour
 
     [Tooltip("분기를 택해야 하는지 여부 확인")]
     public bool HavetoTakeBranch = false;
-    public int WhatBranchITake = 0;
+    public int SeleceBranchStartIndex = 0;//시작 인덱스
+    public int SelectBranchEndIndex = 0;//끝 인덱스
+    public int SelectBranchDestindex = 0;//마지막 인덱스
+
 
     void Awake()
     {
@@ -335,12 +338,28 @@ public class DialogueManager : MonoBehaviour
             return;
         }//대사 파일이 null을 제공했을 경우 마지막 줄에 도달했다는 것이므로 end of this Scene임. 
 
+        //분기 설정
+        if(HavetoTakeBranch){
+            if(currentIndex == SelectBranchEndIndex){
+                //선택지의 다른 분기 중 하나에 도달했을 경우
+                currentIndex = SelectBranchDestindex;
+                HavetoTakeBranch = false;
+                ShowNextLine();
+            }else if(!(currentIndex <= SelectBranchEndIndex && currentIndex >=SeleceBranchStartIndex))
+            {
+                currentIndex = SeleceBranchStartIndex;
+                ShowNextLine();
+
+            }
+        }
 
         // 🔹 데이터 필드 분리
          if(data.Length >=9&&!data[8].Trim().Equals("None")){
             transitionControllerobj.SetActive(true);
             //미리 켜놓고
         }
+
+        
 
         // 🔹 UI 텍스트 설정
         string speaker = data[0]?.Trim();//파일에서 읽어서 실제로 적용할, 말하는 사람
